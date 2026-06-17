@@ -1,0 +1,53 @@
+/* =========================================================================
+   히어로 캐릭터 — 부유 + 궤도 회전 애니메이션.
+   prefers-reduced-motion 존중.
+   ========================================================================= */
+
+.hero-character {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.hero-character__svg {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  overflow: visible;
+  animation: hc-float 6s ease-in-out infinite;
+  filter: drop-shadow(0 24px 40px rgba(40, 60, 140, 0.35));
+}
+
+/* 궤도 그룹: 본체와 함께 천천히 회전 */
+.hero-character__orbit {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hc-spin 28s linear infinite;
+}
+
+@keyframes hc-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes hc-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-character__svg,
+  .hero-character__orbit {
+    animation: none;
+  }
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KLID AI 영상학습 사용자 포털 — Hero Design Concept</title>
+<style>
+:root{
+  --ink:#05070d;
+  --ink2:#0e1324;
+  --paper:#f7f8fb;
+  --white:#ffffff;
+  --muted:#7d8596;
+  --line:rgba(9,13,26,.12);
+  --blue:#335cff;
+  --blue2:#6d82ff;
+  --cyan:#6ae6ff;
+  --violet:#9a7cff;
+  --lime:#b8ff6a;
+  --grad:linear-gradient(125deg,#335cff 0%,#6ae6ff 52%,#9a7cff 100%);
+  --soft:linear-gradient(145deg,#f8fbff 0%,#edf3ff 58%,#f8f6ff 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:Pretendard,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:var(--ink);color:var(--ink);word-break:keep-all;line-break:strict}
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6.2vh 7vw;background:var(--paper);opacity:0;visibility:hidden;transform:translateY(18px);transition:.38s ease}
+.slide.active{opacity:1;visibility:visible;transform:none;z-index:2}
+.slide.dark{background:radial-gradient(42% 50% at 78% 40%,rgba(51,92,255,.32),transparent 68%),linear-gradient(145deg,#070a13 0%,#111b3d 100%);color:var(--white)}
+.slide.blue{background:radial-gradient(45% 60% at 76% 44%,rgba(106,230,255,.22),transparent 72%),linear-gradient(140deg,#172b93 0%,#071344 100%);color:var(--white)}
+.slide.white{background:#fff}
+.slide:after{content:"";position:absolute;inset:auto 7vw 5.2vh 7vw;height:1px;background:linear-gradient(90deg,transparent,rgba(125,133,150,.45),transparent);pointer-events:none}.dark:after,.blue:after{background:linear-gradient(90deg,transparent,rgba(255,255,255,.23),transparent)}
+.eyebrow{font-size:13px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;display:flex;gap:10px;align-items:center}.eyebrow:before{content:"";width:24px;height:2px;background:currentColor}.dark .eyebrow,.blue .eyebrow{color:#aebcff}
+h1{font-size:clamp(52px,8vw,112px);line-height:.94;letter-spacing:-.065em;font-weight:950;max-width:1200px}h2{font-size:clamp(38px,5.6vw,82px);line-height:1.02;letter-spacing:-.055em;font-weight:950;max-width:1250px}h3{font-size:clamp(20px,2vw,31px);letter-spacing:-.03em;font-weight:930}.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}.dark .grad,.blue .grad{background:linear-gradient(125deg,#fff 0%,#b9c6ff 52%,#8ff4ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}.sub{font-size:clamp(17px,1.45vw,22px);line-height:1.68;color:#687184;max-width:980px;margin-top:24px}.dark .sub,.blue .sub{color:rgba(255,255,255,.74)}
+.bigword{font-size:clamp(76px,15vw,220px);line-height:.78;letter-spacing:-.09em;font-weight:1000}.caption{font-size:clamp(20px,2.35vw,36px);line-height:1.36;font-weight:900;letter-spacing:-.04em;margin-top:26px;max-width:980px}.caption em{font-style:normal;background:linear-gradient(transparent 58%,rgba(51,92,255,.22) 0)}.dark .caption em,.blue .caption em{background:linear-gradient(transparent 58%,rgba(106,230,255,.33) 0)}
+.cols2{display:grid;grid-template-columns:.92fr 1.08fr;gap:44px;align-items:center;margin-top:34px}.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}.cols4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px}@media(max-width:900px){.cols2,.cols3,.cols4{grid-template-columns:1fr}.slide{padding:7vh 8vw}.bigword{font-size:clamp(64px,22vw,150px)}}
+.card{position:relative;border:1px solid var(--line);background:rgba(255,255,255,.78);border-radius:24px;padding:28px 28px 30px;box-shadow:0 22px 50px -38px rgba(5,7,13,.45);overflow:hidden}.card:before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--grad);opacity:.7}.dark .card,.blue .card{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.15);box-shadow:none}.card .num{font-size:13px;font-weight:950;letter-spacing:.14em;color:var(--blue);text-transform:uppercase;margin-bottom:12px}.dark .card .num,.blue .card .num{color:#b9c6ff}.card p{font-size:clamp(14px,1.2vw,17px);line-height:1.62;color:#687184;margin-top:10px}.dark .card p,.blue .card p{color:rgba(255,255,255,.72)}
+.issue{border-left:4px solid var(--blue);padding-left:24px;margin-top:32px}.issue p{font-size:clamp(22px,2.6vw,38px);line-height:1.38;font-weight:900;letter-spacing:-.04em;color:#131927}.dark .issue p,.blue .issue p{color:#fff}.issue span{color:var(--blue)}.dark .issue span,.blue .issue span{color:#8ff4ff}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:18px;align-items:center;margin-top:40px}.arrow{font-size:34px;color:#aab2c3;font-weight:900}.flowbox{min-height:250px;border-radius:30px;border:1px solid var(--line);background:#fff;padding:34px;display:flex;flex-direction:column;justify-content:space-between}.flowbox b{font-size:clamp(40px,4.4vw,64px);line-height:.95;letter-spacing:-.055em}.flowbox p{font-size:clamp(15px,1.25vw,18px);line-height:1.6;color:#687184}.flowbox i{font-style:normal;font-size:13px;font-weight:950;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}@media(max-width:900px){.flow{grid-template-columns:1fr}.arrow{display:none}.flowbox{min-height:170px}}
+.visual{height:clamp(270px,42vh,460px);border-radius:34px;background:radial-gradient(55% 65% at 50% 42%,rgba(51,92,255,.17),transparent 70%),linear-gradient(145deg,#f8fbff,#eef3ff);border:1px solid var(--line);display:grid;place-items:center;position:relative;overflow:hidden}.dark .visual,.blue .visual{background:radial-gradient(55% 70% at 50% 40%,rgba(106,230,255,.18),transparent 72%),rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}.unitgrid{display:grid;grid-template-columns:repeat(5,48px);gap:10px;transform:rotate(-8deg)}.unitgrid i{width:48px;height:48px;border-radius:13px;background:linear-gradient(145deg,#7febff 0%,#5d78ff 48%,#9a7cff 100%);box-shadow:0 16px 30px rgba(42,61,160,.28)}.unitgrid i:nth-child(3n){opacity:.58;transform:translateY(-20px) scale(.72)}.unitgrid i:nth-child(4n){opacity:.72;transform:translateY(18px) scale(.84)}.unitgrid i:nth-child(7),.unitgrid i:nth-child(13){background:linear-gradient(145deg,#fff,#aebcff)}
+.molecule{position:absolute;inset:0}.molecule i{position:absolute;width:10px;height:10px;border-radius:50%;background:#6ae6ff;box-shadow:0 0 24px rgba(106,230,255,.9)}.molecule i:nth-child(1){left:20%;top:28%}.molecule i:nth-child(2){left:28%;top:66%}.molecule i:nth-child(3){right:25%;top:25%}.molecule i:nth-child(4){right:17%;bottom:30%}.molecule i:nth-child(5){left:52%;bottom:18%}
+.mascot{position:relative;width:210px;height:190px}.mascot .head{position:absolute;left:42px;top:24px;width:126px;height:112px;border-radius:30px;background:linear-gradient(135deg,#8ff4ff,#5d78ff 54%,#b597ff);box-shadow:0 30px 55px rgba(51,92,255,.28)}.mascot .face{position:absolute;left:22px;top:26px;width:82px;height:56px;border-radius:20px;background:#fff;display:flex;justify-content:center;align-items:center;gap:20px}.mascot .eye{width:8px;height:25px;border-radius:999px;background:#090d1a}.mascot .foot{position:absolute;bottom:25px;width:34px;height:20px;border-radius:11px;background:#5270ff}.mascot .foot.l{left:66px}.mascot .foot.r{right:66px}.mascot .cube{position:absolute;border-radius:10px;background:linear-gradient(135deg,#8ff4ff,#8d7dff);box-shadow:0 15px 26px rgba(51,92,255,.22)}.mascot .cube.a{width:33px;height:33px;right:8px;top:44px}.mascot .cube.b{width:24px;height:24px;left:8px;top:30px}.mascot .cube.c{width:28px;height:28px;right:24px;bottom:48px}
+.principle{display:grid;grid-template-columns:.62fr .38fr;gap:22px;align-items:stretch;margin-top:34px}.principle .statement{border-radius:34px;background:#fff;border:1px solid var(--line);padding:44px;min-height:420px;display:flex;flex-direction:column;justify-content:space-between}.dark .principle .statement,.blue .principle .statement{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.15)}.statement .label{font-size:13px;font-weight:950;letter-spacing:.15em;text-transform:uppercase;color:var(--blue)}.dark .statement .label,.blue .statement .label{color:#b9c6ff}.statement strong{display:block;font-size:clamp(40px,5.1vw,76px);line-height:.98;letter-spacing:-.06em;margin-top:18px}.statement p{font-size:clamp(16px,1.35vw,20px);line-height:1.62;color:#687184;max-width:760px}.dark .statement p,.blue .statement p{color:rgba(255,255,255,.72)}@media(max-width:900px){.principle{grid-template-columns:1fr}.principle .statement{min-height:300px}}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.tags span{font-size:13px;font-weight:900;border-radius:999px;padding:9px 13px;background:rgba(51,92,255,.08);color:#3155df}.dark .tags span,.blue .tags span{background:rgba(255,255,255,.12);color:#dce4ff}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}.step{position:relative;border-radius:26px;background:#fff;border:1px solid var(--line);padding:28px;min-height:300px;overflow:hidden}.step:after{content:"";position:absolute;right:-35px;bottom:-35px;width:140px;height:140px;border-radius:34px;background:var(--grad);opacity:.12;transform:rotate(18deg)}.step b{font-size:clamp(36px,4vw,60px);letter-spacing:-.06em}.step h3{margin:22px 0 8px}.step p{font-size:clamp(14px,1.15vw,17px);line-height:1.58;color:#687184}@media(max-width:1000px){.timeline{grid-template-columns:1fr 1fr}}@media(max-width:650px){.timeline{grid-template-columns:1fr}}
+.table{width:100%;border-collapse:collapse;margin-top:34px;font-size:clamp(15px,1.4vw,19px);background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 26px 60px -45px rgba(5,7,13,.5)}.table th,.table td{text-align:left;vertical-align:top;padding:21px 23px;border-bottom:1px solid var(--line)}.table th{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#687184;background:#f2f5fb}.table td:first-child{font-weight:950;width:22%;color:#11182b}.table tr:last-child td{border-bottom:none}.table b{color:#3155df}
+.navbtn{position:fixed;z-index:20;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid rgba(125,133,150,.35);background:rgba(255,255,255,.88);backdrop-filter:blur(12px);color:#6b7487;font-size:24px;cursor:pointer;display:grid;place-items:center;box-shadow:0 12px 30px rgba(5,7,13,.13)}.navbtn:hover{color:var(--blue)}.prev{left:20px}.next{right:20px}.hud{position:fixed;z-index:20;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:9px}.hud b{width:8px;height:8px;border-radius:99px;background:#b8bfcb;transition:.22s}.hud b.on{width:30px;background:var(--blue)}.counter{position:fixed;z-index:20;bottom:19px;right:26px;font-size:13px;font-weight:900;color:#8c95a6}.hint{position:fixed;z-index:20;top:20px;left:26px;font-size:12px;font-weight:800;letter-spacing:.04em;color:#8c95a6}.dark ~ .hint{color:#fff}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <section class="slide dark active">
+    <span class="eyebrow">Hero Design Concept</span>
+    <h1>KLID<br><span class="grad">AI 영상학습 사용자 포털</span></h1>
+    <p class="sub">데이터를 찾고, 키우고, 바로 쓸 수 있게 만드는 AI 영상학습 사용자 포털의 브랜드 경험 방향.</p>
+  </section>
+
+  <section class="slide white">
+    <span class="eyebrow">Reference Learning</span>
+    <h2>레퍼런스에서 가져올 건<br><span class="grad">스타일이 아니라 설득 구조</span>입니다</h2>
+    <p class="sub">좋은 브랜드 컨셉서는 예쁜 화면을 먼저 보여주지 않습니다. 먼저 서비스가 왜 필요한지 정의하고, 하나의 핵심 단어로 압축한 뒤, 그 단어가 비주얼·모션·서비스 접점으로 어떻게 확장되는지 보여줍니다.</p>
+    <div class="cols4">
+      <div class="card"><div class="num">01 Problem</div><h3>무엇이 헷갈리는가</h3><p>기존 포털처럼 보이는 순간, 생성·증강·저작이라는 차별성이 흐려집니다.</p></div>
+      <div class="card"><div class="num">02 Essence</div><h3>한 단어로 압축</h3><p>서비스 가치를 길게 설명하기 전에 모두가 기억할 수 있는 기준어가 필요합니다.</p></div>
+      <div class="card"><div class="num">03 System</div><h3>형태로 반복</h3><p>큐브, 그리드, 연결선, 모션이 같은 의미를 반복해서 말해야 합니다.</p></div>
+      <div class="card"><div class="num">04 Touchpoint</div><h3>접점으로 확장</h3><p>히어로에서 끝나는 것이 아니라 검색, 로딩, 빈 상태, 완료 안내까지 이어져야 합니다.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <span class="eyebrow">Reframing</span>
+    <h2>이 포털은<br><span class="grad">다운로드 페이지가 아닙니다</span></h2>
+    <div class="issue"><p>원본 데이터를 <span>탐색</span>하고, AI로 <span>증강·생성</span>하고, 워크스페이스에서 <span>활용 가능한 학습 자산</span>으로 만드는 환경입니다.</p></div>
+    <div class="cols3">
+      <div class="card"><div class="num">Not Only</div><h3>검색과 반출</h3><p>데이터를 찾아 내려받는 기능은 기본값입니다. 여기서 끝나면 기존 AI Hub형 포털과 차이가 약합니다.</p></div>
+      <div class="card"><div class="num">But Also</div><h3>증강과 생성</h3><p>원본이 부족하거나 조건이 맞지 않을 때, AI로 학습데이터의 양과 조건을 확장합니다.</p></div>
+      <div class="card"><div class="num">Finally</div><h3>활용과 관리</h3><p>프로젝트 단위로 담고, 정리하고, 다시 활용하는 워크스페이스 경험으로 연결합니다.</p></div>
+    </div>
+  </section>
+
+  <section class="slide blue">
+    <span class="eyebrow">Brand Essence</span>
+    <div class="bigword">GROW</div>
+    <p class="caption">원본 데이터가 끝이 아니라 시작이 되는 포털.<br><em>데이터가 학습 가능한 자산으로 자라는 경험</em>을 보여줍니다.</p>
+    <p class="sub">GROW는 연결·증강·생성·활용을 한 번에 묶는 가장 쉬운 기준어입니다. 어려운 영어 조합 대신, 포털이 사용자에게 주는 결과를 바로 말합니다.</p>
+  </section>
+
+  <section class="slide white">
+    <span class="eyebrow">Experience Flow</span>
+    <h2>사용자 경험은<br><span class="grad">Find → Grow → Use</span>로 정리합니다</h2>
+    <div class="flow">
+      <div class="flowbox"><i>Find</i><b>탐색</b><p>조건 검색, 데이터 카드, 상세 정보로 필요한 원본 데이터를 발견합니다.</p></div>
+      <div class="arrow">→</div>
+      <div class="flowbox"><i>Grow</i><b>성장</b><p>AI 증강과 생성으로 부족한 데이터를 늘리고 조건을 다양화합니다.</p></div>
+      <div class="arrow">→</div>
+      <div class="flowbox"><i>Use</i><b>활용</b><p>워크스페이스에 담아 프로젝트 목적에 맞게 반출·저작·관리합니다.</p></div>
+    </div>
+  </section>
+
+  <section class="slide dark">
+    <span class="eyebrow">Visual Principle</span>
+    <h2>시각 언어는<br><span class="grad">Unit → Cluster → System</span></h2>
+    <div class="cols2">
+      <div class="visual">
+        <div class="molecule"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="unitgrid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div>
+        <p class="caption">하나의 데이터 단위가 묶이고, 확장되고, 정렬되며 <em>하나의 학습 데이터 시스템</em>이 됩니다.</p>
+        <div class="tags"><span>Data Unit</span><span>Grid</span><span>Expansion</span><span>Training Asset</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide white">
+    <span class="eyebrow">Concept A</span>
+    <div class="principle">
+      <div class="statement">
+        <div>
+          <div class="label">A · Main Hero Direction</div>
+          <strong>SYSTEM</strong>
+        </div>
+        <p>데이터 큐브와 그리드 구조를 중심으로, 원본 데이터가 증강·생성을 거쳐 정렬된 학습 자산이 되는 과정을 보여줍니다. 공공기관 포털의 신뢰감과 기술 플랫폼의 확장성을 가장 안정적으로 전달합니다.</p>
+      </div>
+      <div class="visual"><div class="unitgrid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    </div>
+    <div class="tags"><span>전문성</span><span>신뢰감</span><span>확장성</span><span>메인 히어로 적합</span></div>
+  </section>
+
+  <section class="slide dark">
+    <span class="eyebrow">Concept B</span>
+    <div class="principle">
+      <div class="statement">
+        <div>
+          <div class="label">B · Service Guide Direction</div>
+          <strong>GUIDE</strong>
+        </div>
+        <p>데이터의 최소 단위를 캐릭터화해, 복잡한 탐색·증강·생성·완료 과정을 쉽게 이해시키는 안내자입니다. 귀여움이 목적이 아니라, 어려운 데이터 기능을 낮은 진입장벽으로 전달하는 UX 장치입니다.</p>
+      </div>
+      <div class="visual">
+        <div class="mascot"><div class="head"><div class="face"><span class="eye"></span><span class="eye"></span></div></div><span class="foot l"></span><span class="foot r"></span><span class="cube a"></span><span class="cube b"></span><span class="cube c"></span></div>
+      </div>
+    </div>
+    <div class="tags"><span>친근함</span><span>이해도</span><span>온보딩</span><span>상태 안내 적합</span></div>
+  </section>
+
+  <section class="slide white">
+    <span class="eyebrow">Hero Storyboard</span>
+    <h2>히어로는 기능 나열이 아니라<br><span class="grad">데이터가 자라는 장면</span>이어야 합니다</h2>
+    <div class="timeline">
+      <div class="step"><b>01</b><h3>Data Unit</h3><p>하나의 영상·이미지 세트가 큐브 형태로 등장합니다. 원본 데이터의 시작점을 명확히 보여줍니다.</p></div>
+      <div class="step"><b>02</b><h3>Condition</h3><p>시간대, 날씨, 이벤트, 라벨 정보가 주변 그리드로 연결됩니다.</p></div>
+      <div class="step"><b>03</b><h3>Growth</h3><p>AI 증강·생성으로 큐브가 늘어나며 데이터의 조건과 수량이 확장됩니다.</p></div>
+      <div class="step"><b>04</b><h3>Asset</h3><p>확장된 데이터가 워크스페이스 안에서 정렬되어 학습 자산으로 완성됩니다.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <span class="eyebrow">Selection Guide</span>
+    <h2>추천은<br><span class="grad">SYSTEM을 메인, GUIDE를 접점</span>으로 쓰는 방향</h2>
+    <table class="table">
+      <thead><tr><th>구분</th><th>역할</th><th>적용 위치</th><th>선택 이유</th></tr></thead>
+      <tbody>
+        <tr><td>Concept A · SYSTEM</td><td><b>브랜드의 얼굴</b></td><td>메인 히어로, 핵심 소개, 제안서 첫 장</td><td>공공기관 포털에 필요한 전문성·신뢰감·확장성을 가장 강하게 전달합니다.</td></tr>
+        <tr><td>Concept B · GUIDE</td><td><b>사용자 안내자</b></td><td>온보딩, 로딩, 빈 상태, 완료/주의 안내</td><td>복잡한 데이터 과정을 캐릭터 행동으로 낮춰 보여줘 접근성을 보완합니다.</td></tr>
+        <tr><td>Hybrid</td><td><b>가장 안정적인 운영안</b></td><td>히어로는 데이터 시스템, 세부 접점은 캐릭터</td><td>A/B를 억지로 섞지 않고 역할을 분리하면 컨셉이 더 선명해집니다.</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+<button class="navbtn prev" id="prev">‹</button><button class="navbtn next" id="next">›</button><div class="hud" id="dots"></div><div class="counter" id="counter"></div><div class="hint">← → / 클릭 이동 · F 전체화면</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let idx=0;const dots=document.getElementById('dots'),counter=document.getElementById('counter');slides.forEach((_,i)=>{const b=document.createElement('b');if(!i)b.className='on';b.onclick=()=>go(i);dots.appendChild(b)});function go(n){n=Math.max(0,Math.min(slides.length-1,n));slides[idx].classList.remove('active');dots.children[idx].classList.remove('on');idx=n;slides[idx].classList.add('active');dots.children[idx].classList.add('on');counter.textContent=`${idx+1} / ${slides.length}`}go(0);document.getElementById('next').onclick=()=>go(idx+1);document.getElementById('prev').onclick=()=>go(idx-1);document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){go(idx+1);e.preventDefault()}else if(['ArrowLeft','PageUp'].includes(e.key)){go(idx-1)}else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});document.addEventListener('click',e=>{if(e.target.closest('.navbtn')||e.target.closest('.hud'))return;if(e.clientX>innerWidth*.62)go(idx+1);else if(e.clientX<innerWidth*.16)go(idx-1)});
+</script>
+</body>
+</html>

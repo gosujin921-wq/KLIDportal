@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+*.local
+*.tsbuildinfo
+.DS_Store
+.vite
+
+# 히어로 B안 도구 작업 디렉터리(키·세션로그·node_modules — 저장소 제외)
+docs/hero_v2/
