@@ -9,7 +9,7 @@ export function AppFooter() {
       <Container className="py-12">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div>
-            <Logo inverted />
+            <Logo inverted markTo="/v2" />
             <p className="mt-4 text-sm leading-relaxed">
               한국지역정보개발원 · 행정안전부
               <br />

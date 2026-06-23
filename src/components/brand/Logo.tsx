@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { cn } from '@/lib/cn'
 
 /**
@@ -7,16 +9,17 @@ import { cn } from '@/lib/cn'
  */
 export function Logo({
   inverted = false,
+  markTo,
   className,
 }: {
   /** 다크 배경용 (푸터 등) */
   inverted?: boolean
+  /** 지정 시 심볼(큐브 마크)만 해당 경로로 이동하는 링크가 된다 */
+  markTo?: string
   className?: string
 }) {
-  return (
-    <span className={cn('group flex items-center gap-2.5', className)}>
-      {/* 마크 */}
-      <svg viewBox="0 0 32 32" aria-hidden className="size-9 shrink-0">
+  const mark = (
+    <svg viewBox="0 0 32 32" aria-hidden className="size-9 shrink-0">
         <defs>
           <linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor="#4a61e8" />
@@ -54,6 +57,18 @@ export function Logo({
           className="transition-transform duration-300 group-hover:-translate-y-[2px]"
         />
       </svg>
+  )
+
+  return (
+    <span className={cn('group flex items-center gap-2.5', className)}>
+      {/* 마크 — markTo 지정 시 심볼만 링크 */}
+      {markTo ? (
+        <Link to={markTo} aria-label="랜딩 v2 보기" className="shrink-0">
+          {mark}
+        </Link>
+      ) : (
+        mark
+      )}
 
       {/* 워드마크 */}
       <span className="flex flex-col justify-center leading-none">
