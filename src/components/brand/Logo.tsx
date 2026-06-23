@@ -7,13 +7,10 @@ import { cn } from '@/lib/cn'
  */
 export function Logo({
   inverted = false,
-  compact = false,
   className,
 }: {
   /** 다크 배경용 (푸터 등) */
   inverted?: boolean
-  /** 태그라인 없는 한 줄 버전 */
-  compact?: boolean
   className?: string
 }) {
   return (
