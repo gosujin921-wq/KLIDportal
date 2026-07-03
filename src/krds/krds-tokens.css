@@ -1,0 +1,367 @@
+/* ============================================================
+   KRDS — Webfonts
+   KRDS ships "Pretendard GOV", a government-tuned build of the
+   open-source Pretendard family. The binaries are not publicly
+   redistributable, so this system loads the open-source
+   Pretendard (visually near-identical metrics) from CDN as a
+   faithful substitute. KoddiUD 온고딕 (the a11y display face) is
+   likewise substituted by Pretendard. → flagged in readme.md.
+   Swap the src URLs for the official GOV woff2 when available.
+   ============================================================ */
+
+/* Pretendard — variable font, weights 45–920 */
+@font-face {
+  font-family: "Pretendard GOV";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2") format("woff2-variations");
+}
+
+/* Static fallbacks (so weight tokens resolve even without VF support) */
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Bold.woff2") format("woff2");
+}
+
+/* ============================================================
+   KRDS — Color tokens (Standard style, Light mode)
+   Primitive scale: 5 / 10 / 20 / 30 / 40 / 50 / 60 / 70 / 80 / 90 / 95
+   8 color families (Gray, Primary, Secondary, Point, Danger,
+   Warning, Success, Information) + Gray 0/100 (white/black).
+   Anchors verified against krds.go.kr: primary-50 #256EF4,
+   gray text #1E2124 / #58616A, danger #DE3412, warning #FFB114,
+   point #AB2B36. Intermediate steps tuned for a harmonious ramp.
+   ============================================================ */
+:root {
+  /* ---- Gray (정부 회색) ---- */
+  --krds-color-gray-0:   #ffffff;
+  --krds-color-gray-5:   #f4f5f6;
+  --krds-color-gray-10:  #e7e8ea;
+  --krds-color-gray-20:  #cdd1d5;
+  --krds-color-gray-30:  #b1b8be;
+  --krds-color-gray-40:  #8a949e;
+  --krds-color-gray-50:  #6d7882;
+  --krds-color-gray-60:  #58616a;
+  --krds-color-gray-70:  #464c53;
+  --krds-color-gray-80:  #33363d;
+  --krds-color-gray-90:  #1e2124;
+  --krds-color-gray-95:  #131416;
+  --krds-color-gray-100: #000000;
+
+  /* ---- Primary (정부 청색) ---- */
+  --krds-color-primary-5:   #eaf2ff;
+  --krds-color-primary-10:  #d8e5ff;
+  --krds-color-primary-20:  #b0ccff;
+  --krds-color-primary-30:  #83afff;
+  --krds-color-primary-40:  #4b8df5;
+  --krds-color-primary-50:  #256ef4;
+  --krds-color-primary-60:  #0b50d0;
+  --krds-color-primary-70:  #0a3fa8;
+  --krds-color-primary-80:  #093081;
+  --krds-color-primary-90:  #04205c;
+  --krds-color-primary-95:  #021744;
+
+  /* ---- Secondary (정부 남색 / navy) ---- */
+  --krds-color-secondary-5:   #eef1f7;
+  --krds-color-secondary-10:  #dce2ee;
+  --krds-color-secondary-20:  #b6c2d9;
+  --krds-color-secondary-30:  #8a9cbf;
+  --krds-color-secondary-40:  #5b709a;
+  --krds-color-secondary-50:  #3a4f73;
+  --krds-color-secondary-60:  #2b3c5a;
+  --krds-color-secondary-70:  #212f47;
+  --krds-color-secondary-80:  #182234;
+  --krds-color-secondary-90:  #101724;
+  --krds-color-secondary-95:  #0a0f18;
+
+  /* ---- Point (정부 적색 / government red) ---- */
+  --krds-color-point-5:   #fcecee;
+  --krds-color-point-10:  #f9d7da;
+  --krds-color-point-20:  #f0a8ae;
+  --krds-color-point-30:  #e57883;
+  --krds-color-point-40:  #d54c5a;
+  --krds-color-point-50:  #cd2e3a;
+  --krds-color-point-60:  #ab2b36;
+  --krds-color-point-70:  #8a212a;
+  --krds-color-point-80:  #66181f;
+  --krds-color-point-90:  #420f14;
+  --krds-color-point-95:  #2c090c;
+
+  /* ---- Danger (오류 / error) ---- */
+  --krds-color-danger-5:   #fdecea;
+  --krds-color-danger-10:  #fbd6d0;
+  --krds-color-danger-20:  #f6aa9d;
+  --krds-color-danger-30:  #f07a64;
+  --krds-color-danger-40:  #e84e30;
+  --krds-color-danger-50:  #de3412;
+  --krds-color-danger-60:  #b9290b;
+  --krds-color-danger-70:  #911f08;
+  --krds-color-danger-80:  #6b1706;
+  --krds-color-danger-90:  #460e03;
+  --krds-color-danger-95:  #2e0902;
+
+  /* ---- Warning (경고) ---- */
+  --krds-color-warning-5:   #fff6e3;
+  --krds-color-warning-10:  #ffe9b8;
+  --krds-color-warning-20:  #ffd271;
+  --krds-color-warning-30:  #ffbf3c;
+  --krds-color-warning-40:  #ffb114;
+  --krds-color-warning-50:  #9e6a00; /* text-safe contrast step */
+  --krds-color-warning-60:  #845800;
+  --krds-color-warning-70:  #694600;
+  --krds-color-warning-80:  #4e3400;
+  --krds-color-warning-90:  #332200;
+  --krds-color-warning-95:  #211600;
+
+  /* ---- Success (성공) ---- */
+  --krds-color-success-5:   #e8f6ec;
+  --krds-color-success-10:  #c9ebd3;
+  --krds-color-success-20:  #93d6a8;
+  --krds-color-success-30:  #57bd7c;
+  --krds-color-success-40:  #2aa25a;
+  --krds-color-success-50:  #228738;
+  --krds-color-success-60:  #1c7030;
+  --krds-color-success-70:  #165826;
+  --krds-color-success-80:  #10411c;
+  --krds-color-success-90:  #0a2b12;
+  --krds-color-success-95:  #061c0c;
+
+  /* ---- Information (정보) ---- */
+  --krds-color-information-5:   #e6f3fb;
+  --krds-color-information-10:  #c4e3f6;
+  --krds-color-information-20:  #8ac8ed;
+  --krds-color-information-30:  #4dabe2;
+  --krds-color-information-40:  #1f8fd4;
+  --krds-color-information-50:  #0e6fb5;
+  --krds-color-information-60:  #0b5b96;
+  --krds-color-information-70:  #094875;
+  --krds-color-information-80:  #063556;
+  --krds-color-information-90:  #042338;
+  --krds-color-information-95:  #021725;
+
+  /* ============================================================
+     Semantic aliases — reference these in components, not the
+     raw primitive steps above.
+     ============================================================ */
+
+  /* Text */
+  --krds-color-text-default:    var(--krds-color-gray-90);  /* #1E2124 body */
+  --krds-color-text-strong:     var(--krds-color-gray-95);
+  --krds-color-text-subtle:     var(--krds-color-gray-60);  /* #58616A */
+  --krds-color-text-disabled:   var(--krds-color-gray-40);
+  --krds-color-text-inverse:    var(--krds-color-gray-0);
+  --krds-color-text-primary:    var(--krds-color-primary-60);
+  --krds-color-text-link:       var(--krds-color-primary-60);
+  --krds-color-text-danger:     var(--krds-color-danger-50);
+  --krds-color-text-success:    var(--krds-color-success-50);
+  --krds-color-text-warning:    var(--krds-color-warning-50);
+
+  /* Surface / background */
+  --krds-color-surface-default:  var(--krds-color-gray-0);
+  --krds-color-surface-subtle:   var(--krds-color-gray-5);
+  --krds-color-surface-muted:    var(--krds-color-gray-10);
+  --krds-color-surface-primary:  var(--krds-color-primary-50);
+  --krds-color-surface-primary-subtle: var(--krds-color-primary-5);
+  --krds-color-surface-inverse:  var(--krds-color-secondary-80);
+  --krds-color-surface-disabled: var(--krds-color-gray-10);
+
+  /* Border */
+  --krds-color-border-default:  var(--krds-color-gray-20);
+  --krds-color-border-subtle:   var(--krds-color-gray-10);
+  --krds-color-border-strong:   var(--krds-color-gray-40);
+  --krds-color-border-primary:  var(--krds-color-primary-50);
+  --krds-color-border-danger:   var(--krds-color-danger-50);
+  --krds-color-border-focus:    var(--krds-color-primary-50);
+
+  /* Icon */
+  --krds-color-icon-default:  var(--krds-color-gray-70);
+  --krds-color-icon-subtle:   var(--krds-color-gray-50);
+  --krds-color-icon-primary:  var(--krds-color-primary-50);
+  --krds-color-icon-inverse:  var(--krds-color-gray-0);
+
+  /* Action (buttons) */
+  --krds-color-action-primary:        var(--krds-color-primary-50);
+  --krds-color-action-primary-hover:  var(--krds-color-primary-60);
+  --krds-color-action-primary-active: var(--krds-color-primary-70);
+  --krds-color-action-secondary:        var(--krds-color-gray-0);
+  --krds-color-action-secondary-hover:  var(--krds-color-primary-5);
+}
+
+/* ============================================================
+   KRDS — Typography tokens
+   Typeface: Pretendard GOV (gov-tuned Pretendard). Open-source
+   Pretendard is loaded as the faithful substitute — see fonts.css.
+   Hierarchy (2nd guide): Display › Heading › Body + Label / Detail.
+   Sizes given in rem (root 16px). px noted in comments.
+   ============================================================ */
+:root {
+  /* ---- Font families ---- */
+  --krds-font-sans: "Pretendard GOV", "Pretendard", -apple-system,
+    BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic",
+    "맑은 고딕", sans-serif;
+  --krds-font-display: var(--krds-font-sans);
+  --krds-font-mono: "D2Coding", ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* ---- Font weight ---- */
+  --krds-font-weight-regular: 400;
+  --krds-font-weight-medium: 500;
+  --krds-font-weight-bold: 700;
+
+  /* ---- Line height ---- */
+  --krds-line-height-tight: 1.3;
+  --krds-line-height-normal: 1.5;
+  --krds-line-height-loose: 1.7;
+
+  /* ---- Letter spacing ---- */
+  --krds-letter-spacing-tight: -0.02em;
+  --krds-letter-spacing-normal: -0.01em;
+
+  /* ---- Font size scale (px → rem) ---- */
+  --krds-font-size-66: 4.125rem; /* 66 Display lg */
+  --krds-font-size-50: 3.125rem; /* 50 Display md */
+  --krds-font-size-40: 2.5rem;   /* 40 Display sm */
+  --krds-font-size-36: 2.25rem;  /* 36 H1 */
+  --krds-font-size-32: 2rem;     /* 32 H2 */
+  --krds-font-size-28: 1.75rem;  /* 28 H3 */
+  --krds-font-size-25: 1.5625rem;/* 25 H3 alt */
+  --krds-font-size-19: 1.1875rem;/* 19 H4 / body lg / button */
+  --krds-font-size-17: 1.0625rem;/* 17 H5 / body md */
+  --krds-font-size-16: 1rem;     /* 16 body */
+  --krds-font-size-15: 0.9375rem;/* 15 body sm / label */
+  --krds-font-size-14: 0.875rem; /* 14 detail */
+  --krds-font-size-13: 0.8125rem;/* 13 detail sm */
+  --krds-font-size-12: 0.8125rem;  /* bumped 12->13px: project 13px floor */
+
+  /* ============================================================
+     Semantic type roles  — font: weight size/line family
+     ============================================================ */
+  --krds-display-large:  var(--krds-font-weight-bold) var(--krds-font-size-66)/1.3 var(--krds-font-display);
+  --krds-display-medium: var(--krds-font-weight-bold) var(--krds-font-size-50)/1.3 var(--krds-font-display);
+  --krds-display-small:  var(--krds-font-weight-bold) var(--krds-font-size-40)/1.3 var(--krds-font-display);
+
+  --krds-heading-large:  var(--krds-font-weight-bold) var(--krds-font-size-36)/1.4 var(--krds-font-sans); /* h1 */
+  --krds-heading-medium: var(--krds-font-weight-bold) var(--krds-font-size-32)/1.4 var(--krds-font-sans); /* h2 */
+  --krds-heading-small:  var(--krds-font-weight-bold) var(--krds-font-size-25)/1.4 var(--krds-font-sans); /* h3 */
+  --krds-heading-xsmall: var(--krds-font-weight-bold) var(--krds-font-size-19)/1.5 var(--krds-font-sans); /* h4 */
+
+  --krds-title-medium:   var(--krds-font-weight-bold) var(--krds-font-size-17)/1.5 var(--krds-font-sans);
+
+  --krds-body-large:    var(--krds-font-weight-regular) var(--krds-font-size-19)/1.7 var(--krds-font-sans);
+  --krds-body-medium:   var(--krds-font-weight-regular) var(--krds-font-size-17)/1.7 var(--krds-font-sans);
+  --krds-body-small:    var(--krds-font-weight-regular) var(--krds-font-size-16)/1.6 var(--krds-font-sans);
+
+  --krds-label-medium:  var(--krds-font-weight-medium) var(--krds-font-size-15)/1.4 var(--krds-font-sans);
+  --krds-detail-medium: var(--krds-font-weight-regular) var(--krds-font-size-14)/1.4 var(--krds-font-sans);
+  --krds-detail-small:  var(--krds-font-weight-regular) var(--krds-font-size-13)/1.4 var(--krds-font-sans);
+}
+
+/* ============================================================
+   KRDS — Spacing, sizing & radius tokens
+   Primitive spacing built on a 4px grid (4 / 8 / 16 / 20 base).
+   ============================================================ */
+:root {
+  /* ---- Spacing scale (4px grid) ---- */
+  --krds-spacing-0: 0;
+  --krds-spacing-2: 0.125rem;  /* 2 */
+  --krds-spacing-4: 0.25rem;   /* 4 */
+  --krds-spacing-8: 0.5rem;    /* 8 */
+  --krds-spacing-12: 0.75rem;  /* 12 */
+  --krds-spacing-16: 1rem;     /* 16 */
+  --krds-spacing-20: 1.25rem;  /* 20 */
+  --krds-spacing-24: 1.5rem;   /* 24 */
+  --krds-spacing-32: 2rem;     /* 32 */
+  --krds-spacing-40: 2.5rem;   /* 40 */
+  --krds-spacing-48: 3rem;     /* 48 */
+  --krds-spacing-64: 4rem;     /* 64 */
+  --krds-spacing-80: 5rem;     /* 80 */
+  --krds-spacing-120: 7.5rem;  /* 120 */
+
+  /* ---- Radius ---- */
+  --krds-radius-none: 0;
+  --krds-radius-xsmall: 0.25rem; /* 4 — chips, tags */
+  --krds-radius-small: 0.375rem; /* 6 — inputs */
+  --krds-radius-medium: 0.5rem;  /* 8 — buttons, cards */
+  --krds-radius-large: 0.75rem;  /* 12 — large cards */
+  --krds-radius-xlarge: 1rem;    /* 16 — modals */
+  --krds-radius-full: 9999px;    /* pills, avatars */
+
+  /* ---- Border width ---- */
+  --krds-border-width-1: 1px;
+  --krds-border-width-2: 2px;   /* error / focus emphasis */
+
+  /* ---- Layout ---- */
+  --krds-layout-container: 1200px;   /* content max width */
+  --krds-layout-gutter: 1.5rem;      /* 24 */
+  --krds-breakpoint-mobile: 600px;
+  --krds-breakpoint-tablet: 1024px;
+  --krds-breakpoint-pc: 1200px;
+
+  /* ---- Component sizing — control heights ---- */
+  --krds-size-control-xsmall: 2rem;   /* 32 */
+  --krds-size-control-small: 2.5rem;  /* 40 */
+  --krds-size-control-medium: 3rem;   /* 48 */
+  --krds-size-control-large: 3.5rem;  /* 56 */
+  --krds-size-control-xlarge: 4rem;   /* 64 — primary CTA, form submit */
+
+  /* ---- Icon sizing (1.6 / 2.0 / 2.4rem grid) ---- */
+  --krds-icon-size-xsmall: 1rem;    /* 16 */
+  --krds-icon-size-small: 1.25rem;  /* 20 */
+  --krds-icon-size-medium: 1.5rem;  /* 24 */
+  --krds-icon-size-large: 2rem;     /* 32 */
+  --krds-icon-size-xlarge: 2.5rem;  /* 40 */
+}
+
+/* ============================================================
+   KRDS — Elevation, shadow & focus tokens
+   KRDS is a low-elevation system: flat surfaces, hairline borders,
+   and a single strong focus halo (4px primary outline) for a11y.
+   ============================================================ */
+:root {
+  /* ---- Drop shadows (subtle, cool-gray) ---- */
+  --krds-shadow-none: none;
+  --krds-shadow-xsmall: 0 1px 2px rgba(30, 33, 36, 0.06);
+  --krds-shadow-small: 0 1px 3px rgba(30, 33, 36, 0.08), 0 1px 2px rgba(30, 33, 36, 0.06);
+  --krds-shadow-medium: 0 4px 12px rgba(30, 33, 36, 0.10);
+  --krds-shadow-large: 0 8px 24px rgba(30, 33, 36, 0.12);
+  --krds-shadow-overlay: 0 12px 40px rgba(16, 23, 36, 0.18);
+
+  /* ---- Focus ring — KRDS signature 4px primary halo ---- */
+  --krds-box-shadow-outline: 0 0 0 0.25rem rgba(37, 110, 244, 0.35);
+  --krds-focus-ring-width: 0.25rem; /* 4px */
+  --krds-focus-ring-color: var(--krds-color-primary-50);
+
+  /* ---- Motion ---- */
+  --krds-duration-fast: 120ms; /* @kind other */
+  --krds-duration-base: 200ms; /* @kind other */
+  --krds-duration-slow: 320ms; /* @kind other */
+  --krds-easing-standard: cubic-bezier(0.2, 0, 0.2, 1); /* @kind other */
+  --krds-easing-decelerate: cubic-bezier(0, 0, 0.2, 1); /* @kind other */
+  --krds-easing-emphasized: cubic-bezier(0.2, 0, 0, 1); /* @kind other */
+
+  /* ---- Z-index ---- */
+  --krds-z-dropdown: 1000; /* @kind other */
+  --krds-z-sticky: 1010; /* @kind other */
+  --krds-z-header: 1020; /* @kind other */
+  --krds-z-overlay: 1040; /* @kind other */
+  --krds-z-modal: 1050; /* @kind other */
+  --krds-z-toast: 1080; /* @kind other */
+}

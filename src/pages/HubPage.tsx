@@ -13,15 +13,21 @@ interface HubItem {
 const ITEMS: HubItem[] = [
   {
     to: '/',
+    tag: 'B안',
+    title: '랜딩페이지 B안',
+    desc: '데이터 흐름과 캐릭터를 강조한 비주얼형 구성. 현재 메인.',
+  },
+  {
+    to: '/demo-v2',
     tag: 'A안',
     title: '랜딩페이지 A안',
     desc: '데이터 통계와 지역 현황 중심의 정보형 구성.',
   },
   {
-    to: '/v2',
-    tag: 'B안',
-    title: '랜딩페이지 B안',
-    desc: '데이터 흐름과 캐릭터를 강조한 비주얼형 구성.',
+    to: '/krds',
+    tag: 'KRDS',
+    title: '랜딩페이지 KRDS안',
+    desc: '한국 정부 디자인시스템(KRDS) 토큰으로 구성한 시안.',
   },
 ]
 
@@ -29,7 +35,7 @@ const ITEMS: HubItem[] = [
 export function HubPage() {
   return (
     <Container className="flex min-h-screen items-center py-16">
-      <div className="mx-auto grid w-full max-w-3xl gap-6 sm:grid-cols-2">
+      <div className="mx-auto grid w-full max-w-5xl gap-6 sm:grid-cols-3">
         {ITEMS.map((item) => (
           <Link
             key={item.to}

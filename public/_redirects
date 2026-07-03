@@ -1,0 +1,2 @@
+# SPA 폴백: 모든 경로를 index.html로 넘겨 react-router가 처리하게 함
+/*    /index.html   200

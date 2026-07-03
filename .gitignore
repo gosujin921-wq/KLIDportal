@@ -6,6 +6,10 @@ dist-ssr
 .DS_Store
 .vite
 
+# Storybook 빌드 산출물 / 임시 설치 로그
+storybook-static
+sb_install.log
+
 # 히어로 B안 도구 작업 디렉터리(키·세션로그·node_modules — 저장소 제외)
 docs/hero_v2/
 
