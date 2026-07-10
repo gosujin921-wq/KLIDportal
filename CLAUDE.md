@@ -7,7 +7,7 @@
 - 일정: 6월 말 1차 목업 / 7월 말 상세 목업·룩앤필 / 8월 개발 착수
 - 성격: 내부 관제용 CUVIA 대시보드와 **별개 아이덴티티**. 외부 일반 사용자 대상 공공 포털.
 
-> **기획 문서는 [docs/](docs/) 폴더.** 회의록 [docs/02_회의록_1차정리본.md](docs/02_회의록_1차정리본.md), 레퍼런스 `docs/reference/`, 원본자료(RFP 등) `docs/source/`. 노출 문구·수치는 RFP와 회의록 근거만 사용.
+> **기획 문서는 [docs/](docs/) 폴더.** 기획 정본 [docs/02_기획/작성/기획정리_최종.md](docs/02_기획/작성/기획정리_최종.md), 회의록 [docs/00_회의록/260611.md](docs/00_회의록/260611.md), 기획 수신 원본 `docs/02_기획/수신/`, 원본자료(RFP 등) `docs/99_source/`. 노출 문구·수치는 RFP와 회의록 근거만 사용.
 
 ---
 
@@ -64,15 +64,30 @@
 
 ```
 src/
-  app/         라우터, 레이아웃 분기
-  styles/      tokens.css, globals
+  app/         App.tsx 라우터
+  krds/        krds-tokens.css (KRDS 디자인시스템 토큰·폰트. components/krds + Storybook 전용)
+  lib/         cn, datetime, format (범용 유틸)
+  mocks/       klid.ts (KLID 기관정보 샘플 데이터)
   components/
-    ui/        Button, Input, Textarea, Select, Modal, Dialog, Badge, Card, Tabs, Table, Toast, Tooltip, Stepper, FileDropzone, EmptyState …
-    domain/    SearchCard, FilterBar, DatasetCard, EventBadge, RegionMap …
-  lib/         cn, datetime, format
-  mocks/       목업 데이터
-  pages/       landing / search / workspace / authoring / genai / mypage / admin
+    krds/      ★ 본작업 정본 디자인 시스템. Button, TextField, Table, Card … + KRDS Header/Footer
+    domain/    eventTypes 등 도메인 상수 (검색카드·배지 이벤트색)
+
+  mockup/      목업. 랜딩·플로우 확인용
+    styles/         index.css (Tailwind 토큰 — mockup 전역 스타일)
+    pages/
+      landing/        랜딩 (구 landing-v2, 원본은 docs/98_아카이브/mockup_hero)
+      PlaceholderPage
+      StyleGuide       디자인 스타일 가이드 (/style)
+    components/
+      layout/         AppLayout·AppHeader·AppFooter (코발트 셸)
+      ui/             Container·Button(캡슐)·Reveal·Mark·CountUp
+      Logo
+    mocks/            landing.ts (랜딩 샘플 데이터)
 ```
+
+- **본작업은 `components/krds`를 디자인 수정해서 페이지를 만든다.**
+- **목업 작업은 `mockup/` 안에서 한다.** 랜딩·플로우로 서비스 정체성 + 디자인 스타일 확인이 목적. 디테일 기능·본격 디자인은 추후.
+- `mocks/` 는 화면 채우는 샘플 데이터. klid.ts(기관정보), mockup/mocks/landing.ts(랜딩용).
 
 ---
 

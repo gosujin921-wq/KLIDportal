@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 영상학습 사용자 포털 — 히어로 디자인 컨셉 최종</title>
+<style>
+:root{
+  --blue:#2f49df;--blue2:#526cf4;--violet:#7b61ff;--cyan:#66d4ef;--navy:#0f172a;--muted:#64748b;--line:#e2e8f0;--soft:#f5f8ff;
+  --grad:linear-gradient(120deg,#2f49df 0%,#536dff 52%,#7b61ff 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0} html,body{height:100%}
+body{font-family:Pretendard,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:#0b1020;color:var(--navy);overflow:hidden;word-break:keep-all;line-break:strict}
+.deck{position:fixed;inset:0}.slide{position:absolute;inset:0;background:#fff;opacity:0;visibility:hidden;transform:translateY(14px);transition:.35s ease;display:flex;flex-direction:column;justify-content:center;padding:6.3vh 7.5vw}.slide.active{opacity:1;visibility:visible;transform:none;z-index:2}
+.tint{background:radial-gradient(42% 52% at 76% 44%,rgba(47,73,223,.18),transparent 70%),linear-gradient(160deg,#f8fbff 0%,#edf4ff 58%,#f7faff 100%)}
+.dark{background:radial-gradient(50% 60% at 75% 30%,rgba(90,111,255,.35),transparent 70%),linear-gradient(145deg,#18266e,#0d153f);color:#fff}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:900;letter-spacing:.08em;color:var(--blue);text-transform:uppercase;margin-bottom:18px}.eyebrow:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--blue)}.dark .eyebrow{color:#bfc9ff}.dark .eyebrow:before{background:#bfc9ff}
+h1{font-size:clamp(40px,6vw,78px);line-height:1.1;letter-spacing:-.04em;font-weight:900}h2{font-size:clamp(30px,4.2vw,54px);line-height:1.18;letter-spacing:-.035em;font-weight:900}.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}.dark .grad{background:linear-gradient(120deg,#bfc9ff,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:clamp(16px,1.55vw,21px);line-height:1.65;color:var(--muted);max-width:930px;margin-top:18px}.dark .sub{color:rgba(255,255,255,.78)}
+.statement{font-size:clamp(24px,3vw,40px);line-height:1.45;font-weight:900;max-width:1120px}.statement em{font-style:normal;background:linear-gradient(transparent 60%,rgba(82,108,244,.32) 0);padding:0 3px}.dark .statement em{background:linear-gradient(transparent 60%,rgba(150,170,255,.5) 0)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:30px}@media(max-width:850px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:26px 28px;box-shadow:0 14px 36px -24px rgba(15,23,42,.28)}.dark .card{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.16);box-shadow:none}.card h3{font-size:clamp(18px,1.9vw,25px);font-weight:900;margin-bottom:10px}.card p{font-size:clamp(14px,1.35vw,17px);line-height:1.62;color:var(--muted)}.dark .card p{color:rgba(255,255,255,.78)}.label{font-size:13px;font-weight:900;letter-spacing:.08em;color:var(--blue);text-transform:uppercase;margin-bottom:8px}.dark .label{color:#bfc9ff}
+.kword{border-radius:24px;padding:30px 28px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.16)}.kword .en{font-size:13px;font-weight:900;letter-spacing:.14em;color:#bfc9ff}.kword .ko{font-size:clamp(30px,4vw,50px);font-weight:900;line-height:1.05;margin:9px 0 12px}.kword p{font-size:clamp(13px,1.35vw,16px);line-height:1.55;color:rgba(255,255,255,.78)}
+.concept{border-radius:28px;padding:34px;background:linear-gradient(160deg,#f8fbff,#edf4ff);border:1px solid #dbe5ff;min-height:340px;display:flex;flex-direction:column}.concept.b{background:linear-gradient(160deg,#fbf8ff,#eef1ff);border-color:#ded9ff}.concept .num{font-size:13px;font-weight:900;letter-spacing:.12em;color:var(--blue);text-transform:uppercase}.concept.b .num{color:#7257dc}.concept .name{font-size:clamp(28px,3.4vw,44px);font-weight:900;margin:8px 0 2px;letter-spacing:-.025em}.concept .eng{font-size:15px;font-weight:800;color:#94a3b8;margin-bottom:18px}.concept p{font-size:clamp(15px,1.45vw,18px);line-height:1.62;color:#475569}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:22px}.tags span{font-size:13px;font-weight:800;border-radius:999px;padding:7px 13px;background:#fff;color:#2f49df;border:1px solid #dbe5ff}.concept.b .tags span{color:#7257dc;border-color:#ded9ff}
+.meaning{display:grid;grid-template-columns:.95fr 1.05fr;gap:34px;align-items:center;margin-top:28px;flex:1}@media(max-width:850px){.meaning{grid-template-columns:1fr}}
+.stage{height:clamp(250px,42vh,430px);border-radius:26px;display:grid;place-items:center;background:linear-gradient(160deg,#f8fbff,#edf4ff);border:1px solid var(--line);position:relative;overflow:hidden}.dark .stage{background:radial-gradient(60% 70% at 50% 35%,rgba(110,132,241,.36),transparent 70%),linear-gradient(160deg,#243089,#16205c);border-color:rgba(255,255,255,.14)}
+.cubes{display:grid;grid-template-columns:repeat(3,54px);gap:10px}.cubes i{display:block;width:54px;height:54px;border-radius:12px;background:linear-gradient(145deg,#5d7cff,#243fd6);box-shadow:0 12px 24px rgba(31,46,146,.35)}.cubes i:nth-child(2),.cubes i:nth-child(8){transform:translateY(-16px) scale(.82);opacity:.75}.cubes i:nth-child(4),.cubes i:nth-child(6){transform:translateX(18px) scale(.72);opacity:.65}.cubes i:nth-child(5){background:linear-gradient(145deg,#7d8fff,#3146d8)}
+.stage.imgwrap{height:auto;background:none;border:none;overflow:visible;place-items:center}
+.heroimg{display:block;width:100%;max-width:400px;height:auto;margin:0 auto;object-fit:contain;border-radius:20px;filter:drop-shadow(0 24px 40px rgba(15,23,42,.32))}
+.poseimg{display:block;width:100%;height:clamp(120px,15vh,170px);object-fit:contain;margin-bottom:14px}
+.mascot{position:relative;width:190px;height:170px}.face{position:absolute;left:38px;top:20px;width:118px;height:104px;border-radius:26px;background:linear-gradient(135deg,#88dcf0,#6d89fb 48%,#b79af8);box-shadow:0 18px 34px rgba(63,81,181,.25)}.panel{position:absolute;left:20px;top:23px;width:78px;height:58px;border-radius:20px;background:#fbfbff;display:flex;align-items:center;justify-content:center;gap:18px;box-shadow:inset 0 -2px 4px rgba(0,0,0,.05)}.eye{width:9px;height:24px;border-radius:999px;background:#12131a}.foot{position:absolute;width:30px;height:18px;border-radius:9px;background:#5574ee;bottom:28px;box-shadow:0 8px 14px rgba(63,81,181,.22)}.foot.l{left:63px}.foot.r{right:63px}.mini{position:absolute;border-radius:9px;background:linear-gradient(135deg,#70d8ed,#857df2);box-shadow:0 10px 18px rgba(63,81,181,.2)}.mini.a{width:34px;height:34px;right:6px;top:36px}.mini.b{width:24px;height:24px;left:6px;top:18px}.mini.c{width:28px;height:28px;right:18px;bottom:36px}
+.list{list-style:none}.list li{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(100,116,139,.18)}.list li:last-child{border-bottom:none}.list b{font-size:clamp(16px,1.5vw,19px)}.list p{margin-top:3px;color:var(--muted);font-size:clamp(13px,1.25vw,16px);line-height:1.5}.dark .list p{color:rgba(255,255,255,.72)}.dotn{width:30px;height:30px;flex:none;border-radius:10px;background:rgba(47,73,223,.08);display:grid;place-items:center;color:var(--blue);font-weight:900}.dark .dotn{background:rgba(255,255,255,.12);color:#bfc9ff}
+.cmp{width:100%;border-collapse:collapse;margin-top:26px;font-size:clamp(14px,1.35vw,18px)}.cmp th,.cmp td{text-align:left;padding:16px 18px;border-bottom:1px solid var(--line);vertical-align:top}.cmp th{font-size:14px;color:#64748b;background:#f8fafc;font-weight:900}.cmp td:first-child{font-weight:900;color:var(--navy);width:18%}.cmp b{color:var(--navy)}
+.titlecube{position:absolute;right:8vw;top:50%;transform:translateY(-50%);display:grid;grid-template-columns:repeat(3,58px);gap:11px}.titlecube i{width:58px;height:58px;border-radius:13px;background:linear-gradient(145deg,#5d7cff,#243fd6);box-shadow:0 14px 28px rgba(31,46,146,.3)}@media(max-width:850px){.titlecube{display:none}}
+.navbtn{position:fixed;z-index:20;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.9);color:#64748b;font-size:22px;cursor:pointer;display:grid;place-items:center;box-shadow:0 4px 14px rgba(15,23,42,.12)}.navbtn:hover{color:var(--blue)}.prev{left:18px}.next{right:18px}.hud{position:fixed;z-index:20;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:9px}.hud b{width:9px;height:9px;border-radius:50%;background:#cbd5e1;transition:.2s}.hud b.on{background:var(--blue);width:26px;border-radius:5px}.counter{position:fixed;z-index:20;bottom:20px;right:24px;font-size:14px;font-weight:800;color:#94a3b8}.hint{position:fixed;z-index:20;top:18px;left:24px;font-size:13px;color:#94a3b8}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <section class="slide tint active">
+    <div>
+      <span class="eyebrow">Design Concept</span>
+      <h1>AI 영상학습<br><span class="grad">사용자 포털</span></h1>
+      <p class="sub">포털의 핵심 가치를 두 가지 비주얼 방향으로 제안합니다. 데이터 자체를 주인공으로 삼은 A안, 데이터 경험을 친근하게 안내하는 B안.</p>
+    </div>
+    <div class="titlecube"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <section class="slide">
+    <span class="eyebrow">Business Value</span>
+    <h2>이 포털은 데이터를 <span class="grad">제공하는 곳</span>을 넘어,<br>데이터를 <span class="grad">확장하고 활용하는 플랫폼</span>입니다</h2>
+    <p class="sub">AI 영상학습 사용자 포털은 원본 영상·이미지 데이터를 단순 조회하거나 다운로드하는 서비스가 아닙니다. 사용자는 필요한 데이터를 탐색하고, AI 증강과 생성 기술을 통해 더 많은 학습데이터로 확장하며, 프로젝트 목적에 맞게 활용할 수 있어야 합니다.</p>
+    <div class="grid3">
+      <div class="card"><div class="label">From</div><h3>데이터 제공</h3><p>정해진 데이터를 검색하고 내려받는 기존 포털형 경험.</p></div>
+      <div class="card"><div class="label">To</div><h3>데이터 확장</h3><p>원본 데이터가 증강·생성을 거쳐 더 큰 학습 자산으로 성장하는 경험.</p></div>
+      <div class="card"><div class="label">Value</div><h3>데이터 활용</h3><p>확장된 데이터를 연구·서비스·모델 학습에 연결하는 실질적 활용 경험.</p></div>
+    </div>
+  </section>
+
+  <section class="slide dark">
+    <span class="eyebrow">Brand Message</span>
+    <h2>DATA TO VALUE<br><span class="grad">데이터를 가치로</span></h2>
+    <p class="sub">흩어진 원천 데이터를 연결하고, AI로 확장하며, 새로운 학습데이터로 성장시키는 연결형 데이터 생태계.</p>
+    <div class="grid3">
+      <div class="kword"><div class="en">CONNECT</div><div class="ko">연결</div><p>영상·이미지·라벨·메타데이터를 하나의 활용 흐름으로 연결합니다.</p></div>
+      <div class="kword"><div class="en">EXPAND</div><div class="ko">확장</div><p>AI 증강을 통해 데이터의 수량과 조건, 활용 범위를 넓힙니다.</p></div>
+      <div class="kword"><div class="en">CREATE</div><div class="ko">생성</div><p>생성형 AI를 통해 부족한 학습데이터를 새롭게 만들어냅니다.</p></div>
+    </div>
+  </section>
+
+  <section class="slide tint">
+    <span class="eyebrow">Design Direction</span>
+    <h2>데이터의 가치를 전달하는<br><span class="grad">두 가지 브랜드 경험 방향</span></h2>
+    <div class="grid2">
+      <div class="concept">
+        <div class="num">Concept A</div>
+        <div class="name">Value in Structure</div>
+        <div class="eng">데이터가 가치로 성장하는 과정을 시각화</div>
+        <p>포털의 핵심 자산인 데이터를 직접 주인공으로 삼아, 하나의 원본 데이터가 연결·증강·생성을 거치며 더 큰 데이터 구조로 성장하는 과정을 시각화합니다.</p>
+        <div class="tags"><span>데이터 중심</span><span>확장성</span><span>신뢰감</span><span>전문성</span></div>
+      </div>
+      <div class="concept b">
+        <div class="num">Concept B</div>
+        <div class="name">Value in Experience</div>
+        <div class="eng">데이터 활용 경험을 캐릭터로 전달</div>
+        <p>데이터 셀(Data Cell)을 의인화한 캐릭터로, 데이터의 연결·확장·생성 과정을 친근하게 전달하는 브랜드 파트너.</p>
+        <div class="tags"><span>캐릭터 중심</span><span>접근성</span><span>친근함</span><span>서비스성</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <span class="eyebrow">Concept A</span>
+    <h2>EXPAND<br><span class="grad">데이터가 확장되는 플랫폼</span></h2>
+    <div class="grid4">
+      <div class="card"><div class="label">하나의 큐브</div><h3>원본 데이터</h3><p>지자체 CCTV 클립영상 한 건. 영상과 이미지가 묶인 한 세트.</p></div>
+      <div class="card"><div class="label">하나에서 여럿으로</div><h3>증강 · 생성</h3><p>생성형 AI와 증강으로 학습데이터가 늘어남. 포털의 핵심 가치.</p></div>
+      <div class="card"><div class="label">색·크기의 다양성</div><h3>이벤트 · 조건</h3><p>산불·침수·유괴 등 이벤트와 날씨·시간대 조건별로 갈라지는 데이터셋.</p></div>
+      <div class="card"><div class="label">메탈릭·하나로 회귀</div><h3>통합 데이터 자산</h3><p>증강·생성·가공된 데이터가 하나의 공공 데이터 자산으로 축적됨을 의미.</p></div>
+    </div>
+  </section>
+
+  <section class="slide tint">
+    <span class="eyebrow">Concept A · Message</span>
+    <h2>데이터를 보여주는 것이 아니라,<br><span class="grad">데이터가 가치로 성장하는 과정</span>을 보여줍니다</h2>
+    <div class="grid4">
+      <div class="card"><div class="label">Connect</div><h3>연결</h3><p>흩어진 데이터 조각을 하나의 구조로 엮습니다.</p></div>
+      <div class="card"><div class="label">Expand</div><h3>확장</h3><p>데이터의 조건과 활용 범위를 넓힙니다.</p></div>
+      <div class="card"><div class="label">Generate</div><h3>생성</h3><p>부족한 데이터를 AI로 새롭게 구축합니다.</p></div>
+      <div class="card"><div class="label">Activate</div><h3>활용</h3><p>확장된 데이터를 실제 학습과 연구에 연결합니다.</p></div>
+    </div>
+  </section>
+
+  <section class="slide dark">
+    <span class="eyebrow">Concept B</span>
+    <h2>GUIDE<br><span class="grad">데이터 경험을 안내하는 파트너</span></h2>
+    <div class="meaning">
+      <div class="stage imgwrap"><img class="heroimg" src="CHARACTER/img/000.png" alt="데이터 캐릭터" /></div>
+      <div>
+        <p class="statement">B안은 <em>데이터의 최소 단위가 살아난 존재</em>로서, 포털의 기능과 데이터 성장 과정을 친근하게 전달합니다.</p>
+        <ul class="list" style="margin-top:22px">
+          <li><span class="dotn">1</span><div><b>데이터 셀</b><p>작은 데이터 조각에서 시작하는 학습데이터의 기본 단위를 캐릭터화합니다.</p></div></li>
+          <li><span class="dotn">2</span><div><b>서비스 안내자</b><p>탐색·증강·생성·분석 흐름을 딱딱한 기능 설명이 아니라 행동과 표정으로 전달합니다.</p></div></li>
+          <li><span class="dotn">3</span><div><b>브랜드 자산</b><p>히어로, 빈 상태, 로딩, 완료 안내 등 포털 전반의 사용자 접점을 부드럽게 연결합니다.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide tint">
+    <span class="eyebrow">Concept B · Message</span>
+    <h2>기술을 귀엽게 만드는 것이 아니라,<br><span class="grad">복잡한 데이터 과정을 쉽게 이해시키는 것</span>입니다</h2>
+    <div class="grid4">
+      <div class="card"><img class="poseimg" src="CHARACTER/img/검색중.png" alt="" /><div class="label">Explore</div><h3>탐색</h3><p>필요한 데이터를 발견하고 선택하는 경험을 안내합니다.</p></div>
+      <div class="card"><img class="poseimg" src="CHARACTER/img/가이드.png" alt="" /><div class="label">Enhance</div><h3>증강</h3><p>원본 데이터를 더 다양한 조건으로 확장하는 과정을 보여줍니다.</p></div>
+      <div class="card"><img class="poseimg" src="CHARACTER/img/완료.png" alt="" /><div class="label">Create</div><h3>생성</h3><p>새로운 학습데이터가 만들어지는 장면을 직관적으로 전달합니다.</p></div>
+      <div class="card"><img class="poseimg" src="CHARACTER/img/주의.png" alt="" /><div class="label">Trust</div><h3>신뢰</h3><p>공공 데이터 기반의 안정성과 지원 이미지를 부드럽게 보완합니다.</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <span class="eyebrow">Comparison</span>
+    <h2>A안과 B안의 역할 차이</h2>
+    <table class="cmp">
+      <thead><tr><th>구분</th><th>A안 · Value in Structure</th><th>B안 · Value in Experience</th></tr></thead>
+      <tbody>
+        <tr><td>핵심 가치</td><td><b>데이터 성장</b></td><td><b>사용자 경험</b></td></tr>
+        <tr><td>브랜드 역할</td><td>데이터 생태계 표현</td><td>서비스 경험 안내</td></tr>
+        <tr><td>강점</td><td>전문성·신뢰성</td><td>친근함·기억성</td></tr>
+        <tr><td>적합 영역</td><td>메인 히어로</td><td>온보딩·가이드</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+<button class="navbtn prev" id="prev">‹</button><button class="navbtn next" id="next">›</button><div class="hud" id="dots"></div><div class="counter" id="counter"></div><div class="hint">← → / 클릭으로 이동 · F 전체화면</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let idx=0;const dots=document.getElementById('dots'),counter=document.getElementById('counter');slides.forEach((_,i)=>{const b=document.createElement('b');if(!i)b.className='on';b.onclick=()=>go(i);dots.appendChild(b)});function go(n){n=Math.max(0,Math.min(slides.length-1,n));slides[idx].classList.remove('active');dots.children[idx].classList.remove('on');idx=n;slides[idx].classList.add('active');dots.children[idx].classList.add('on');counter.textContent=`${idx+1} / ${slides.length}`}go(0);document.getElementById('next').onclick=()=>go(idx+1);document.getElementById('prev').onclick=()=>go(idx-1);document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){go(idx+1);e.preventDefault()}else if(['ArrowLeft','PageUp'].includes(e.key)){go(idx-1)}else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});document.addEventListener('click',e=>{if(e.target.closest('.navbtn')||e.target.closest('.hud'))return;if(e.clientX>innerWidth*.62)go(idx+1);else if(e.clientX<innerWidth*.16)go(idx-1)});
+</script>
+</body>
+</html>

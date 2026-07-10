@@ -1,0 +1,231 @@
+@import 'tailwindcss';
+
+/* =========================================================================
+   디자인 토큰 — AI 영상학습 사용자 포털
+   - 코발트 블루 단일 강조색 + 라이트 베이스
+   - 타이포 base 15px / 최소 13px (12px 이하 금지)
+   ========================================================================= */
+@theme {
+  /* ----- 폰트 ----- */
+  --font-sans: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+
+  /* ----- 타이포 스케일 (base 15px, 최소 13px) ----- */
+  --text-xs: 0.8125rem; /* 13px — 하한. 12px 이하 금지 */
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem; /* 14px */
+  --text-sm--line-height: 1.55;
+  --text-base: 0.9375rem; /* 15px — 본문 기본 */
+  --text-base--line-height: 1.6;
+  --text-lg: 1.0625rem; /* 17px */
+  --text-lg--line-height: 1.55;
+  --text-xl: 1.25rem; /* 20px */
+  --text-xl--line-height: 1.4;
+  --text-2xl: 1.5rem; /* 24px */
+  --text-2xl--line-height: 1.35;
+  --text-3xl: 1.875rem; /* 30px */
+  --text-3xl--line-height: 1.3;
+  --text-4xl: 2.5rem; /* 40px */
+  --text-4xl--line-height: 1.2;
+  --text-5xl: 3.25rem; /* 52px — 히어로 H1 */
+  --text-5xl--line-height: 1.15;
+
+  /* ----- 코발트 블루 (Primary) ----- */
+  --color-cobalt-50: #eef1fe;
+  --color-cobalt-100: #e0e6fd;
+  --color-cobalt-200: #c4cffb;
+  --color-cobalt-300: #9daef7;
+  --color-cobalt-400: #6e84f1;
+  --color-cobalt-500: #4a61e8;
+  --color-cobalt-600: #2e45dc; /* 메인 강조색 (흰 배경 대비 통과) */
+  --color-cobalt-700: #2336b8;
+  --color-cobalt-800: #1f2e92;
+  --color-cobalt-900: #1e2b74;
+
+  /* ----- 이벤트 유형색 8종 (검색카드·배지 일관) ----- */
+  --color-event-falldown: #ca8a04; /* 쓰러짐 */
+  --color-event-violence: #c026d3; /* 폭력 */
+  --color-event-fire: #dc2626; /* 화재 */
+  --color-event-traffic: #0d9488; /* 교통사고 */
+  --color-event-abduction: #7c3aed; /* 유괴 */
+  --color-event-flood: #0284c7; /* 침수 */
+  --color-event-wildfire: #ea580c; /* 산불 */
+  --color-event-landslide: #92400e; /* 산사태 */
+  --color-event-etc: #64748b; /* 기타(예비) */
+
+  /* ----- 시맨틱 ----- */
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+  --color-info: #2e45dc;
+}
+
+/* =========================================================================
+   베이스
+   ========================================================================= */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-white text-slate-800 antialiased;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    letter-spacing: -0.5px; /* Pretendard 한글 자간 보정 */
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-bold text-slate-900;
+    text-wrap: balance;
+  }
+  /* 포커스 가시성 (KWCAG) */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-cobalt-600;
+  }
+}
+
+/* =========================================================================
+   유틸 — 히어로 코발트 그라데이션 (은은한 라이트)
+   ========================================================================= */
+@layer utilities {
+  /* 레퍼런스(AI SaaS 히어로) 톤: 아주 밝은 아이시 블루, 큐브 뒤에만 은은한 코발트 글로우 */
+  .hero-gradient {
+    /* 큐브 뒤 채도 높은 코발트 코어(네온 톤은 히어로 한정 허용)로 포컬 앵커,
+       바깥으로 갈수록 기존 은은한 글로우로 풀림 */
+    background:
+      radial-gradient(28% 34% at 68% 45%, rgba(74, 97, 232, 0.38), transparent 72%),
+      radial-gradient(50% 58% at 68% 46%, rgba(110, 150, 235, 0.3), transparent 70%),
+      radial-gradient(42% 50% at 10% 10%, rgba(255, 255, 255, 0.85), transparent 60%),
+      linear-gradient(160deg, #f2f6fb 0%, #e4ecf7 52%, #edf2fa 100%);
+  }
+
+  /* 히어로 장식 — 은은한 코발트 글로우 블롭 (느린 드리프트) */
+  .hero-blob-a {
+    background: radial-gradient(circle, rgba(110, 132, 241, 0.22), transparent 70%);
+  }
+  .hero-blob-b {
+    background: radial-gradient(circle, rgba(160, 190, 250, 0.3), transparent 70%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-blob-a {
+      animation: hero-drift-a 16s ease-in-out infinite alternate;
+    }
+    .hero-blob-b {
+      animation: hero-drift-b 22s ease-in-out infinite alternate;
+    }
+  }
+
+  /* 코발트 그라데이션 텍스트 (빅 넘버·키워드 강조) */
+  .text-gradient-cobalt {
+    background: linear-gradient(120deg, #2e45dc 10%, #4a61e8 55%, #2336b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* 딥 코발트 섹션 배경 (Wow·CTA 밴드) */
+  .band-cobalt {
+    background:
+      radial-gradient(60% 90% at 80% 10%, rgba(110, 132, 241, 0.35), transparent 60%),
+      radial-gradient(50% 80% at 8% 90%, rgba(35, 54, 184, 0.55), transparent 65%),
+      linear-gradient(135deg, #1e2b74 0%, #1f2e92 45%, #16205c 100%);
+  }
+
+  /* 다크 밴드 위 미세 도트 텍스처 */
+  .band-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* 카드 코발트 글로우 호버 */
+  .card-glow {
+    transition:
+      box-shadow 0.25s ease,
+      transform 0.25s ease,
+      border-color 0.25s ease;
+  }
+  .card-glow:hover {
+    box-shadow:
+      0 12px 32px -8px rgba(46, 69, 220, 0.25),
+      0 2px 8px rgba(46, 69, 220, 0.08);
+  }
+
+  /* 히어로 장식 — 미세 도트 그리드 (데이터 그리드 메타포, 큐브 주변만 보이게 마스크) */
+  .hero-dots {
+    background-image: radial-gradient(rgba(46, 69, 220, 0.09) 1px, transparent 1px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(55% 65% at 68% 45%, black, transparent 78%);
+    mask-image: radial-gradient(55% 65% at 68% 45%, black, transparent 78%);
+  }
+}
+
+/* 콘텐츠 상시 모션 (reduced-motion 시 비활성) */
+@media (prefers-reduced-motion: no-preference) {
+  .radar-pulse {
+    animation: radar-pulse 4s ease-in-out infinite;
+  }
+  .orb-drift {
+    animation: orb-drift 9s ease-in-out infinite alternate;
+  }
+  .marquee-track {
+    animation: marquee 36s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  .bob {
+    animation: bob 2.4s ease-in-out infinite;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes radar-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.75;
+  }
+}
+@keyframes orb-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-18px, 14px, 0) scale(1.12);
+  }
+}
+
+@keyframes hero-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(44px, -30px, 0) scale(1.12);
+  }
+}
+@keyframes hero-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.08);
+  }
+  to {
+    transform: translate3d(-50px, 26px, 0) scale(1);
+  }
+}

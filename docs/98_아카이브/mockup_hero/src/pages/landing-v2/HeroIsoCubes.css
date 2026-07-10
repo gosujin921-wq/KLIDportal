@@ -1,0 +1,115 @@
+/* =========================================================================
+   히어로 아이소메트릭 큐브 그리드 — 레퍼런스(다크 + 블루 하이라이트 큐브) CSS 재현.
+   플랫 아이소 일러스트라 실시간 렌더 없이 CSS 3D transform 으로 합성.
+   ========================================================================= */
+
+.iso-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 70% at 55% 45%, #2a3552 0%, #1a2238 45%, #131a2c 100%);
+}
+
+/* 흩뿌린 블루 도트 */
+.iso-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(120, 165, 255, 0.55) 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(120, 165, 255, 0.3) 1px, transparent 1.5px);
+  background-size: 90px 90px, 140px 120px;
+  background-position: 0 0, 40px 60px;
+  opacity: 0.6;
+}
+
+.iso-field {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 큐브 한 칸 */
+.iso-cube {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  transform-style: preserve-3d;
+  transform: rotateX(-35.264deg) rotateY(-45deg);
+}
+
+.iso-cube__face {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+}
+
+/* 반투명 프로스티드(기본) — 어둠 속 얼음 블록 */
+.iso-cube__top {
+  transform: rotateX(90deg) translateZ(60px);
+  background: linear-gradient(135deg, rgba(214, 224, 244, 0.92), rgba(170, 186, 220, 0.82));
+}
+.iso-cube__left {
+  transform: translateZ(60px);
+  background: linear-gradient(180deg, rgba(150, 164, 198, 0.78), rgba(120, 136, 176, 0.7));
+}
+.iso-cube__right {
+  transform: rotateY(90deg) translateZ(60px);
+  background: linear-gradient(180deg, rgba(120, 134, 172, 0.72), rgba(92, 108, 148, 0.66));
+}
+
+/* 격자 결(프로스티드 안쪽 라인) */
+.iso-cube__left,
+.iso-cube__right,
+.iso-cube__top {
+  background-blend-mode: normal;
+}
+.iso-cube__face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* 하이라이트(블루) 큐브 */
+.iso-cube--hl .iso-cube__top {
+  background: linear-gradient(135deg, #6c97ff, #3f73ff);
+}
+.iso-cube--hl .iso-cube__left {
+  background: linear-gradient(180deg, #2f63f0, #2452d8);
+}
+.iso-cube--hl .iso-cube__right {
+  background: linear-gradient(180deg, #2150cf, #1a40b0);
+}
+/* 글로우는 box-shadow 로 — filter 는 preserve-3d 를 평면으로 뭉갬 */
+.iso-cube--hl .iso-cube__left,
+.iso-cube--hl .iso-cube__right {
+  box-shadow: 0 0 44px 6px rgba(63, 115, 255, 0.5);
+}
+
+/* 블루 큐브 정면 카피 */
+.iso-cube__label {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(60.5px);
+  padding: 18px;
+  color: #fff;
+  display: flex;
+}
+.iso-cube__label span {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 1024px) {
+  .iso-field {
+    transform: translate(-50%, -50%) scale(0.62);
+  }
+}

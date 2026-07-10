@@ -1,0 +1,126 @@
+/* =========================================================================
+   히어로 정적 글래스 큐브 — 레퍼런스(frosted 코발트 아크릴 블록) CSS 재현.
+   실시간 3D 대신 정지 합성: 아이소 큐브 3면 + 세로 리브 + 바닥 그림자.
+   ========================================================================= */
+
+.gcube-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: clamp(2rem, 8vw, 9rem);
+  perspective: 1400px;
+  overflow: hidden;
+}
+
+/* 바닥 스튜디오 그리드 */
+.gcube-floor {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(120, 150, 200, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(120, 150, 200, 0.09) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(70% 60% at 70% 60%, #000 30%, transparent 80%);
+}
+
+.gcube-scene {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  transform-style: preserve-3d;
+  transform: rotateX(-24deg) rotateY(-34deg);
+}
+
+/* 바닥에 깔리는 부드러운 코발트 그림자 */
+.gcube-shadow {
+  position: absolute;
+  left: 50%;
+  top: 64%;
+  width: 360px;
+  height: 150px;
+  transform: translate(-50%, -50%) rotateX(78deg) translateZ(-150px);
+  background: radial-gradient(closest-side, rgba(47, 99, 240, 0.42), rgba(47, 99, 240, 0) 72%);
+  filter: blur(14px);
+}
+
+.gcube {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 220px;
+  height: 220px;
+  transform-style: preserve-3d;
+}
+
+.gcube__face {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 6px;
+}
+
+/* 세로 리브(corrugated 아크릴) 텍스처 — 옆면에 */
+.gcube__ribs {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.22) 0,
+    rgba(255, 255, 255, 0.22) 1px,
+    rgba(255, 255, 255, 0) 1px,
+    rgba(255, 255, 255, 0) 5px
+  );
+}
+
+/* 정면 — 코발트 프로스티드, 위(밝음)→아래(짙음) */
+.gcube__front {
+  transform: translateZ(110px);
+  background: linear-gradient(165deg, rgba(120, 165, 255, 0.92) 0%, rgba(47, 99, 240, 0.96) 55%, rgba(36, 78, 210, 0.98) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* 우측면 — 더 밝고 반사 강함 */
+.gcube__side {
+  transform: rotateY(90deg) translateZ(110px);
+  background: linear-gradient(165deg, rgba(190, 215, 255, 0.95) 0%, rgba(120, 160, 245, 0.92) 60%, rgba(80, 125, 235, 0.94) 100%);
+}
+
+/* 윗면 — 가장 밝은 하이라이트 면 */
+.gcube__top {
+  transform: rotateX(90deg) translateZ(110px);
+  background: linear-gradient(135deg, rgba(225, 238, 255, 0.97) 0%, rgba(150, 185, 250, 0.94) 70%, rgba(110, 150, 240, 0.95) 100%);
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+/* 큐브 위 카피 */
+.gcube__label {
+  position: absolute;
+  left: 22px;
+  bottom: 26px;
+  transform: translateZ(111px);
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(20, 50, 130, 0.45);
+  line-height: 1.15;
+}
+.gcube__label-kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.92;
+}
+.gcube__label-num {
+  font-size: 56px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 1024px) {
+  .gcube-stage {
+    justify-content: center;
+    padding-right: 0;
+    opacity: 0.5;
+  }
+}
