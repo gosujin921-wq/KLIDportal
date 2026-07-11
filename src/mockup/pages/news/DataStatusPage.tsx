@@ -16,7 +16,7 @@ import { portalStats, monthlyGrowth, eventStats, regionStats } from '@/mockup/mo
 import { formatNumber } from '@/lib/format'
 import { cn } from '@/lib/cn'
 
-/** 4×5 컴팩트 타일맵 (RegionSection과 동일 배치) */
+/** 4×5 컴팩트 타일맵 (시·도 17개) */
 const TILES: Record<string, { c: number; r: number }> = {
   인천: { c: 1, r: 1 }, 서울: { c: 2, r: 1 }, 경기: { c: 3, r: 1 }, 강원: { c: 4, r: 1 },
   충남: { c: 1, r: 2 }, 세종: { c: 2, r: 2 }, 충북: { c: 3, r: 2 }, 경북: { c: 4, r: 2 },
