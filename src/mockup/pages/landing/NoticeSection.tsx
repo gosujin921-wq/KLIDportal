@@ -15,9 +15,9 @@ const TAG_STYLE: Record<string, string> = {
 
 export function NoticeSection() {
   return (
-    <section className="pb-24">
+    <section className="bg-slate-50/70 py-20">
       <Container>
-        <Reveal className="card-glow rounded-2xl border border-slate-200 bg-white p-7">
+        <Reveal className="card-soft rounded-2xl bg-white p-7">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-slate-900">공지사항</h2>
             <button className="inline-flex items-center gap-1 text-sm font-semibold text-cobalt-700">

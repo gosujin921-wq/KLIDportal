@@ -9,7 +9,7 @@ export function CasesPage() {
         <a
           key={c.id}
           href="#"
-          className="card-glow group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors hover:border-cobalt-200"
+          className="card-soft group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors hover:border-cobalt-200"
         >
           {/* 썸네일 */}
           <div className="relative flex aspect-[16/7] items-center justify-center bg-gradient-to-br from-cobalt-50 to-slate-100">

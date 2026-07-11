@@ -10,7 +10,7 @@ import { POPULAR_DATASETS } from '@/mockup/mocks/datasets'
 /** 인기 데이터셋: 다운로드 상위 데이터셋 노출 → 탐색 유도 */
 export function PopularSection() {
   return (
-    <section className="bg-slate-50/70 py-20">
+    <section className="py-20">
       <Container>
         <Reveal>
           <div className="flex items-end justify-between gap-4">
@@ -33,7 +33,7 @@ export function PopularSection() {
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
           {POPULAR_DATASETS.map((d, i) => (
             <Reveal key={d.id} delay={i * 0.06}>
               <DatasetCard dataset={d} />

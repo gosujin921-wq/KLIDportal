@@ -79,7 +79,7 @@ export function ServiceIntroPage() {
           {FEATURES.map((f) => (
             <div
               key={f.title}
-              className="card-glow flex flex-col rounded-2xl border border-slate-200 bg-white p-6"
+              className="card-soft flex flex-col rounded-2xl border border-slate-200 bg-white p-6"
             >
               <span className="flex size-12 items-center justify-center rounded-2xl bg-cobalt-600 text-white">
                 <f.icon className="size-6" />

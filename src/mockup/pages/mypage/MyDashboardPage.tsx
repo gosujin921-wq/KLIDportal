@@ -35,7 +35,7 @@ export function MyDashboardPage() {
           <Link
             key={s.label}
             to={s.to}
-            className="card-glow flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-cobalt-200"
+            className="card-soft flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-cobalt-200"
           >
             <span className="flex size-11 items-center justify-center rounded-xl bg-cobalt-50 text-cobalt-600">
               <s.icon className="size-5.5" />

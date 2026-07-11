@@ -106,7 +106,7 @@ export function StyleGuide() {
         </Section>
 
         {/* 5. 카드·엘리베이션 */}
-        <Section title="5. 카드 · 그림자" desc="기본은 얇은 보더, 강조·호버에만 코발트 글로우">
+        <Section title="5. 카드 · 그림자" desc="기본은 얇은 보더, 강조 카드는 정적 소프트 섀도(호버 반응 없음)">
           <div className="grid gap-4 sm:grid-cols-3">
             <DemoCard className="border border-slate-200">
               <b>기본 카드</b>
@@ -116,9 +116,9 @@ export function StyleGuide() {
               <b>떠 있는 카드</b>
               <span>shadow-lg</span>
             </DemoCard>
-            <DemoCard className="card-glow border border-slate-200">
-              <b>글로우 (호버)</b>
-              <span>card-glow · 마우스 올려보기</span>
+            <DemoCard className="card-soft border border-slate-200">
+              <b>소프트 섀도</b>
+              <span>card-soft · 코발트 틴트 정적 섀도</span>
             </DemoCard>
           </div>
         </Section>

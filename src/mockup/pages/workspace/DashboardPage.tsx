@@ -47,7 +47,7 @@ export function DashboardPage() {
           <Link
             key={s.label}
             to={s.to}
-            className="card-glow rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-cobalt-200"
+            className="card-soft rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-cobalt-200"
           >
             <span className="flex size-9 items-center justify-center rounded-xl bg-cobalt-50 text-cobalt-600">
               <s.icon className="size-4.5" />

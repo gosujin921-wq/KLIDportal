@@ -41,6 +41,8 @@ export function DatasetThumb({
           backgroundImage: 'repeating-linear-gradient(0deg, #fff 0 1px, transparent 1px 4px)',
         }}
       />
+      {/* 스캔 스윕 (느린 수직 순환, reduced-motion 시 정지) */}
+      <div aria-hidden className="thumb-scan absolute inset-x-0 top-0 h-1/3" />
       {/* 유형 아이콘 워터마크 */}
       <t.icon
         aria-hidden

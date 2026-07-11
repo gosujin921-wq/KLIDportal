@@ -64,7 +64,7 @@ export function RegionSection() {
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
           {/* 타일 맵 */}
-          <Reveal className="card-glow rounded-2xl border border-slate-200 bg-white p-7">
+          <Reveal className="card-soft rounded-2xl border border-slate-200 bg-white p-7">
             <div
               className="mx-auto grid w-fit gap-2"
               style={{
@@ -115,7 +115,7 @@ export function RegionSection() {
           </Reveal>
 
           {/* Top 5 */}
-          <Reveal delay={0.12} className="card-glow rounded-2xl border border-slate-200 bg-white p-7">
+          <Reveal delay={0.12} className="card-soft rounded-2xl border border-slate-200 bg-white p-7">
             <p className="text-lg font-bold text-slate-900">데이터 보유 상위 지역</p>
             <ol className="mt-5 space-y-3">
               {top5.map((r, i) => (

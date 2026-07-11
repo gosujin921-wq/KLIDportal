@@ -22,7 +22,7 @@ const KPIS = [
 
 export function StatsSection() {
   return (
-    <section className="py-20">
+    <section className="bg-slate-50/70 py-20">
       <Container>
         <Reveal>
           <SectionHeading
@@ -54,9 +54,9 @@ export function StatsSection() {
           ))}
         </div>
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
           {/* 이벤트 유형별 분포 */}
-          <Reveal className="card-glow rounded-2xl border border-slate-200 bg-white p-7">
+          <Reveal className="card-soft rounded-2xl bg-white p-7">
             <p className="text-lg font-bold text-slate-900">이벤트 유형별 데이터셋</p>
             <ul className="mt-6 space-y-4">
               {eventStats.map((e) => {
@@ -87,7 +87,7 @@ export function StatsSection() {
           </Reveal>
 
           {/* 월별 누적 증가 */}
-          <Reveal delay={0.12} className="card-glow rounded-2xl border border-slate-200 bg-white p-7">
+          <Reveal delay={0.12} className="card-soft rounded-2xl bg-white p-7">
             <p className="text-lg font-bold text-slate-900">월별 누적 데이터셋</p>
             <GrowthChart />
           </Reveal>

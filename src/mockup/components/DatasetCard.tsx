@@ -13,7 +13,7 @@ export function DatasetCard({ dataset }: { dataset: Dataset }) {
   return (
     <Link
       to={`/search/${dataset.id}`}
-      className="card-glow group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors hover:border-cobalt-200"
+      className="card-soft flex flex-col overflow-hidden rounded-2xl bg-white"
     >
       <DatasetThumb type={dataset.type} resolution={dataset.resolution} />
 
@@ -31,7 +31,7 @@ export function DatasetCard({ dataset }: { dataset: Dataset }) {
           )}
         </div>
 
-        <h3 className="mt-2.5 line-clamp-2 text-base leading-snug font-bold text-slate-900 group-hover:text-cobalt-700">
+        <h3 className="mt-2.5 line-clamp-2 text-base leading-snug font-bold text-slate-900">
           {dataset.title}
         </h3>
 

@@ -110,7 +110,7 @@ export function GenAiSection() {
             {genAiJobs.map((j) => (
               <div
                 key={j.id}
-                className="card-glow overflow-hidden rounded-2xl border border-slate-200 bg-white"
+                className="card-soft overflow-hidden rounded-2xl border border-slate-200 bg-white"
               >
                 <DatasetThumb type={j.type} showPlay={j.status === 'done'} />
                 <div className="p-4">

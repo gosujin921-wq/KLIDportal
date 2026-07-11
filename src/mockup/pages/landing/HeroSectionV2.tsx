@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'motion/react'
 import { Search } from 'lucide-react'
 import { Container } from '@/mockup/components/ui/Container'
 import { Button } from '@/mockup/components/ui/Button'
@@ -57,15 +58,23 @@ export function HeroSectionV2() {
             <br />
             <span className="text-gradient-cobalt">{msg.emph}</span>
           </h1>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-slate-600">
+          <motion.p
+            className="mt-6 max-w-md text-lg leading-relaxed text-slate-600"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.1, ease: 'easeOut' }}
+          >
             재난·안전 CCTV 영상 기반 AI 학습데이터를
             <br />
             검색하고 활용하세요.
-          </p>
+          </motion.p>
 
           {/* 검색 진입점 */}
-          <form
+          <motion.form
             className="mt-8 flex max-w-lg items-center gap-2"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.22, ease: 'easeOut' }}
             onSubmit={(e) => {
               e.preventDefault()
               navigate(query.trim() ? `/search?q=${encodeURIComponent(query.trim())}` : '/search')
@@ -84,15 +93,18 @@ export function HeroSectionV2() {
             <Button type="submit" size="lg" className="h-13">
               검색
             </Button>
-          </form>
+          </motion.form>
 
-          {/* 이벤트 유형 빠른 필터 칩 */}
+          {/* 이벤트 유형 빠른 필터 칩 (스태거 등장) */}
           <div className="mt-4 flex max-w-lg flex-wrap items-center gap-2">
-            {EVENT_TYPES_MAIN.map((t) => (
-              <button
+            {EVENT_TYPES_MAIN.map((t, i) => (
+              <motion.button
                 key={t.key}
                 type="button"
                 onClick={() => navigate(`/search?type=${t.key}`)}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.36 + i * 0.05, ease: 'easeOut' }}
                 className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white/80 px-3 py-1.5 text-sm font-medium text-slate-600 backdrop-blur transition-colors hover:border-cobalt-200 hover:bg-white hover:text-cobalt-700"
               >
                 <span
@@ -100,15 +112,18 @@ export function HeroSectionV2() {
                   style={{ backgroundColor: `var(--color-event-${t.key})` }}
                 />
                 {t.label}
-              </button>
+              </motion.button>
             ))}
-            <button
+            <motion.button
               type="button"
               onClick={() => navigate('/search')}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.36 + EVENT_TYPES_MAIN.length * 0.05, ease: 'easeOut' }}
               className="inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-semibold text-cobalt-700 transition-colors hover:bg-cobalt-50"
             >
               전체보기 →
-            </button>
+            </motion.button>
           </div>
         </div>
       </Container>

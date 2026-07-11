@@ -55,7 +55,7 @@ export function WowSection() {
           {/* 우: 도트 증식 시각화 + 생성 */}
           <Reveal
             delay={0.12}
-            className="relative rounded-3xl border border-white/15 bg-white/5 p-8 backdrop-blur-sm"
+            className="relative rounded-3xl bg-gradient-to-b from-white/15 to-white/5 p-8 shadow-[0_24px_48px_-20px_rgba(8,12,50,0.55)] backdrop-blur-sm"
           >
             {/* 조건 반영 증강 (출처: RFP SFR-06/07) */}
             <p className="text-base font-bold text-white">조건 반영 데이터 증강</p>
