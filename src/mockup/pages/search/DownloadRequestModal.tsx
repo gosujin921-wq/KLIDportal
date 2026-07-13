@@ -5,6 +5,7 @@ import { Modal } from '@/mockup/components/ui/Modal'
 import { Button } from '@/mockup/components/ui/Button'
 import { EventBadge } from '@/mockup/components/ui/badges'
 import { zipParts, type Dataset } from '@/mockup/mocks/datasets'
+import { useDemoAuth } from '@/mockup/demoAuth'
 import { formatNumber } from '@/lib/format'
 
 // 활용 목적 (REQ-007: 학술 연구·기업 R&D·공공 프로젝트 등)
@@ -22,6 +23,7 @@ export function DownloadRequestModal({
   dataset: Dataset
 }) {
   const navigate = useNavigate()
+  const { login } = useDemoAuth()
   const [purpose, setPurpose] = useState('')
   const [plan, setPlan] = useState('')
   const [agreed, setAgreed] = useState(false)
@@ -58,6 +60,9 @@ export function DownloadRequestModal({
         <form
           onSubmit={(e) => {
             e.preventDefault()
+            // 데모: 신청까지 진행한 사용자는 로그인 세션 보유로 간주.
+            // 완료 화면의 "워크스페이스로 이동"이 잠금 오버레이에 막히지 않게 한다.
+            login()
             setSubmitted(true)
           }}
         >

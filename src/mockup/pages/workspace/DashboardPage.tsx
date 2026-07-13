@@ -11,12 +11,12 @@ export function DashboardPage() {
   const uploading = uploads.filter((u) => u.status === 'inProgress').length
   const activeJobs = workJobs.filter((j) => j.status === 'inProgress' || j.status === 'waiting')
 
-  const SUMMARY = [
+  const SUMMARY: { label: string; value: number; icon: typeof Download; to?: string }[] = [
     {
+      // 이 페이지 아래 표가 곧 상세라 링크 없음 (자기참조 방지)
       label: '진행중 다운로드',
       value: exportRequests.length,
       icon: Download,
-      to: '/workspace',
     },
     { label: '업로드 처리중', value: uploading, icon: Upload, to: '/workspace/upload' },
     {
@@ -29,7 +29,7 @@ export function DashboardPage() {
       label: '생성형 AI 대기',
       value: workJobs.filter((j) => j.kind === '생성').length,
       icon: Sparkles,
-      to: '/workspace/genai',
+      to: '/workspace/augment',
     },
   ]
 
@@ -43,19 +43,30 @@ export function DashboardPage() {
 
       {/* 요약 카드 */}
       <div className="mt-6 grid grid-cols-2 gap-4 xl:grid-cols-4">
-        {SUMMARY.map((s) => (
-          <Link
-            key={s.label}
-            to={s.to}
-            className="card-soft rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-cobalt-200"
-          >
-            <span className="flex size-9 items-center justify-center rounded-xl bg-cobalt-50 text-cobalt-600">
-              <s.icon className="size-4.5" />
-            </span>
-            <p className="mt-3 text-3xl font-extrabold text-slate-900 tabular-nums">{s.value}</p>
-            <p className="mt-1 text-sm font-medium text-slate-500">{s.label}</p>
-          </Link>
-        ))}
+        {SUMMARY.map((s) => {
+          const body = (
+            <>
+              <span className="flex size-9 items-center justify-center rounded-xl bg-cobalt-50 text-cobalt-600">
+                <s.icon className="size-4.5" />
+              </span>
+              <p className="mt-3 text-3xl font-extrabold text-slate-900 tabular-nums">{s.value}</p>
+              <p className="mt-1 text-sm font-medium text-slate-500">{s.label}</p>
+            </>
+          )
+          return s.to ? (
+            <Link
+              key={s.label}
+              to={s.to}
+              className="card-soft rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-cobalt-200"
+            >
+              {body}
+            </Link>
+          ) : (
+            <div key={s.label} className="card-soft rounded-2xl border border-slate-200 bg-white p-5">
+              {body}
+            </div>
+          )
+        })}
       </div>
 
       {/* 진행중 다운로드 */}
@@ -78,9 +89,12 @@ export function DashboardPage() {
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-2.5">
                       <EventBadge type={r.type} />
-                      <span className="truncate text-base font-semibold text-slate-800">
+                      <Link
+                        to={`/search/${r.datasetId}`}
+                        className="truncate text-base font-semibold text-slate-800 hover:text-cobalt-700 hover:underline"
+                      >
                         {r.datasetTitle}
-                      </span>
+                      </Link>
                     </div>
                   </td>
                   <td className="px-3 py-3.5 text-sm whitespace-nowrap text-slate-500 tabular-nums">

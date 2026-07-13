@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 import {
   LayoutDashboard,
   Upload,
@@ -81,6 +81,12 @@ export function WorkspaceLayout() {
             <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
               이용 가이드에서 업로드부터 라벨링까지 단계별 안내를 확인하세요.
             </p>
+            <Link
+              to="/guide/how"
+              className="mt-2.5 inline-block text-sm font-semibold text-cobalt-700 hover:underline"
+            >
+              이용 가이드 바로가기
+            </Link>
           </div>
         </aside>
 

@@ -1,6 +1,7 @@
 import type { EventTypeKey } from '@/components/domain/eventTypes'
+import { daysAgo, dDay, expiredAgo, until } from '@/mockup/mocks/dates'
 
-/** 워크스페이스 목업 데이터 (전부 임의 수치) */
+/** 워크스페이스 목업 데이터 (전부 임의 수치, 날짜는 열람 시점 기준 상대 계산) */
 
 export type StatusKey =
   | 'waiting' // 대기
@@ -17,6 +18,8 @@ export type StatusKey =
 /** 다운로드(반출) 요청 현황 */
 export interface ExportRequest {
   id: string
+  /** 원본 데이터셋 (datasets.ts) 연결. 대시보드에서 상세로 되돌아가는 고리 */
+  datasetId: string
   datasetTitle: string
   type: EventTypeKey
   requestedAt: string
@@ -29,28 +32,31 @@ export interface ExportRequest {
 export const exportRequests: ExportRequest[] = [
   {
     id: 'req-0412',
+    datasetId: 'ds-2026-0087',
     datasetTitle: '도심 건물 화재 감지 영상 데이터셋',
     type: 'fire',
-    requestedAt: '2026-07-06',
+    requestedAt: daysAgo(5),
     status: 'approved',
-    dueLabel: 'D-6 (07.15까지)',
+    dueLabel: dDay(6),
     sizeGb: 84.2,
   },
   {
     id: 'req-0398',
+    datasetId: 'ds-2026-0142',
     datasetTitle: '하천변 침수 수위 감시 CCTV 학습데이터',
     type: 'flood',
-    requestedAt: '2026-07-08',
+    requestedAt: daysAgo(3),
     status: 'reviewing',
     sizeGb: 61.8,
   },
   {
     id: 'req-0371',
+    datasetId: 'ds-2026-0119',
     datasetTitle: '교차로 교통사고 감지 CCTV 학습데이터',
     type: 'traffic',
-    requestedAt: '2026-06-29',
+    requestedAt: daysAgo(12),
     status: 'expiring',
-    dueLabel: 'D-1 (07.10까지)',
+    dueLabel: dDay(1),
     sizeGb: 96.4,
   },
 ]
@@ -75,7 +81,7 @@ export const workJobs: WorkJob[] = [
     type: 'traffic',
     status: 'inProgress',
     progress: 62,
-    updatedAt: '2026-07-09',
+    updatedAt: daysAgo(1),
   },
   {
     id: 'job-117',
@@ -84,7 +90,7 @@ export const workJobs: WorkJob[] = [
     type: 'fire',
     status: 'inProgress',
     progress: 38,
-    updatedAt: '2026-07-09',
+    updatedAt: daysAgo(1),
   },
   {
     id: 'job-115',
@@ -92,7 +98,7 @@ export const workJobs: WorkJob[] = [
     title: '침수 상황 영상 생성 (교차로)',
     type: 'flood',
     status: 'waiting',
-    updatedAt: '2026-07-08',
+    updatedAt: daysAgo(2),
   },
   {
     id: 'job-112',
@@ -100,11 +106,11 @@ export const workJobs: WorkJob[] = [
     title: 'CCTV-해운대-002 라벨링',
     type: 'falldown',
     status: 'reviewWait',
-    updatedAt: '2026-07-07',
+    updatedAt: daysAgo(4),
   },
 ]
 
-/** 업로드 영상 현황 */
+/** 업로드 영상 현황 (보관 90일) */
 export interface UploadItem {
   id: string
   fileName: string
@@ -127,8 +133,8 @@ export const uploads: UploadItem[] = [
     status: 'inProgress',
     progress: 45,
     sizeMb: 842,
-    uploadedAt: '2026-07-09',
-    expireLabel: '2026.10.09까지',
+    uploadedAt: daysAgo(1),
+    expireLabel: until(89),
   },
   {
     id: 'up-228',
@@ -137,8 +143,8 @@ export const uploads: UploadItem[] = [
     type: 'falldown',
     status: 'done',
     sizeMb: 617,
-    uploadedAt: '2026-07-05',
-    expireLabel: '2026.10.05까지',
+    uploadedAt: daysAgo(5),
+    expireLabel: until(85),
   },
   {
     id: 'up-224',
@@ -147,8 +153,8 @@ export const uploads: UploadItem[] = [
     type: 'flood',
     status: 'done',
     sizeMb: 1_204,
-    uploadedAt: '2026-07-01',
-    expireLabel: '2026.10.01까지',
+    uploadedAt: daysAgo(9),
+    expireLabel: until(81),
   },
   {
     id: 'up-219',
@@ -157,7 +163,7 @@ export const uploads: UploadItem[] = [
     type: 'fire',
     status: 'failed',
     sizeMb: 458,
-    uploadedAt: '2026-06-27',
+    uploadedAt: daysAgo(13),
     expireLabel: '-',
   },
 ]
@@ -175,15 +181,15 @@ export interface AuthoringTask {
 }
 
 export const authoringTasks: AuthoringTask[] = [
-  { id: 'at-009', videoName: 'CCTV-강남대로-004', videoId: 'video-0009', type: 'traffic', status: 'inProgress', frames: 48, objects: 214, updatedAt: '2026-07-09' },
-  { id: 'at-008', videoName: 'CCTV-해운대-002', videoId: 'video-0008', type: 'falldown', status: 'reviewWait', frames: 36, objects: 128, updatedAt: '2026-07-07' },
-  { id: 'at-007', videoName: 'CCTV-탄천변-006', videoId: 'video-0007', type: 'flood', status: 'done', frames: 52, objects: 96, updatedAt: '2026-07-04' },
-  { id: 'at-006', videoName: 'CCTV-서문시장-001', videoId: 'video-0006', type: 'fire', status: 'rejected', frames: 41, objects: 175, updatedAt: '2026-07-02' },
-  { id: 'at-005', videoName: 'CCTV-우면산-003', videoId: 'video-0005', type: 'landslide', status: 'done', frames: 29, objects: 44, updatedAt: '2026-06-28' },
-  { id: 'at-004', videoName: 'CCTV-수성못-001', videoId: 'video-0004', type: 'falldown', status: 'waiting', frames: 0, objects: 0, updatedAt: '2026-06-26' },
+  { id: 'at-009', videoName: 'CCTV-강남대로-004', videoId: 'video-0009', type: 'traffic', status: 'inProgress', frames: 48, objects: 214, updatedAt: daysAgo(1) },
+  { id: 'at-008', videoName: 'CCTV-해운대-002', videoId: 'video-0008', type: 'falldown', status: 'reviewWait', frames: 36, objects: 128, updatedAt: daysAgo(3) },
+  { id: 'at-007', videoName: 'CCTV-탄천변-006', videoId: 'video-0007', type: 'flood', status: 'done', frames: 52, objects: 96, updatedAt: daysAgo(6) },
+  { id: 'at-006', videoName: 'CCTV-서문시장-001', videoId: 'video-0006', type: 'fire', status: 'rejected', frames: 41, objects: 175, updatedAt: daysAgo(8) },
+  { id: 'at-005', videoName: 'CCTV-우면산-003', videoId: 'video-0005', type: 'landslide', status: 'done', frames: 29, objects: 44, updatedAt: daysAgo(12) },
+  { id: 'at-004', videoName: 'CCTV-수성못-001', videoId: 'video-0004', type: 'falldown', status: 'waiting', frames: 0, objects: 0, updatedAt: daysAgo(14) },
 ]
 
-/** 내 학습데이터 (저작 완료 결과물) */
+/** 내 학습데이터 (저작 완료 결과물, 보관 30일) */
 export interface MyDataset {
   id: string
   title: string
@@ -196,13 +202,13 @@ export interface MyDataset {
 }
 
 export const myDatasets: MyDataset[] = [
-  { id: 'md-031', title: 'CCTV-탄천변-006 침수 라벨링 결과', type: 'flood', frames: 52, objects: 96, finishedAt: '2026-07-04', status: 'done', expireLabel: 'D-25 (08.03까지)' },
-  { id: 'md-028', title: 'CCTV-우면산-003 산사태 라벨링 결과', type: 'landslide', frames: 29, objects: 44, finishedAt: '2026-06-28', status: 'done', expireLabel: 'D-19 (07.28까지)' },
-  { id: 'md-025', title: 'CCTV-역삼로-002 교통사고 라벨링 결과', type: 'traffic', frames: 44, objects: 187, finishedAt: '2026-06-19', status: 'expiring', expireLabel: 'D-2 (07.11까지)' },
-  { id: 'md-021', title: 'CCTV-북항대교-001 화재 라벨링 결과', type: 'fire', frames: 38, objects: 152, finishedAt: '2026-05-30', status: 'expired', expireLabel: '만료 (06.29)' },
+  { id: 'md-031', title: 'CCTV-탄천변-006 침수 라벨링 결과', type: 'flood', frames: 52, objects: 96, finishedAt: daysAgo(5), status: 'done', expireLabel: dDay(25) },
+  { id: 'md-028', title: 'CCTV-우면산-003 산사태 라벨링 결과', type: 'landslide', frames: 29, objects: 44, finishedAt: daysAgo(11), status: 'done', expireLabel: dDay(19) },
+  { id: 'md-025', title: 'CCTV-역삼로-002 교통사고 라벨링 결과', type: 'traffic', frames: 44, objects: 187, finishedAt: daysAgo(28), status: 'expiring', expireLabel: dDay(2) },
+  { id: 'md-021', title: 'CCTV-북항대교-001 화재 라벨링 결과', type: 'fire', frames: 38, objects: 152, finishedAt: daysAgo(42), status: 'expired', expireLabel: expiredAgo(12) },
 ]
 
-/** 증강 이력 */
+/** 증강 이력 (결과물 보관 30일) */
 export interface AugmentJob {
   id: string
   source: string
@@ -214,12 +220,12 @@ export interface AugmentJob {
 }
 
 export const augmentJobs: AugmentJob[] = [
-  { id: 'ag-014', source: 'CCTV-탄천변-006 침수 라벨링 결과', options: ['야간', '비'], multiple: '4배', status: 'inProgress', requestedAt: '2026-07-09' },
-  { id: 'ag-013', source: 'CCTV-우면산-003 산사태 라벨링 결과', options: ['안개'], multiple: '2배', status: 'done', requestedAt: '2026-07-05', expireLabel: 'D-26 (08.04까지)' },
-  { id: 'ag-011', source: 'CCTV-역삼로-002 교통사고 라벨링 결과', options: ['야간', '눈'], multiple: '4배', status: 'done', requestedAt: '2026-06-24', expireLabel: 'D-15 (07.24까지)' },
+  { id: 'ag-014', source: 'CCTV-탄천변-006 침수 라벨링 결과', options: ['야간', '비'], multiple: '4배', status: 'inProgress', requestedAt: daysAgo(1) },
+  { id: 'ag-013', source: 'CCTV-우면산-003 산사태 라벨링 결과', options: ['안개'], multiple: '2배', status: 'done', requestedAt: daysAgo(4), expireLabel: dDay(26) },
+  { id: 'ag-011', source: 'CCTV-역삼로-002 교통사고 라벨링 결과', options: ['야간', '눈'], multiple: '4배', status: 'done', requestedAt: daysAgo(15), expireLabel: dDay(15) },
 ]
 
-/** 생성형 AI 결과 */
+/** 생성형 AI 결과 (결과물 보관 30일) */
 export interface GenAiJob {
   id: string
   title: string
@@ -231,10 +237,10 @@ export interface GenAiJob {
 }
 
 export const genAiJobs: GenAiJob[] = [
-  { id: 'gen-022', title: '침수 상황 영상 생성 (교차로)', type: 'flood', length: '10초', status: 'waiting', requestedAt: '2026-07-08' },
-  { id: 'gen-021', title: '산불 확산 영상 생성 (능선)', type: 'wildfire', length: '10초', status: 'done', requestedAt: '2026-07-03', expireLabel: 'D-24 (08.02까지)' },
-  { id: 'gen-019', title: '야간 화재 영상 생성 (주차장)', type: 'fire', length: '5초', status: 'done', requestedAt: '2026-06-27', expireLabel: 'D-18 (07.27까지)' },
-  { id: 'gen-017', title: '폭우 침수 영상 생성 (지하차도)', type: 'flood', length: '5초', status: 'failed', requestedAt: '2026-06-21' },
+  { id: 'gen-022', title: '침수 상황 영상 생성 (교차로)', type: 'flood', length: '10초', status: 'waiting', requestedAt: daysAgo(3) },
+  { id: 'gen-021', title: '산불 확산 영상 생성 (능선)', type: 'wildfire', length: '10초', status: 'done', requestedAt: daysAgo(8), expireLabel: dDay(22) },
+  { id: 'gen-019', title: '야간 화재 영상 생성 (주차장)', type: 'fire', length: '5초', status: 'done', requestedAt: daysAgo(14), expireLabel: dDay(16) },
+  { id: 'gen-017', title: '폭우 침수 영상 생성 (지하차도)', type: 'flood', length: '5초', status: 'failed', requestedAt: daysAgo(20) },
 ]
 
 /** 데모 사용자 */

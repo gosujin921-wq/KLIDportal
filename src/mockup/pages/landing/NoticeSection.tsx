@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { Container } from '@/mockup/components/ui/Container'
 import { Reveal } from '@/mockup/components/ui/Reveal'
@@ -20,9 +21,12 @@ export function NoticeSection() {
         <Reveal className="card-soft rounded-2xl bg-white p-7">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-slate-900">공지사항</h2>
-            <button className="inline-flex items-center gap-1 text-sm font-semibold text-cobalt-700">
+            <Link
+              to="/news/notices"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-cobalt-700 hover:text-cobalt-800"
+            >
               전체보기 <ArrowRight className="size-4" />
-            </button>
+            </Link>
           </div>
 
           <ul className="mt-5 divide-y divide-slate-100">
@@ -34,7 +38,7 @@ export function NoticeSection() {
                 viewport={{ once: true, margin: '-60px 0px' }}
                 transition={{ duration: 0.4, delay: 0.1 + i * 0.07, ease: 'easeOut' }}
               >
-                <a href="#" className="flex items-center gap-4 py-3.5 hover:bg-slate-50">
+                <Link to="/news/notices" className="flex items-center gap-4 py-3.5 hover:bg-slate-50">
                   <span
                     className={`w-14 shrink-0 rounded-md py-1 text-center text-[13px] font-semibold ${
                       TAG_STYLE[n.tag] ?? 'bg-slate-100 text-slate-600'
@@ -46,7 +50,7 @@ export function NoticeSection() {
                   <span className="shrink-0 text-sm tabular-nums text-slate-400">
                     {formatDate(n.date)}
                   </span>
-                </a>
+                </Link>
               </motion.li>
             ))}
           </ul>
