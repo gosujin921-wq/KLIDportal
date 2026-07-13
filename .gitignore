@@ -10,6 +10,10 @@ dist-ssr
 storybook-static
 sb_install.log
 
+# 임시 캡처·검증 스크립트 및 잘못된 출력 경로
+_*_tmp.mjs
+/undefined/
+
 # 히어로 B안 도구 작업 디렉터리(키·세션로그 포함 — 저장소 제외, 로컬 보존)
 docs/98_아카이브/hero_v2/
 

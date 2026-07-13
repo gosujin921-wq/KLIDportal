@@ -1,4 +1,4 @@
-import type { EventTypeKey } from '@/components/domain/eventTypes'
+import type { EventTypeKey } from '@/mockup/domain/eventTypes'
 import { daysAgo, dDay, expiredAgo, until } from '@/mockup/mocks/dates'
 
 /** 워크스페이스 목업 데이터 (전부 임의 수치, 날짜는 열람 시점 기준 상대 계산) */

@@ -83,7 +83,7 @@ export function HistoryPage() {
         {tab === 'download' && (
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-slate-100 text-sm text-slate-400">
+              <tr className="border-b border-slate-200 text-sm text-slate-400">
                 <th className="px-5 py-3 font-medium">데이터셋</th>
                 <th className="px-3 py-3 font-medium whitespace-nowrap">신청일</th>
                 <th className="px-3 py-3 font-medium whitespace-nowrap">승인일</th>
@@ -124,7 +124,7 @@ export function HistoryPage() {
         {tab === 'authoring' && (
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-slate-100 text-sm text-slate-400">
+              <tr className="border-b border-slate-200 text-sm text-slate-400">
                 <th className="px-5 py-3 font-medium">작업명</th>
                 <th className="px-3 py-3 font-medium whitespace-nowrap">완료일</th>
                 <th className="px-3 py-3 text-right font-medium">프레임</th>
@@ -152,7 +152,7 @@ export function HistoryPage() {
         {tab === 'ai' && (
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-slate-100 text-sm text-slate-400">
+              <tr className="border-b border-slate-200 text-sm text-slate-400">
                 <th className="px-5 py-3 font-medium">구분</th>
                 <th className="px-3 py-3 font-medium">대상</th>
                 <th className="px-3 py-3 font-medium whitespace-nowrap">실행일</th>

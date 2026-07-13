@@ -40,7 +40,7 @@ export function DatasetCard({ dataset }: { dataset: Dataset }) {
           {dataset.region} · {dataset.period}
         </p>
 
-        <div className="mt-auto flex items-center justify-between gap-2 border-t border-slate-100 pt-3.5 text-sm text-slate-500">
+        <div className="mt-auto flex items-center justify-between gap-2 border-t border-slate-200 pt-3.5 text-sm text-slate-500">
           <span className="min-w-0 tabular-nums">
             <span className="whitespace-nowrap">영상 {formatNumber(dataset.videoCount)}건</span> ·{' '}
             <span className="whitespace-nowrap">이미지 {formatNumber(dataset.imageCount)}장</span>

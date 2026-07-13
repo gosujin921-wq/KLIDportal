@@ -1,3 +1,5 @@
+import { Select } from '@/mockup/components/ui/Select'
+
 /** 이용약관·개인정보처리방침 문서 뷰어 (목차 + 본문) */
 
 const TERMS_SECTIONS = [
@@ -46,17 +48,13 @@ export function DocumentPage({ kind }: { kind: 'terms' | 'privacy' }) {
             <h2 className="text-2xl font-extrabold text-slate-900">{title}</h2>
             <p className="mt-1 text-sm text-slate-400">시행일: 2026.07.01</p>
           </div>
-          <select
-            defaultValue="2026.07.01"
-            className="h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-600 focus:border-cobalt-400 focus:outline-none"
-            aria-label="개정 이력"
-          >
+          <Select aria-label="개정 이력" className="text-slate-600">
             <option>2026.07.01 (현행)</option>
             <option>2025.09.01</option>
-          </select>
+          </Select>
         </div>
 
-        <div className="mt-2 divide-y divide-slate-100">
+        <div className="mt-2 divide-y divide-slate-200">
           {sections.map((s) => (
             <section key={s.id} id={s.id} className="scroll-mt-24 py-6">
               <h3 className="text-lg font-bold text-slate-900">{s.title}</h3>

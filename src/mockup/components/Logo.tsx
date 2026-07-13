@@ -63,7 +63,7 @@ export function Logo({
     <span className={cn('group flex items-center gap-2.5', className)}>
       {/* 마크 — markTo 지정 시 심볼만 링크 */}
       {markTo ? (
-        <Link to={markTo} aria-label="랜딩 v2 보기" className="shrink-0">
+        <Link to={markTo} aria-label="메인으로" className="shrink-0">
           {mark}
         </Link>
       ) : (

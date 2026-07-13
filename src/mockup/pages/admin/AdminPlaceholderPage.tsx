@@ -35,7 +35,7 @@ export function AdminPlaceholderPage({
 
       {/* 테이블 골격 */}
       <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white">
-        <div className="border-b border-slate-100 bg-slate-50/60 px-5 py-3">
+        <div className="border-b border-slate-200 bg-slate-50/60 px-5 py-3">
           <div className="flex gap-6">
             {['항목', '상태', '등록일', '관리'].map((h) => (
               <span key={h} className="text-sm font-medium text-slate-400">

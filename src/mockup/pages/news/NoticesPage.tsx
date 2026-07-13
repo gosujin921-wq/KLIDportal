@@ -38,7 +38,7 @@ export function NoticesPage() {
         </div>
         <p className="min-h-40 py-7 text-base leading-relaxed text-slate-600">{selected.body}</p>
 
-        <div className="divide-y divide-slate-100 border-t border-slate-200">
+        <div className="divide-y divide-slate-200 border-t border-slate-200">
           {prev && (
             <button
               type="button"
@@ -87,7 +87,7 @@ export function NoticesPage() {
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
         <table className="w-full text-left">
           <thead>
-            <tr className="border-b border-slate-100 text-sm text-slate-400">
+            <tr className="border-b border-slate-200 text-sm text-slate-400">
               <th className="w-24 px-5 py-3 font-medium">분류</th>
               <th className="px-3 py-3 font-medium">제목</th>
               <th className="px-3 py-3 font-medium whitespace-nowrap">작성일</th>

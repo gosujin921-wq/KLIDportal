@@ -3,12 +3,13 @@ import {
   LayoutDashboard,
   Upload,
   PenTool,
-  FolderOpen,
   Layers,
   Heart,
   CircleHelp,
+  UserRound,
 } from 'lucide-react'
 import { Container } from '@/mockup/components/ui/Container'
+import { DATASET_ICON } from '@/mockup/domain/dataset'
 import { demoUser } from '@/mockup/mocks/workspace'
 import { useDemoAuth } from '@/mockup/demoAuth'
 import { LockedOverlay } from './LockedOverlay'
@@ -19,7 +20,7 @@ const MENUS = [
   { to: '/workspace', label: '대시보드', icon: LayoutDashboard, end: true },
   { to: '/workspace/upload', label: '업로드 영상', icon: Upload },
   { to: '/workspace/authoring', label: '저작도구', icon: PenTool },
-  { to: '/workspace/datasets', label: '내 학습데이터', icon: FolderOpen },
+  { to: '/workspace/datasets', label: '내 학습데이터', icon: DATASET_ICON },
   { to: '/workspace/augment', label: '데이터 증강', icon: Layers },
   { to: '/workspace/favorites', label: '즐겨찾기', icon: Heart },
 ]
@@ -29,19 +30,40 @@ export function WorkspaceLayout() {
   const { loggedIn } = useDemoAuth()
   return (
     <Container className="py-10">
-      <div className="flex items-start gap-8">
-        <aside className="sticky top-24 hidden w-60 shrink-0 lg:block">
-          {/* 사용자 카드 */}
+      {/* min-h: 콘텐츠가 짧아도 행이 사이드바보다 커서 좌측 LNB가 항상 sticky 고정되게 함 (헤더64+상하 py-10 80 = 9rem 제외) */}
+      <div className="flex min-h-[calc(100vh-9rem)] items-start gap-8">
+        {/* top: 헤더 h-16(64px) + 컨테이너 py-10(40px) = 104px. 자연 위치와 맞춰 스크롤 초반 상단 여백이 변하지 않게 함 */}
+        <aside
+          className={cn(
+            'sticky top-[104px] hidden w-60 shrink-0 lg:block',
+            // 비로그인 시 셸 전체를 잠긴 미리보기로: 딤 처리 + 클릭·선택 차단
+            !loggedIn && 'pointer-events-none select-none opacity-60',
+          )}
+          aria-hidden={!loggedIn}
+        >
+          {/* 사용자 카드 (비로그인 시 게스트) */}
           <div className="rounded-2xl border border-slate-200 bg-white p-4">
-            <div className="flex items-center gap-3">
-              <span className="flex size-10 items-center justify-center rounded-full bg-cobalt-50 text-base font-bold text-cobalt-700">
-                {demoUser.name.charAt(0)}
-              </span>
-              <div className="min-w-0">
-                <p className="truncate text-base font-bold text-slate-900">{demoUser.name}</p>
-                <p className="truncate text-sm text-slate-500">{demoUser.org}</p>
+            {loggedIn ? (
+              <div className="flex items-center gap-3">
+                <span className="flex size-10 items-center justify-center rounded-full bg-cobalt-50 text-base font-bold text-cobalt-700">
+                  {demoUser.name.charAt(0)}
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-base font-bold text-slate-900">{demoUser.name}</p>
+                  <p className="truncate text-sm text-slate-500">{demoUser.org}</p>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <span className="flex size-10 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                  <UserRound className="size-5" />
+                </span>
+                <div className="min-w-0">
+                  <p className="truncate text-base font-bold text-slate-400">게스트</p>
+                  <p className="truncate text-sm text-slate-400">로그인이 필요합니다</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* LNB */}

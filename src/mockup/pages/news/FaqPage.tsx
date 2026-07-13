@@ -59,7 +59,7 @@ export function FaqPage() {
                 />
               </button>
               {open && (
-                <div className="flex gap-3 border-t border-slate-100 bg-slate-50/60 px-5 py-4">
+                <div className="flex gap-3 border-t border-slate-200 bg-slate-50/60 px-5 py-4">
                   <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-slate-200 text-sm font-bold text-slate-500">
                     A
                   </span>

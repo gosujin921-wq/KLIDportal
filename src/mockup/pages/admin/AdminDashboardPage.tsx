@@ -41,7 +41,7 @@ export function AdminDashboardPage() {
       <div className="mt-6 grid gap-5 lg:grid-cols-2">
         {/* 최근 다운로드 신청 */}
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-          <div className="border-b border-slate-100 px-5 py-3.5">
+          <div className="border-b border-slate-200 px-5 py-3.5">
             <p className="text-base font-bold text-slate-900">최근 다운로드 신청</p>
           </div>
           <ul className="divide-y divide-slate-50">
@@ -57,7 +57,7 @@ export function AdminDashboardPage() {
 
         {/* 최근 문의 */}
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-          <div className="border-b border-slate-100 px-5 py-3.5">
+          <div className="border-b border-slate-200 px-5 py-3.5">
             <p className="text-base font-bold text-slate-900">최근 문의</p>
           </div>
           <ul className="divide-y divide-slate-50">

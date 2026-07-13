@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Download, ImagePlus, Sparkles } from 'lucide-react'
 import { Button } from '@/mockup/components/ui/Button'
+import { Select } from '@/mockup/components/ui/Select'
 import { DatasetThumb } from '@/mockup/components/DatasetThumb'
 import { EventBadge, StatusBadge } from '@/mockup/components/ui/badges'
-import { EVENT_TYPES_MAIN } from '@/components/domain/eventTypes'
+import { EVENT_TYPES_MAIN } from '@/mockup/domain/eventTypes'
 import { genAiJobs } from '@/mockup/mocks/workspace'
 import { formatDate } from '@/lib/datetime'
 import { cn } from '@/lib/cn'
@@ -49,17 +50,14 @@ export function GenAiSection() {
             <span className="text-sm font-semibold text-slate-700">
               이벤트 유형 <span className="text-red-500">*</span>
             </span>
-            <select
-              defaultValue=""
-              className="mt-1.5 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-700 focus:border-cobalt-400 focus:outline-none"
-            >
+            <Select defaultValue="" wrapperClassName="mt-1.5 w-full" className="h-10 w-full text-base">
               <option value="" disabled>
                 선택하세요
               </option>
               {EVENT_TYPES_MAIN.map((t) => (
                 <option key={t.key}>{t.label}</option>
               ))}
-            </select>
+            </Select>
           </label>
 
           <div className="mt-4">
@@ -122,7 +120,7 @@ export function GenAiSection() {
                   <p className="mt-1 text-sm text-slate-400 tabular-nums">
                     {j.length} · {formatDate(j.requestedAt)} 요청
                   </p>
-                  <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3">
+                  <div className="mt-3 flex items-center justify-between border-t border-slate-200 pt-3">
                     {j.expireLabel ? (
                       <span className="text-sm text-slate-500 tabular-nums">{j.expireLabel}</span>
                     ) : (

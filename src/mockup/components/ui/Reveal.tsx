@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from 'motion/react'
 
 /**
  * 스크롤 진입 시 페이드 + 라이즈 리빌.
- * 랜딩 섹션 공통. reduced-motion이면 즉시 표시.
+ * 메인 섹션 공통. reduced-motion이면 즉시 표시.
  */
 export function Reveal({
   children,

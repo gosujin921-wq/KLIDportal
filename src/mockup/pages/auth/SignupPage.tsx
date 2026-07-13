@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Check, ChevronDown, ShieldCheck, PartyPopper } from 'lucide-react'
+import { Check, ChevronDown, PartyPopper } from 'lucide-react'
 import { Container } from '@/mockup/components/ui/Container'
 import { Button } from '@/mockup/components/ui/Button'
+import { KakaoAuthButton, KakaoIcon } from './KakaoAuthButton'
 import { cn } from '@/lib/cn'
 
 const STEPS = ['약관 동의', '본인인증', '정보 입력', '가입 완료']
@@ -96,7 +97,7 @@ function StepAgree({ onNext }: { onNext: () => void }) {
         <span className="text-base font-bold text-slate-900">전체 동의</span>
       </label>
 
-      <ul className="mt-3 divide-y divide-slate-100">
+      <ul className="mt-3 divide-y divide-slate-200">
         {AGREEMENTS.map((a) => (
           <li key={a.id}>
             <div className="flex items-center gap-2.5 py-3">
@@ -151,19 +152,15 @@ function StepAuth({ onNext, onPrev }: { onNext: () => void; onPrev: () => void }
         <span
           className={cn(
             'flex size-16 items-center justify-center rounded-2xl transition-colors',
-            verified ? 'bg-green-100 text-green-600' : 'bg-cobalt-100 text-cobalt-600',
+            verified ? 'bg-green-100 text-green-600' : 'bg-[#FEE500] text-black/85',
           )}
         >
-          {verified ? <Check className="size-8" /> : <ShieldCheck className="size-8" />}
+          {verified ? <Check className="size-8" /> : <KakaoIcon className="size-8" />}
         </span>
         <p className="mt-4 text-base font-semibold text-slate-700">
           {verified ? '본인인증이 완료되었습니다' : '카카오톡으로 본인인증을 진행하세요'}
         </p>
-        {!verified && (
-          <Button className="mt-5" onClick={() => setVerified(true)}>
-            카카오로 인증하기
-          </Button>
-        )}
+        {!verified && <KakaoAuthButton className="mt-5" onClick={() => setVerified(true)} />}
       </div>
 
       <div className="mt-6 flex justify-between">

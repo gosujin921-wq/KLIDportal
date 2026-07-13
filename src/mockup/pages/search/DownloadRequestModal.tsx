@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { CheckCircle2, Info } from 'lucide-react'
 import { Modal } from '@/mockup/components/ui/Modal'
 import { Button } from '@/mockup/components/ui/Button'
+import { Select } from '@/mockup/components/ui/Select'
 import { EventBadge } from '@/mockup/components/ui/badges'
 import { zipParts, type Dataset } from '@/mockup/mocks/datasets'
 import { useDemoAuth } from '@/mockup/demoAuth'
@@ -88,11 +89,11 @@ export function DownloadRequestModal({
             <span className="text-sm font-semibold text-slate-800">
               활용 목적 <span className="text-red-500">*</span>
             </span>
-            <select
-              required
+            <Select
               value={purpose}
-              onChange={(e) => setPurpose(e.target.value)}
-              className="mt-1.5 h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-800 focus:border-cobalt-400 focus:outline-none"
+              onChange={setPurpose}
+              wrapperClassName="mt-1.5 w-full"
+              className="h-11 w-full text-base text-slate-800"
             >
               <option value="" disabled>
                 선택하세요
@@ -100,7 +101,7 @@ export function DownloadRequestModal({
               {PURPOSES.map((p) => (
                 <option key={p}>{p}</option>
               ))}
-            </select>
+            </Select>
           </label>
 
           {/* 활용 계획 (카운터: textarea 내부 우하단) */}

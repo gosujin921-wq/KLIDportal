@@ -1,8 +1,9 @@
 import { TriangleAlert, UploadCloud } from 'lucide-react'
 import { Breadcrumb } from '@/mockup/components/Breadcrumb'
 import { Button } from '@/mockup/components/ui/Button'
+import { Select } from '@/mockup/components/ui/Select'
 import { EventBadge, StatusBadge } from '@/mockup/components/ui/badges'
-import { EVENT_TYPES_MAIN } from '@/components/domain/eventTypes'
+import { EVENT_TYPES_MAIN } from '@/mockup/domain/eventTypes'
 import { uploads } from '@/mockup/mocks/workspace'
 import { formatDate } from '@/lib/datetime'
 
@@ -54,17 +55,14 @@ export function UploadPage() {
             <span className="text-sm font-semibold text-slate-700">
               이벤트 유형 <span className="text-red-500">*</span>
             </span>
-            <select
-              defaultValue=""
-              className="mt-1.5 h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-700 focus:border-cobalt-400 focus:outline-none"
-            >
+            <Select defaultValue="" wrapperClassName="mt-1.5 w-full" className="h-10 w-full text-base">
               <option value="" disabled>
                 선택하세요
               </option>
               {EVENT_TYPES_MAIN.map((t) => (
                 <option key={t.key}>{t.label}</option>
               ))}
-            </select>
+            </Select>
           </label>
           <label className="mt-3.5 block">
             <span className="text-sm font-semibold text-slate-700">촬영일</span>
@@ -85,7 +83,7 @@ export function UploadPage() {
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-slate-100 text-sm text-slate-400">
+              <tr className="border-b border-slate-200 text-sm text-slate-400">
                 <th className="px-5 py-3 font-medium">영상</th>
                 <th className="px-3 py-3 font-medium">유형</th>
                 <th className="px-3 py-3 font-medium">상태</th>

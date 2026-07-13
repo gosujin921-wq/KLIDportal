@@ -2,8 +2,9 @@ import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { MotionConfig } from 'motion/react'
 import { DemoAuthProvider } from '@/mockup/demoAuth'
+import { SavedSearchProvider } from '@/mockup/savedSearches'
 import { AppLayout } from '@/mockup/components/layout/AppLayout'
-import { LandingPage } from '@/mockup/pages/landing/LandingPage'
+import { MainPage } from '@/mockup/pages/main/MainPage'
 import { PlaceholderPage } from '@/mockup/pages/PlaceholderPage'
 import { StyleGuide } from '@/mockup/pages/StyleGuide'
 import { SearchPage } from '@/mockup/pages/search/SearchPage'
@@ -52,7 +53,7 @@ function PortalRoutes() {
   return (
     <AppLayout>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="/style" element={<StyleGuide />} />
 
         {/* 학습데이터 */}
@@ -125,6 +126,7 @@ export default function App() {
       {/* 시스템 reduced-motion 설정을 모든 motion 컴포넌트에 전역 반영 */}
       <MotionConfig reducedMotion="user">
         <DemoAuthProvider>
+          <SavedSearchProvider>
           <Routes>
             {/* 관리자 (별도 레이아웃, 포털 셸 밖) */}
             <Route path="/admin" element={<AdminLayout />}>
@@ -165,6 +167,7 @@ export default function App() {
             {/* 사용자 포털 */}
             <Route path="/*" element={<PortalRoutes />} />
           </Routes>
+          </SavedSearchProvider>
         </DemoAuthProvider>
       </MotionConfig>
     </BrowserRouter>

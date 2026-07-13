@@ -8,7 +8,7 @@ import { DatasetThumb } from '@/mockup/components/DatasetThumb'
 import { DatasetCard } from '@/mockup/components/DatasetCard'
 import { EventBadge, KindTag } from '@/mockup/components/ui/badges'
 import { DownloadRequestModal } from './DownloadRequestModal'
-import { EVENT_TYPE_MAP } from '@/components/domain/eventTypes'
+import { EVENT_TYPE_MAP } from '@/mockup/domain/eventTypes'
 import { DATASETS, getDataset } from '@/mockup/mocks/datasets'
 import { formatNumber } from '@/lib/format'
 import { formatDate } from '@/lib/datetime'
@@ -142,7 +142,7 @@ export function DatasetDetailPage() {
               />
             </dl>
 
-            <div className="mt-5 space-y-2 border-t border-slate-100 pt-4">
+            <div className="mt-5 space-y-2 border-t border-slate-200 pt-4">
               <p className="flex items-start gap-1.5 text-sm text-slate-500">
                 <Info className="mt-0.5 size-4 shrink-0 text-cobalt-500" />
                 영상과 이미지는 세트로 제공됩니다.

@@ -1,15 +1,18 @@
-import type { EventTypeKey } from '@/components/domain/eventTypes'
+import type { EventTypeKey } from '@/mockup/domain/eventTypes'
 
-/** 랜딩 목업 데이터 (전부 임의 수치) */
+/** 메인·포털 공통 목업 데이터 (전부 임의 수치) */
 
 /**
  * 포털 보유 현황 (목업 수치)
  * 단위 기준: 데이터셋 = 영상+이미지 세트 / 영상 = 건 / 이미지 = 장
  */
 export const portalStats = {
-  datasetCount: 1_240, // 누적 학습 데이터셋 (세트) — 이벤트별·월별 누적 합계와 일치해야 함
-  videoCount: 7_400, // 누적 영상 (건)
-  imageCount: 86_000, // 누적 학습 이미지 (장) — RFP 구축 목표 10만장 이내로 유지
+  datasetCount: 1_240, // 누적 학습 데이터셋 (건) — datasets.ts 생성 분포(eventStats·regionStats 합계)와 일치
+  videoCount: 7_400, // 누적 영상 (건) — 데이터 현황 페이지
+  imageCount: 86_000, // 누적 학습 이미지 (장) — 데이터 현황 페이지, RFP 구축 목표 10만장 이내
+  clipCount: 38_520, // 영상 클립 (건) — 메인 보유 현황 (요청서 §섹션2 샘플)
+  frameCount: 524_300, // 라벨링 프레임 (장) — 메인 보유 현황 (요청서 §섹션2 샘플)
+  downloadCount: 12_840, // 누적 다운로드 (회) — 메인 보유 현황 (요청서 §섹션2 샘플)
 }
 
 /**
@@ -40,14 +43,14 @@ export const eventStats: { key: EventTypeKey; count: number }[] = [
   { key: 'abduction', count: 98 },
 ]
 
-/** 월별 누적 데이터 증가 (최근 6개월) */
+/** 월별 데이터셋 구축 (최근 6개월). count = 누적, added = 해당 월 신규(증분) */
 export const monthlyGrowth = [
-  { month: '1월', count: 720 },
-  { month: '2월', count: 845 },
-  { month: '3월', count: 968 },
-  { month: '4월', count: 1054 },
-  { month: '5월', count: 1162 },
-  { month: '6월', count: 1240 },
+  { month: '1월', count: 720, added: 128 },
+  { month: '2월', count: 845, added: 125 },
+  { month: '3월', count: 968, added: 123 },
+  { month: '4월', count: 1054, added: 86 },
+  { month: '5월', count: 1162, added: 108 },
+  { month: '6월', count: 1240, added: 78 },
 ]
 
 /** 시·도별 데이터셋 보유 현황 (목업). 합계 = 1,240 (누적 데이터셋과 일치) */

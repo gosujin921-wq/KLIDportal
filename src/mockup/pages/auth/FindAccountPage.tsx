@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Check, ShieldCheck } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { Container } from '@/mockup/components/ui/Container'
 import { Button } from '@/mockup/components/ui/Button'
+import { KakaoAuthButton, KakaoIcon } from './KakaoAuthButton'
 import { cn } from '@/lib/cn'
 
 /** 아이디 찾기 / 비밀번호 재설정 (동일 좁은 카드 템플릿) */
@@ -41,15 +42,12 @@ export function FindAccountPage({ kind }: { kind: 'id' | 'password' }) {
 
           {((isId && step === 1) || (!isId && step === 2)) && (
             <div className="flex flex-col items-center py-4">
-              <span className="flex size-14 items-center justify-center rounded-2xl bg-cobalt-100 text-cobalt-600">
-                <ShieldCheck className="size-7" />
+              <span className="flex size-14 items-center justify-center rounded-2xl bg-[#FEE500] text-black/85">
+                <KakaoIcon className="size-7" />
               </span>
-              <p className="mt-4 text-base font-semibold text-slate-700">
-                카카오 본인인증
-              </p>
-              <Button className="mt-5" onClick={() => setStep(isId ? 2 : 3)}>
-                카카오로 인증하기
-              </Button>
+              <p className="mt-4 text-base font-semibold text-slate-700">카카오 본인인증</p>
+              <p className="mt-1 text-sm text-slate-500">본인 명의 카카오 계정으로 인증하세요.</p>
+              <KakaoAuthButton className="mt-5" onClick={() => setStep(isId ? 2 : 3)} />
             </div>
           )}
 

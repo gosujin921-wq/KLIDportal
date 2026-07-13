@@ -1,7 +1,7 @@
 /** 재난·안전 이벤트 유형 정의 (기획 확정 8종). 검색카드·배지·통계에서 공통 사용. */
 import {
-  PersonStanding,
-  Swords,
+  HeartPulse,
+  BicepsFlexed,
   Flame,
   CarFront,
   ShieldAlert,
@@ -44,7 +44,7 @@ export const EVENT_TYPES: EventType[] = [
     textClass: 'text-event-falldown',
     borderClass: 'border-event-falldown/30',
     bgClass: 'bg-yellow-50',
-    icon: PersonStanding,
+    icon: HeartPulse,
   },
   {
     key: 'violence',
@@ -52,7 +52,7 @@ export const EVENT_TYPES: EventType[] = [
     textClass: 'text-event-violence',
     borderClass: 'border-event-violence/30',
     bgClass: 'bg-fuchsia-50',
-    icon: Swords,
+    icon: BicepsFlexed,
   },
   {
     key: 'fire',

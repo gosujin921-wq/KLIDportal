@@ -16,7 +16,7 @@ const TAG_STYLE: Record<string, string> = {
 
 export function NoticeSection() {
   return (
-    <section className="bg-slate-50/70 py-20">
+    <section className="py-20">
       <Container>
         <Reveal className="card-soft rounded-2xl bg-white p-7">
           <div className="flex items-center justify-between">
@@ -29,7 +29,7 @@ export function NoticeSection() {
             </Link>
           </div>
 
-          <ul className="mt-5 divide-y divide-slate-100">
+          <ul className="mt-5 divide-y divide-slate-200">
             {notices.map((n, i) => (
               <motion.li
                 key={n.id}

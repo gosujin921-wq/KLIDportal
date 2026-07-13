@@ -1,4 +1,4 @@
-import { EVENT_TYPE_MAP, type EventTypeKey } from '@/components/domain/eventTypes'
+import { EVENT_TYPE_MAP, type EventTypeKey } from '@/mockup/domain/eventTypes'
 import type { StatusKey } from '@/mockup/mocks/workspace'
 import { cn } from '@/lib/cn'
 

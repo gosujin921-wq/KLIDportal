@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { Menu, TriangleAlert, UserCircle } from 'lucide-react'
+import { Menu, TriangleAlert, UserCircle, X } from 'lucide-react'
 import { Button } from '@/mockup/components/ui/Button'
 import { Container } from '@/mockup/components/ui/Container'
 import { Modal } from '@/mockup/components/ui/Modal'
@@ -30,7 +30,12 @@ export function AppHeader() {
           <Logo />
         </NavLink>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav
+          className={cn(
+            'hidden items-center gap-1 transition-opacity duration-200 md:flex',
+            sitemapOpen && 'pointer-events-none opacity-0',
+          )}
+        >
           {NAV.map((item) => (
             <NavLink
               key={item.to}
@@ -50,35 +55,46 @@ export function AppHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          {/* 계정 액션 — 전체메뉴 열리면 숨김 */}
+          <div
+            className={cn(
+              'flex items-center gap-2 transition-opacity duration-200',
+              sitemapOpen && 'pointer-events-none opacity-0',
+            )}
+          >
+            {loggedIn ? (
+              <>
+                <Button variant="ghost" size="sm" onClick={() => setLogoutOpen(true)}>
+                  로그아웃
+                </Button>
+                <Button variant="secondary" size="sm" onClick={() => navigate('/mypage')}>
+                  <UserCircle className="size-4.5" />
+                  마이페이지
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
+                  로그인
+                </Button>
+                <Button size="sm" onClick={() => navigate('/signup')}>
+                  회원가입
+                </Button>
+              </>
+            )}
+            <span aria-hidden className="mx-1 hidden h-5 w-px bg-slate-200 md:block" />
+          </div>
+
+          {/* 전체메뉴 토글 — 같은 자리에서 ≡ ↔ ✕ */}
           <button
             type="button"
-            aria-label="사이트맵"
-            onClick={() => setSitemapOpen(true)}
-            className="mr-1 hidden size-9 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 md:inline-flex"
+            aria-label={sitemapOpen ? '전체 메뉴 닫기' : '전체 메뉴'}
+            aria-expanded={sitemapOpen}
+            onClick={() => setSitemapOpen((v) => !v)}
+            className="hidden size-9 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 md:inline-flex"
           >
-            <Menu className="size-5" />
+            {sitemapOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
-
-          {loggedIn ? (
-            <>
-              <Button variant="ghost" size="sm" onClick={() => setLogoutOpen(true)}>
-                로그아웃
-              </Button>
-              <Button variant="secondary" size="sm" onClick={() => navigate('/mypage')}>
-                <UserCircle className="size-4.5" />
-                마이페이지
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>
-                로그인
-              </Button>
-              <Button size="sm" onClick={() => navigate('/signup')}>
-                회원가입
-              </Button>
-            </>
-          )}
         </div>
       </Container>
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { CheckCircle2, Download } from 'lucide-react'
 import { Breadcrumb } from '@/mockup/components/Breadcrumb'
 import { Button } from '@/mockup/components/ui/Button'
+import { Select } from '@/mockup/components/ui/Select'
 import { StatusBadge } from '@/mockup/components/ui/badges'
 import { GenAiSection } from './GenAiSection'
 import { augmentConditions } from '@/mockup/mocks/landing'
@@ -78,11 +79,7 @@ export function AugmentPage() {
             <span className="text-sm font-semibold text-slate-700">
               원본 데이터 <span className="text-red-500">*</span>
             </span>
-            <select
-              required
-              defaultValue=""
-              className="mt-1.5 h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-700 focus:border-cobalt-400 focus:outline-none"
-            >
+            <Select defaultValue="" wrapperClassName="mt-1.5 w-full" className="h-11 w-full text-base">
               <option value="" disabled>
                 내 학습데이터에서 선택하세요
               </option>
@@ -91,7 +88,7 @@ export function AugmentPage() {
                 .map((d) => (
                   <option key={d.id}>{d.title}</option>
                 ))}
-            </select>
+            </Select>
           </label>
 
           <div className="mt-4">
@@ -163,7 +160,7 @@ export function AugmentPage() {
             </p>
           </div>
 
-          <dl className="mt-5 space-y-3 border-t border-slate-100 pt-4">
+          <dl className="mt-5 space-y-3 border-t border-slate-200 pt-4">
             <div className="flex items-end justify-between">
               <dt className="text-sm text-slate-500">이번 달 누적 증강</dt>
               <dd className="text-xl font-extrabold text-slate-900 tabular-nums">
@@ -189,7 +186,7 @@ export function AugmentPage() {
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-slate-100 text-sm text-slate-400">
+              <tr className="border-b border-slate-200 text-sm text-slate-400">
                 <th className="px-5 py-3 font-medium">원본 데이터</th>
                 <th className="px-3 py-3 font-medium">조건</th>
                 <th className="px-3 py-3 font-medium">배수</th>

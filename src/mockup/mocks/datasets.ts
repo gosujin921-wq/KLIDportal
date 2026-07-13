@@ -1,4 +1,4 @@
-import type { EventTypeKey } from '@/components/domain/eventTypes'
+import type { EventTypeKey } from '@/mockup/domain/eventTypes'
 import { eventStats, regionStats } from '@/mockup/mocks/landing'
 import { daysAgo } from '@/mockup/mocks/dates'
 
@@ -6,7 +6,7 @@ import { daysAgo } from '@/mockup/mocks/dates'
  * 학습데이터셋 목업 데이터. 전부 임의 수치(실운영 데이터 무관).
  * 큐레이션 18건(상세·인기 데모용) + 생성 데이터로 총 1,240건.
  * 유형별·지역별 건수는 landing.ts의 eventStats/regionStats와 정확히 일치한다
- * (랜딩 쇼케이스 "화재 158" 클릭 → 검색 결과 158건).
+ * (메인 쇼케이스 "화재 158" 클릭 → 검색 결과 158건).
  */
 
 export type DataKind = '영상' | '이미지' | '라벨'
@@ -363,7 +363,7 @@ const CURATED: Dataset[] = [
 
 // ── 데이터셋 생성기 ─────────────────────────────────────────────
 // eventStats·regionStats 분포에서 큐레이션분을 뺀 나머지를 생성해
-// 유형별·지역별 건수가 랜딩 통계와 정확히 일치하게 만든다.
+// 유형별·지역별 건수가 메인 통계와 정확히 일치하게 만든다.
 // 시드 고정 PRNG로 결정적 생성 (Math.random 금지: 리로드마다 동일해야 함).
 
 function mulberry32(seed: number) {

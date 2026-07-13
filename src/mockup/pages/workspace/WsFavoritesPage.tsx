@@ -6,7 +6,8 @@ import { Button } from '@/mockup/components/ui/Button'
 import { Modal } from '@/mockup/components/ui/Modal'
 import { EventBadge } from '@/mockup/components/ui/badges'
 import { POPULAR_DATASETS, type Dataset } from '@/mockup/mocks/datasets'
-import { savedSearches, savedSummary, savedQuery, savedCount } from '@/mockup/mocks/mypage'
+import { savedSummary, savedQuery, savedCount, type SavedSearch } from '@/mockup/mocks/mypage'
+import { useSavedSearches } from '@/mockup/savedSearches'
 import { formatNumber } from '@/lib/format'
 import { cn } from '@/lib/cn'
 
@@ -24,6 +25,18 @@ export function WsFavoritesPage() {
   const [tab, setTab] = useState<TabKey>('datasets')
   const [items, setItems] = useState(POPULAR_DATASETS.slice(0, 5))
   const [removeTarget, setRemoveTarget] = useState<Dataset | null>(null)
+
+  // 검색 조건: 스토어 공유 (검색 화면 "이 조건 저장" 과 동기화)
+  const { items: savedSearches, remove: removeSaved, rename: renameSaved } = useSavedSearches()
+  const [renameTarget, setRenameTarget] = useState<SavedSearch | null>(null)
+  const [renameValue, setRenameValue] = useState('')
+  const [deleteTarget, setDeleteTarget] = useState<SavedSearch | null>(null)
+
+  const submitRename = () => {
+    if (!renameTarget || !renameValue.trim()) return
+    renameSaved(renameTarget.id, renameValue)
+    setRenameTarget(null)
+  }
 
   return (
     <>
@@ -63,7 +76,7 @@ export function WsFavoritesPage() {
         <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-slate-100 text-sm text-slate-400">
+              <tr className="border-b border-slate-200 text-sm text-slate-400">
                 <th className="w-16 px-5 py-3 font-medium">번호</th>
                 <th className="w-32 px-3 py-3 font-medium">데이터유형</th>
                 <th className="px-3 py-3 font-medium">데이터명</th>
@@ -150,6 +163,10 @@ export function WsFavoritesPage() {
                 <button
                   type="button"
                   aria-label="이름 변경"
+                  onClick={() => {
+                    setRenameTarget(s)
+                    setRenameValue(s.name)
+                  }}
                   className="flex size-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
                 >
                   <Pencil className="size-4" />
@@ -157,6 +174,7 @@ export function WsFavoritesPage() {
                 <button
                   type="button"
                   aria-label="삭제"
+                  onClick={() => setDeleteTarget(s)}
                   className="flex size-8 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500"
                 >
                   <Trash2 className="size-4" />
@@ -164,6 +182,14 @@ export function WsFavoritesPage() {
               </div>
             </li>
           ))}
+          {savedSearches.length === 0 && (
+            <li className="rounded-2xl border border-slate-200 bg-white px-5 py-14 text-center text-base text-slate-400">
+              저장한 검색 조건이 없습니다.{' '}
+              <Link to="/search" className="font-semibold text-cobalt-600 hover:underline">
+                데이터 검색하기
+              </Link>
+            </li>
+          )}
         </ul>
       )}
 
@@ -189,6 +215,73 @@ export function WsFavoritesPage() {
             }}
           >
             해제
+          </Button>
+        </div>
+      </Modal>
+
+      {/* 검색 조건 이름 변경 */}
+      <Modal
+        open={renameTarget !== null}
+        onClose={() => setRenameTarget(null)}
+        title="검색 조건 이름 변경"
+      >
+        {renameTarget && (
+          <div className="mb-4 flex flex-wrap gap-1.5">
+            {savedSummary(renameTarget).map((c) => (
+              <span
+                key={c}
+                className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-sm text-slate-600"
+              >
+                {c}
+              </span>
+            ))}
+          </div>
+        )}
+        <label htmlFor="rename-input" className="text-sm font-semibold text-slate-700">
+          이름
+        </label>
+        <input
+          id="rename-input"
+          value={renameValue}
+          onChange={(e) => setRenameValue(e.target.value)}
+          maxLength={30}
+          autoFocus
+          onKeyDown={(e) => e.key === 'Enter' && submitRename()}
+          className="mt-2 h-11 w-full rounded-lg border border-slate-300 bg-white px-3.5 text-base text-slate-900 placeholder:text-slate-400 focus:border-cobalt-400 focus:outline-none"
+          placeholder="검색 조건 이름"
+        />
+        <div className="mt-1.5 flex justify-end">
+          <span className="font-mono text-xs text-slate-500 tabular-nums">
+            {renameValue.length}/30
+          </span>
+        </div>
+        <div className="mt-5 flex justify-end gap-2">
+          <Button variant="secondary" onClick={() => setRenameTarget(null)}>
+            취소
+          </Button>
+          <Button disabled={!renameValue.trim()} onClick={submitRename}>
+            저장
+          </Button>
+        </div>
+      </Modal>
+
+      {/* 검색 조건 삭제 */}
+      <Modal open={deleteTarget !== null} onClose={() => setDeleteTarget(null)} title="검색 조건 삭제">
+        <p className="text-base leading-relaxed text-slate-600">
+          <strong className="text-slate-900">{deleteTarget?.name}</strong>
+          <br />이 검색 조건을 삭제할까요?
+        </p>
+        <div className="mt-6 flex justify-end gap-2">
+          <Button variant="secondary" onClick={() => setDeleteTarget(null)}>
+            취소
+          </Button>
+          <Button
+            onClick={() => {
+              if (deleteTarget) removeSaved(deleteTarget.id)
+              setDeleteTarget(null)
+            }}
+          >
+            삭제
           </Button>
         </div>
       </Modal>

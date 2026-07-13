@@ -57,6 +57,9 @@
   --color-warning: #d97706;
   --color-danger: #dc2626;
   --color-info: #2e45dc;
+
+  /* ----- 표면 ----- */
+  --color-canvas: #f4f6fa; /* 서브페이지 베이스 — 미색 쿨톤 그레이 (흰 카드가 도드라지게) */
 }
 
 /* =========================================================================
@@ -65,9 +68,10 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    overscroll-behavior-y: none; /* 상·하단 고무줄 바운스 제거 (sticky 요소가 딸려 튕겨 보이는 현상 방지) */
   }
   body {
-    @apply bg-white text-slate-800 antialiased;
+    @apply bg-canvas text-slate-800 antialiased;
     font-family: var(--font-sans);
     font-size: var(--text-base);
     line-height: var(--text-base--line-height);
@@ -94,10 +98,19 @@
   .hero-gradient {
     /* 큐브 뒤 채도 높은 코발트 코어(네온 톤은 히어로 한정 허용)로 포컬 앵커,
        바깥으로 갈수록 기존 은은한 글로우로 풀림 */
+    /* --hero-focal-x: 캐릭터 화면 가로 위치(캔버스 resize에서 주입). 기본 68%. */
     background:
-      radial-gradient(28% 34% at 68% 45%, rgba(74, 97, 232, 0.38), transparent 72%),
-      radial-gradient(50% 58% at 68% 46%, rgba(110, 150, 235, 0.3), transparent 70%),
+      radial-gradient(28% 34% at var(--hero-focal-x, 68%) 45%, rgba(74, 97, 232, 0.38), transparent 72%),
+      radial-gradient(50% 58% at var(--hero-focal-x, 68%) 46%, rgba(110, 150, 235, 0.3), transparent 70%),
       radial-gradient(42% 50% at 10% 10%, rgba(255, 255, 255, 0.85), transparent 60%),
+      linear-gradient(160deg, #f2f6fb 0%, #e4ecf7 52%, #edf2fa 100%);
+  }
+
+  /* 중앙 정렬 히어로(큐브 없는 인트로 등) — 글로우를 텍스트 중앙에 맞춤 */
+  .hero-gradient-center {
+    background:
+      radial-gradient(30% 42% at 50% 44%, rgba(74, 97, 232, 0.26), transparent 72%),
+      radial-gradient(56% 64% at 50% 46%, rgba(110, 150, 235, 0.24), transparent 72%),
       linear-gradient(160deg, #f2f6fb 0%, #e4ecf7 52%, #edf2fa 100%);
   }
 
@@ -150,8 +163,8 @@
   .hero-dots {
     background-image: radial-gradient(rgba(46, 69, 220, 0.09) 1px, transparent 1px);
     background-size: 22px 22px;
-    -webkit-mask-image: radial-gradient(55% 65% at 68% 45%, black, transparent 78%);
-    mask-image: radial-gradient(55% 65% at 68% 45%, black, transparent 78%);
+    -webkit-mask-image: radial-gradient(55% 65% at var(--hero-focal-x, 68%) 45%, black, transparent 78%);
+    mask-image: radial-gradient(55% 65% at var(--hero-focal-x, 68%) 45%, black, transparent 78%);
   }
 }
 
@@ -237,5 +250,30 @@
   }
   to {
     transform: translate3d(-50px, 26px, 0) scale(1);
+  }
+}
+
+/* 지역 버블맵 부유(오빗). 순수 CSS transform 이라 컴포지터에서 매끄럽게 합성(모션 JS 루프·서브픽셀 스냅 회피). */
+@keyframes region-bubble-float {
+  0% {
+    transform: translate3d(var(--fx, 0), 0, 0);
+  }
+  25% {
+    transform: translate3d(0, var(--fy, 0), 0);
+  }
+  50% {
+    transform: translate3d(calc(var(--fx, 0) * -1), 0, 0);
+  }
+  75% {
+    transform: translate3d(0, calc(var(--fy, 0) * -1), 0);
+  }
+  100% {
+    transform: translate3d(var(--fx, 0), 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .region-bubble {
+    animation: none !important;
   }
 }

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 영상학습 사용자 포털 · 기획 장점 + 디자인 컨셉 (v2)</title>
+<style>
+:root{
+  --ink:#0f1836;
+  --ink2:#1f2942;
+  --paper:#f4f6fa;
+  --white:#ffffff;
+  --muted:#64708c;
+  --line:rgba(15,24,54,.12);
+  --cobalt:#2e45dc;
+  --cobalt2:#4a61e8;
+  --cobalt-lite:#6e84f1;
+  --cobalt-50:#eef1fe;
+  --cobalt-deep:#1e2b74;
+  --grad:linear-gradient(120deg,#2e45dc 8%,#4a61e8 55%,#2336b8 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Pretendard Variable',Pretendard,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;background:var(--ink);color:var(--ink);word-break:keep-all;line-break:strict;letter-spacing:-.02em}
+.deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:6.4vh 8vw;background:var(--paper);opacity:0;visibility:hidden;transform:translateY(18px);transition:.4s ease}
+.slide.active{opacity:1;visibility:visible;transform:none;z-index:2}
+.slide.dark{background:radial-gradient(46% 56% at 80% 36%,rgba(74,97,232,.42),transparent 66%),linear-gradient(145deg,#1e2b74 0%,#16205c 100%);color:var(--white)}
+.slide.blue{background:radial-gradient(52% 64% at 76% 44%,rgba(110,132,241,.36),transparent 70%),linear-gradient(140deg,#2336b8 0%,#16205c 100%);color:var(--white)}
+.slide.white{background:#fff}
+
+.slide:after{content:"";position:absolute;inset:auto 8vw 5vh 8vw;height:1px;background:linear-gradient(90deg,transparent,rgba(100,112,140,.4),transparent);pointer-events:none}
+.dark:after,.blue:after{background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent)}
+
+.eyebrow{font-size:13px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--cobalt);margin-bottom:20px;display:flex;gap:10px;align-items:center}
+.eyebrow:before{content:"";width:26px;height:2px;background:currentColor}
+.dark .eyebrow,.blue .eyebrow{color:#aeb9ff}
+.eyebrow .act{margin-left:auto;font-size:12px;letter-spacing:.08em;color:var(--muted)}
+.dark .eyebrow .act,.blue .eyebrow .act{color:rgba(255,255,255,.55)}
+
+h1{font-size:clamp(44px,7vw,100px);line-height:1.03;letter-spacing:-.055em;font-weight:900;max-width:15ch}
+h2{font-size:clamp(32px,4.8vw,68px);line-height:1.08;letter-spacing:-.05em;font-weight:900;max-width:18ch}
+h3{font-size:clamp(19px,2vw,27px);letter-spacing:-.03em;font-weight:800}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dark .grad,.blue .grad{background:linear-gradient(120deg,#fff 0%,#c4cffb 55%,#9daef7 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:clamp(16px,1.4vw,21px);line-height:1.68;color:#5b6480;max-width:48ch;margin-top:24px}
+.dark .sub,.blue .sub{color:rgba(255,255,255,.8)}
+
+/* ── 데이터 제작 강조 (핵심 차별) ── */
+.hero-line{margin-top:8px}
+.hero-line .lo{font-size:clamp(26px,3.4vw,52px);font-weight:800;letter-spacing:-.05em;line-height:1.12;color:rgba(255,255,255,.62)}
+.hero-line .hi{font-size:clamp(40px,6.6vw,96px);font-weight:900;letter-spacing:-.06em;line-height:1.04;margin-top:6px}
+.made-tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.made-tags span{font-size:clamp(15px,1.5vw,20px);font-weight:800;border-radius:999px;padding:11px 20px;border:1.5px solid rgba(255,255,255,.42);color:#eaf0ff;display:inline-flex;align-items:center;gap:9px}
+.made-tags span:before{content:"";width:9px;height:9px;border-radius:50%;background:#8ff}
+
+/* ── 정면 비교 테이블 ── */
+.vswrap{margin-top:32px;border-radius:22px;overflow:hidden;box-shadow:0 26px 60px -46px rgba(15,24,54,.55);border:1px solid var(--line)}
+.vstable{width:100%;border-collapse:collapse;background:#fff;font-size:clamp(15px,1.4vw,20px)}
+.vstable th,.vstable td{text-align:left;vertical-align:middle;padding:17px 22px;border-bottom:1px solid var(--line)}
+.vstable thead th{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:900;background:#f2f5fb;color:var(--muted)}
+.vstable thead th.us{background:var(--cobalt);color:#fff}
+.vstable .axis{font-weight:900;color:var(--ink);width:19%}
+.vstable td.them{color:#8a93a8;width:37%}
+.vstable td.them:before{content:"×";font-weight:900;color:#c2c9d6;margin-right:10px}
+.vstable td.us{color:var(--ink);font-weight:700;background:var(--cobalt-50);width:44%}
+.vstable td.us:before{content:"→";font-weight:900;color:var(--cobalt);margin-right:10px}
+.vstable tr.hot td.us{color:var(--cobalt-deep)}
+.vstable tr.hot .axis{color:var(--cobalt)}
+.vstable tr:last-child td{border-bottom:none}
+
+/* ── 카드 3열 ── */
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+@media(max-width:900px){.cols3{grid-template-columns:1fr}.slide{padding:8vh 8vw}}
+.card{position:relative;border:1px solid var(--line);background:#fff;border-radius:22px;padding:28px 26px 30px;box-shadow:0 22px 50px -40px rgba(15,24,54,.5);overflow:hidden}
+.card .k{font-size:13px;font-weight:900;letter-spacing:.08em;color:var(--cobalt);margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.card .k i{width:9px;height:9px;border-radius:50%;background:var(--cobalt);box-shadow:0 0 0 4px rgba(46,69,220,.14)}
+.card h3{color:var(--ink)}
+.card p{font-size:clamp(14.5px,1.15vw,17px);line-height:1.62;color:#5b6480;margin-top:10px}
+.card .feat{margin-top:14px;font-size:13px;font-weight:700;color:var(--cobalt);letter-spacing:-.01em}
+.card .gain{margin-top:14px;padding-top:13px;border-top:1px dashed var(--line);font-size:14.5px;font-weight:800;color:var(--cobalt-deep);letter-spacing:-.02em}
+.card .gain:before{content:"→ ";color:var(--cobalt);font-weight:900}
+
+/* ── 흐름 3박스 ── */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:16px;align-items:stretch;margin-top:40px}
+.arrow{font-size:32px;color:#aab2c8;font-weight:900;align-self:center}
+.flowbox{min-height:250px;border-radius:26px;border:1px solid var(--line);background:#fff;padding:26px 30px 30px;display:flex;flex-direction:column;box-shadow:0 22px 50px -42px rgba(15,24,54,.5)}
+.flowbud{height:96px;width:auto;object-fit:contain;object-position:left center;mix-blend-mode:multiply;margin-bottom:6px}
+.flowbox i{font-style:normal;font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--cobalt)}
+.flowbox b{font-size:clamp(30px,3.4vw,48px);line-height:.98;letter-spacing:-.05em;margin-top:4px}
+.flowbox p{font-size:clamp(14.5px,1.15vw,17px);line-height:1.56;color:#5b6480;margin-top:10px}
+@media(max-width:900px){.flow{grid-template-columns:1fr}.arrow{display:none}.flowbox{min-height:0}}
+
+/* ── 캐릭터 슬라이드 ── */
+.cols2{display:grid;grid-template-columns:1.02fr .98fr;gap:52px;align-items:center;margin-top:20px}
+@media(max-width:900px){.cols2{grid-template-columns:1fr;gap:28px}}
+.charstage{position:relative;height:clamp(300px,48vh,500px);border-radius:34px;overflow:hidden;display:grid;place-items:center;background:radial-gradient(60% 66% at 50% 44%,#ffffff,#eaf0fb 78%)}
+.charstage:before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(46,69,220,.09) 1px,transparent 1px);background-size:24px 24px;-webkit-mask-image:radial-gradient(58% 60% at 50% 46%,black,transparent 76%);mask-image:radial-gradient(58% 60% at 50% 46%,black,transparent 76%)}
+.charstage img{position:relative;max-height:86%;max-width:82%;object-fit:contain;mix-blend-mode:multiply;animation:bob 3s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.charstage img{animation:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.tags span{font-size:13.5px;font-weight:800;border-radius:999px;padding:9px 14px;border:1px solid var(--cobalt);color:var(--cobalt)}
+.dark .tags span,.blue .tags span{border-color:rgba(255,255,255,.4);color:#dce4ff}
+
+/* ── 룩앤필 3점 ── */
+.vibe{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:38px}
+@media(max-width:900px){.vibe{grid-template-columns:1fr}}
+.vibe .v{border-radius:22px;background:#fff;border:1px solid var(--line);padding:28px 26px;box-shadow:0 22px 50px -42px rgba(15,24,54,.5)}
+.vibe .v b{display:block;font-size:clamp(21px,2.3vw,29px);letter-spacing:-.04em;color:var(--ink)}
+.vibe .v p{font-size:clamp(14.5px,1.15vw,17px);line-height:1.56;color:#5b6480;margin-top:10px}
+
+/* ── 실제 화면 갤러리 (세로 뷰포트 맞춤: 넘침 방지) ── */
+.gal{justify-content:flex-start;padding-top:4.5vh;padding-bottom:4.5vh}
+.gal .eyebrow{margin-bottom:12px}
+.gal h2{font-size:clamp(24px,3vw,44px);margin:0}
+.gallery{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:16px;margin-top:16px}
+.gcell{display:flex;flex-direction:column;min-height:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#fff;box-shadow:0 22px 50px -42px rgba(15,24,54,.55)}
+.gcell img{flex:1 1 auto;min-height:0;display:block;width:100%;height:auto;object-fit:cover;object-position:top center;border-bottom:1px solid var(--line)}
+.gcap{flex:0 0 auto;padding:11px 18px;display:flex;align-items:baseline;gap:10px}
+.gcap b{font-size:clamp(14px,1.2vw,17px);color:var(--ink);font-weight:800}
+.gcap .tag{font-size:12.5px;font-weight:900;letter-spacing:.06em;color:var(--cobalt);background:var(--cobalt-50);border-radius:6px;padding:3px 9px}
+.gnote{flex:0 0 auto;margin-top:12px;font-size:14px;color:var(--muted)}
+.gnote b{color:var(--cobalt);font-weight:800}
+@media(max-width:900px){.gallery{grid-template-columns:1fr;grid-template-rows:none}.gal{justify-content:center}}
+
+/* ── 디테일 기획 포인트 그리드 ── */
+.detgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+.det{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 22px 24px;box-shadow:0 22px 50px -42px rgba(15,24,54,.5)}
+.det b{display:block;font-size:clamp(16px,1.5vw,19px);color:var(--ink);letter-spacing:-.02em}
+.det b:before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--cobalt);margin-right:9px;vertical-align:middle}
+.det p{margin-top:9px;font-size:clamp(13.5px,1.05vw,15px);line-height:1.55;color:#5b6480}
+@media(max-width:900px){.detgrid{grid-template-columns:1fr}}
+
+/* ── 엔딩 ── */
+.end{align-items:center;text-align:center}
+.end .eyebrow{justify-content:center}
+.end .eyebrow:before{display:none}
+.endbud-wrap{width:clamp(132px,17vh,178px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 42%,#ffffff,#e4ecfb 82%);display:grid;place-items:center;margin-bottom:22px;box-shadow:0 30px 60px -28px rgba(0,0,0,.45)}
+.endbud-wrap img{width:82%;height:82%;object-fit:contain;mix-blend-mode:multiply}
+.end .end-name{font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#aeb9ff;margin-bottom:16px}
+.end h1{max-width:none}
+.end .sub{margin-inline:auto}
+.end .sign{margin-top:32px;font-size:14.5px;font-weight:600;color:rgba(255,255,255,.72)}
+
+/* ── 네비 ── */
+.navbtn{position:fixed;z-index:20;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid rgba(100,112,140,.34);background:rgba(255,255,255,.9);backdrop-filter:blur(12px);color:#5b6480;font-size:24px;cursor:pointer;display:grid;place-items:center;box-shadow:0 12px 30px rgba(15,24,54,.14)}
+.navbtn:hover{color:var(--cobalt)}
+.navbtn:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+.prev{left:20px}.next{right:20px}
+.hud{position:fixed;z-index:20;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:9px}
+.hud b{width:8px;height:8px;border-radius:99px;background:#b8bfcf;transition:.22s;cursor:pointer}
+.hud b.on{width:30px;background:var(--cobalt)}
+.counter{position:fixed;z-index:20;bottom:19px;right:26px;font-size:13px;font-weight:800;color:#8c95a8;font-variant-numeric:tabular-nums}
+.hint{position:fixed;z-index:20;top:20px;left:26px;font-size:12.5px;font-weight:700;letter-spacing:.03em;color:#8c95a8}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1. 타이틀 -->
+  <section class="slide dark active">
+    <span class="eyebrow">AI 영상학습 사용자 포털 · 기획 장점 + 디자인 컨셉 v2</span>
+    <h1>좋은 서비스를,<br><span class="grad">왜 어렵게 써야 할까?</span></h1>
+    <p class="sub" style="max-width:none">A사이트라는 큰 데이터 플랫폼이 이미 있습니다.<br>우리는 무엇을 다르게 기획했고, 그걸 어떤 얼굴로 보여줄까요.<br>기획의 장점과 디자인 컨셉, 두 가지를 이야기합니다.</p>
+  </section>
+
+  <!-- 2. 문제 -->
+  <section class="slide white">
+    <span class="eyebrow">지금의 데이터 포털<span class="act">1막 · 기획</span></span>
+    <h2>강력한데,<br><span class="grad">어렵습니다</span></h2>
+    <p class="sub" style="max-width:none">국내 대표 데이터 플랫폼에는 방대한 데이터가 있습니다.<br>그런데 막상 쓰려면 분류와 데이터 유형으로 찾아 들어가고,<br>실제 영상은 받아봐야 확인됩니다.<br>받은 다음엔 다른 도구로 나가 작업해야 합니다.<br>전문가에게도 번거롭고, 처음 온 기업과 연구자에겐 벽이 됩니다.</p>
+  </section>
+
+  <!-- 2b. 우리만의 데이터 (기획 장점: 원천) -->
+  <section class="slide dark">
+    <span class="eyebrow">우리만의 데이터<span class="act">1막 · 기획</span></span>
+    <h2>방식보다 먼저,<br><span class="grad">데이터가 다릅니다</span></h2>
+    <p class="sub" style="max-width:none">지자체 CCTV가 실제로 담은 재난·안전 현장입니다.<br>산불·침수·교통사고처럼 좀처럼 모으기 힘든 장면을,<br>실제 사건 그대로 학습데이터로 만들었습니다.<br>범용 데이터셋에는 없는, 우리만의 원천입니다.</p>
+    <div class="made-tags">
+      <span>산불</span><span>침수</span><span>화재</span><span>교통사고</span><span>유괴</span><span>쓰러짐</span><span>폭력</span><span>산사태</span>
+    </div>
+  </section>
+
+  <!-- 3. 정면 비교 (기획 장점) -->
+  <section class="slide">
+    <span class="eyebrow">A사이트 vs 우리 포털<span class="act">1막 · 기획</span></span>
+    <h2>같은 데이터 포털,<br><span class="grad">다르게 기획</span>했습니다</h2>
+    <div class="vswrap">
+      <table class="vstable">
+        <thead>
+          <tr><th>구분</th><th>A사이트</th><th class="us">우리 포털</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="axis">검색</td>
+            <td class="them">분류·데이터 유형 중심으로 찾는다</td>
+            <td class="us">이벤트 유형, 상황에서 바로 찾는다</td>
+          </tr>
+          <tr>
+            <td class="axis">미리보기</td>
+            <td class="them">실물 영상·이미지는 받아봐야 안다</td>
+            <td class="us">받기 전에 썸네일·구성·기한을 본다</td>
+          </tr>
+          <tr class="hot">
+            <td class="axis">데이터 제작</td>
+            <td class="them">받아서 다른 도구로 나가 작업한다</td>
+            <td class="us">저작·증강·생성을 포털 안에서 한다</td>
+          </tr>
+          <tr>
+            <td class="axis">관리</td>
+            <td class="them">신청·다운로드가 흩어져 챙기기 번거롭다</td>
+            <td class="us">상태·남은 기한을 한곳에서 챙긴다</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. 데이터 제작 강조 (핵심 차별) -->
+  <section class="slide blue">
+    <span class="eyebrow">가장 큰 차이<span class="act">1막 · 기획</span></span>
+    <div class="hero-line">
+      <div class="lo">A사이트가 받아 가는 저장소라면,</div>
+      <div class="hi"><span class="grad">우리는 안에서 만드는 작업 포털</span>입니다.</div>
+    </div>
+    <p class="sub" style="max-width:none">A사이트는 데이터를 내려받으면 끝입니다.<br>라벨링도 증강도 생성도, 받아서 다른 도구로 나가야 합니다.<br>우리는 그 전부를 포털 안에서 합니다.</p>
+    <div class="made-tags">
+      <span>라벨링</span>
+      <span>데이터 증강</span>
+      <span>생성형 AI</span>
+    </div>
+  </section>
+
+  <!-- 5. 우리 기획 = 세 가지 쉽게 -->
+  <section class="slide white">
+    <span class="eyebrow">우리 기획, 세 가지<span class="act">1막 · 기획</span></span>
+    <h2>찾기 · 만들기 · 챙기기를 <span class="grad">쉽게</span></h2>
+    <div class="cols3">
+      <div class="card">
+        <div class="k"><i></i>찾기 쉽게</div>
+        <h3>상황에서 바로</h3>
+        <p>산불 영상이 필요하면 산불을 누르면 됩니다. 분류를 외울 필요 없이 상황에서 찾고, 받기 전에 미리 봅니다.</p>
+        <div class="feat">이벤트 유형 8종 · 미리보기 카탈로그</div>
+        <div class="gain">필요한 장면을 헤매지 않고 바로</div>
+      </div>
+      <div class="card">
+        <div class="k"><i></i>만들기 쉽게</div>
+        <h3>나가지 않고</h3>
+        <p>라벨링, 증강, 영상 생성을 포털 안에서 바로 합니다. 받아서 다른 도구로 옮겨 다닐 필요가 없습니다.</p>
+        <div class="feat">저작도구 · 데이터 증강 · 생성형 AI</div>
+        <div class="gain">외부 도구·외주 없이 준비 시간 단축</div>
+      </div>
+      <div class="card">
+        <div class="k"><i></i>챙기기 쉽게</div>
+        <h3>곁에서 알려주며</h3>
+        <p>지금 어디까지 처리됐는지, 언제까지 받을 수 있는지 곁에서 알려 줍니다. 상태를 몰라 답답할 일이 없습니다.</p>
+        <div class="feat">처리 상태 · 다운로드 기한 D-day</div>
+        <div class="gain">기한 놓쳐 다시 신청할 일 없이</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5b. 디테일까지 기획 -->
+  <section class="slide">
+    <span class="eyebrow">디테일까지<span class="act">1막 · 기획</span></span>
+    <h2>큰 그림만 그린 게 <span class="grad">아닙니다</span></h2>
+    <div class="detgrid">
+      <div class="det"><b>검색 조건 즐겨찾기</b><p>자주 쓰는 검색 조건을 저장해, 다음엔 한 번에 불러옵니다.</p></div>
+      <div class="det"><b>다운로드 기한 D-day</b><p>받을 수 있는 기한을 목록에 D-day로 병기해 놓치지 않게 합니다.</p></div>
+      <div class="det"><b>진행중 작업 경고</b><p>다운로드·저작 중 로그아웃하면 먼저 알려 주고 종료합니다.</p></div>
+      <div class="det"><b>유효기간 파기 안내</b><p>업로드·생성물은 보관 기한을 명시하고, 만료 시 안전하게 삭제합니다.</p></div>
+      <div class="det"><b>출처 표식</b><p>원본·수동 라벨링·AI 증강을 구분해 데이터 출처를 밝힙니다.</p></div>
+      <div class="det"><b>즐겨찾기 해제 확인</b><p>실수로 지우지 않도록, 해제 전에 한 번 더 확인합니다.</p></div>
+    </div>
+  </section>
+
+  <!-- 6. 컨셉 브리지 -->
+  <section class="slide blue">
+    <span class="eyebrow">디자인 컨셉<span class="act">2막 · 디자인</span></span>
+    <h1>쉬워야<br><span class="grad">진짜다</span></h1>
+    <p class="sub" style="max-width:none">좋은 데이터일수록, 쓰는 사람이 쉬워야 합니다.<br>기획에서 세운 이 장점을 디자인은 한 문장으로 잇습니다.<br>처음 온 사람도 헤매지 않는 얼굴을 만듭니다.</p>
+  </section>
+
+  <!-- 7. 왜 캐릭터 -->
+  <section class="slide dark">
+    <span class="eyebrow">왜 캐릭터인가<span class="act">2막 · 디자인</span></span>
+    <div class="cols2">
+      <div>
+        <h2>어려운 길을,<br><span class="grad">대신 안내합니다</span></h2>
+        <p class="sub">캐릭터는 귀여우려고 만든 게 아닙니다. 복잡한 데이터 과정을 처음 온 사람도 이해하도록, 곁에서 길을 안내하는 장치입니다. 검색부터 저작과 완료 안내까지, 헤맬 만한 곳마다 나타나 다음 걸음을 알려 줍니다.</p>
+        <div class="tags"><span>낮은 진입장벽</span><span>단계 안내</span><span>친근한 첫인상</span></div>
+      </div>
+      <div class="charstage">
+        <img src="assets/buddy-guide.png" alt="안내하는 복셀 버디 캐릭터" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. 경험 흐름 -->
+  <section class="slide white">
+    <span class="eyebrow">사용자 경험<span class="act">2막 · 디자인</span></span>
+    <h2>흐름은 딱 <span class="grad">셋</span>입니다</h2>
+    <div class="flow">
+      <div class="flowbox">
+        <img class="flowbud" src="assets/buddy-search.png" alt="" />
+        <i>Find</i><b>찾고</b>
+        <p>상황에서 검색해 필요한 데이터를 발견하고, 미리 보고 고릅니다.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="flowbox">
+        <img class="flowbud" src="assets/buddy-guide.png" alt="" />
+        <i>Make</i><b>만들고</b>
+        <p>포털 안에서 라벨링·증강·생성으로 필요한 학습데이터를 만듭니다.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="flowbox">
+        <img class="flowbud" src="assets/buddy-done.png" alt="" />
+        <i>Use</i><b>쓰고</b>
+        <p>워크스페이스에 담아 반출하고, 기한까지 챙겨 활용합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. 룩앤필 -->
+  <section class="slide">
+    <span class="eyebrow">룩앤필<span class="act">2막 · 디자인</span></span>
+    <h2>밝고, 넓고, <span class="grad">말이 쉽게</span></h2>
+    <div class="vibe">
+      <div class="v"><b>밝은 톤</b><p>관제 대시보드가 아니라, 누구나 드나드는 공공 포털의 밝은 얼굴로.</p></div>
+      <div class="v"><b>넓은 여백</b><p>정보를 빽빽이 채우지 않습니다. 눈이 쉴 자리를 남겨 한 번에 하나씩 읽히게.</p></div>
+      <div class="v"><b>쉬운 말</b><p>전문 용어 대신 사람의 말로. 버튼 하나에도 무슨 일이 일어나는지 그대로 적습니다.</p></div>
+    </div>
+  </section>
+
+  <!-- 10. 클로징 선언 -->
+  <section class="slide dark">
+    <span class="eyebrow">Design Concept</span>
+    <h1>좋은 서비스를,<br><span class="grad">어렵지 않게.</span></h1>
+  </section>
+
+  <!-- 11. 실제 화면으로 증명 -->
+  <section class="slide white gal">
+    <span class="eyebrow">실제 화면<span class="act">이미 만든 것</span></span>
+    <h2>말이 아니라, <span class="grad">이미 화면입니다</span></h2>
+    <div class="gallery">
+      <div class="gcell">
+        <img src="assets/cap-search.png" alt="이벤트 유형 검색 화면" />
+        <div class="gcap"><span class="tag">찾기</span><b>이벤트 유형 검색 · 미리보기</b></div>
+      </div>
+      <div class="gcell">
+        <img src="assets/cap-authoring.png" alt="저작도구 라벨링 화면" />
+        <div class="gcap"><span class="tag">만들기</span><b>저작도구 · 라벨링</b></div>
+      </div>
+      <div class="gcell">
+        <img src="assets/cap-augment.png" alt="데이터 증강·생성 화면" />
+        <div class="gcap"><span class="tag">만들기</span><b>데이터 증강 · 생성형 AI</b></div>
+      </div>
+      <div class="gcell">
+        <img src="assets/cap-workspace.png" alt="워크스페이스 대시보드 화면" />
+        <div class="gcap"><span class="tag">챙기기</span><b>상태 · 기한 대시보드</b></div>
+      </div>
+    </div>
+    <p class="gnote">이 네 화면은 <b>A사이트에는 없습니다.</b> 우리 기획의 장점은 이미 목업 화면으로 존재합니다.</p>
+  </section>
+
+  <!-- 12. 엔딩 -->
+  <section class="slide blue end">
+    <div class="endbud-wrap"><img src="assets/buddy-done.png" alt="완료를 알리는 복셀 버디" /></div>
+    <p class="end-name">AI 영상학습 사용자 포털</p>
+    <h1>받는 곳이 아니라,<br><span class="grad">만드는 곳.</span></h1>
+    <p class="sub" style="max-width:42ch">데이터를 내려받는 곳을 넘어, 찾고 만들고 쓰는 작업 포털로.</p>
+    <p class="sign">한국지역정보개발원 · 행정안전부 &nbsp; · &nbsp; 감사합니다</p>
+  </section>
+
+</div>
+
+<button class="navbtn prev" id="prev" aria-label="이전">‹</button>
+<button class="navbtn next" id="next" aria-label="다음">›</button>
+<div class="hud" id="dots"></div>
+<div class="counter" id="counter"></div>
+<div class="hint">← → · 클릭 이동 · F 전체화면</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let idx=0;
+const dots=document.getElementById('dots'),counter=document.getElementById('counter');
+slides.forEach((_,i)=>{const b=document.createElement('b');if(!i)b.className='on';b.onclick=()=>go(i);dots.appendChild(b)});
+function go(n){
+  n=Math.max(0,Math.min(slides.length-1,n));
+  slides[idx].classList.remove('active');dots.children[idx].classList.remove('on');
+  idx=n;
+  slides[idx].classList.add('active');dots.children[idx].classList.add('on');
+  counter.textContent=`${idx+1} / ${slides.length}`;
+}
+go(0);
+document.getElementById('next').onclick=()=>go(idx+1);
+document.getElementById('prev').onclick=()=>go(idx-1);
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)){go(idx+1);e.preventDefault()}
+  else if(['ArrowLeft','PageUp'].includes(e.key)){go(idx-1)}
+  else if(e.key==='Home')go(0);
+  else if(e.key==='End')go(slides.length-1);
+  else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+});
+document.addEventListener('click',e=>{
+  if(e.target.closest('.navbtn')||e.target.closest('.hud'))return;
+  if(e.clientX>innerWidth*.62)go(idx+1);
+  else if(e.clientX<innerWidth*.16)go(idx-1);
+});
+</script>
+</body>
+</html>

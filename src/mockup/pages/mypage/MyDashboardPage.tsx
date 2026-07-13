@@ -62,7 +62,7 @@ export function MyDashboardPage() {
             전체보기 <ChevronRight className="size-4" />
           </Link>
         </div>
-        <ul className="divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+        <ul className="divide-y divide-slate-200 overflow-hidden rounded-2xl border border-slate-200 bg-white">
           {RECENT_DOWNLOADS.map((d, i) => (
             <li key={i} className="flex items-center gap-3 px-5 py-3.5">
               <EventBadge type={d.type} />

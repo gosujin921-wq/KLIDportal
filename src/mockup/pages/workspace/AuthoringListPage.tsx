@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom'
 import { ClipboardList, Play, History, Search, LoaderCircle, Flame, Undo2, Upload, FolderSearch } from 'lucide-react'
 import { Breadcrumb } from '@/mockup/components/Breadcrumb'
 import { Button } from '@/mockup/components/ui/Button'
+import { Select } from '@/mockup/components/ui/Select'
 import { EventBadge, StatusBadge } from '@/mockup/components/ui/badges'
-import { EVENT_TYPES_MAIN } from '@/components/domain/eventTypes'
+import { EVENT_TYPES_MAIN } from '@/mockup/domain/eventTypes'
 import { authoringTasks } from '@/mockup/mocks/workspace'
 import { formatDate } from '@/lib/datetime'
 import { formatNumber } from '@/lib/format'
@@ -68,27 +69,27 @@ export function AuthoringListPage() {
             className="h-10 w-full rounded-lg border border-slate-300 bg-white pr-3 pl-10 text-base placeholder:text-slate-400 focus:border-cobalt-400 focus:outline-none"
           />
         </div>
-        <select className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-cobalt-400 focus:outline-none" aria-label="이벤트 유형">
+        <Select aria-label="이벤트 유형" className="h-10">
           <option>이벤트 전체</option>
           {EVENT_TYPES_MAIN.map((t) => (
             <option key={t.key}>{t.label}</option>
           ))}
-        </select>
-        <select className="h-10 rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-700 focus:border-cobalt-400 focus:outline-none" aria-label="상태">
+        </Select>
+        <Select aria-label="상태" className="h-10">
           <option>상태 전체</option>
           <option>대기</option>
           <option>진행중</option>
           <option>검수대기</option>
           <option>완료</option>
           <option>반려</option>
-        </select>
+        </Select>
       </div>
 
       {/* 작업 테이블 */}
       <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white">
         <table className="w-full text-left">
           <thead>
-            <tr className="border-b border-slate-100 text-sm text-slate-400">
+            <tr className="border-b border-slate-200 text-sm text-slate-400">
               <th className="px-5 py-3 font-medium">영상명</th>
               <th className="px-3 py-3 font-medium">이벤트</th>
               <th className="px-3 py-3 font-medium">상태</th>

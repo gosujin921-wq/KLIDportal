@@ -34,13 +34,15 @@ const smoothstep = (x: number) => {
   return t * t * (3 - 2 * t)
 }
 
-// 한 사이클의 5개 동작(초 단위). 각 동작 사이엔 기본형(동작1)으로 복귀.
+// 한 사이클의 5개 동작(초 단위). 각 동작 사이엔 기본형으로 복귀.
+// 재생 순서: 검색 → 저작도구(라벨링) → 증강(공중부양) → 생성(빛큐브) → 안전(방패).
+// (아래 [동작 N]은 포즈 식별 번호. 실제 재생 순서는 poses()의 시간 창으로 결정.)
 //  [동작 1] 기본형    — 정면, 팔 내림, 접지.
 //  [동작 2] 돋보기L   — 팔 올려 돋보기 들고 좌측 응시. (search 0→1→0)
 //  [동작 3] 공중부양  — 팔은 기본형 그대로, 정면으로 떠올랐다 내려옴. (float 0→1→0)
 //  [동작 4] 빛큐브    — 양손을 앞으로 들어 빛나는 큐브를 받침. (face 0→1→0)
-//  [동작 5] 대시보드  — 양손으로 대시보드를 들어 앞으로 내밂. (dash 0→1→0)
-//  [동작 6] 빼꼼      — 동작5에 이어 발 뒷꿈치 들고 몸 상승, 대시보드 뒤로 눈만 빼꼼. (peek 0→1→0)
+//  [동작 5] 라벨링   — 양손으로 라벨링 보드를 들어 앞으로 내밂(바운딩 박스 저작). (dash 0→1→0)
+//  [동작 6] 빼꼼      — 동작5에 이어 발 뒷꿈치 들고 몸 상승, 라벨링 보드 뒤로 눈만 빼꼼. (peek 0→1→0)
 //  [동작 7] 안전아이콘 — 한 발 내딛고 반대 발 뒷꿈치 들며 방패. (shield=팔, shieldVis=방패 표시)
 const CYCLE = 23.85
 // 동작 사이클 재생 속도 배수. 1보다 크면 빠르게(전체 동작이 같은 비율로 단축).
@@ -48,38 +50,39 @@ const POSE_SPEED = 1.5
 function poses(t: number) {
   const x = t % CYCLE
   const ramp = (a: number, b: number) => smoothstep((x - a) / (b - a))
-  // 동작 사이 기본자세 간격을 ~0.35s로 단축. 각 동작의 진입·유지·복귀 길이는 유지.
-  // 동작 2: 돋보기(좌측) 0.35~4.15
+  // 재생 순서: 검색 → 저작도구(라벨링) → 증강(공중부양) → 생성(빛큐브) → 안전(방패).
+  // 동작 사이 기본자세 간격 ~0.35s. 각 동작의 진입·유지·복귀 길이는 유지.
+  // 동작 2: 돋보기(좌측) 0.35~4.15  [검색]
   let search = 0
   if (x < 0.35) search = 0
   else if (x < 1.85) search = ramp(0.35, 1.85)
   else if (x < 3.35) search = 1
   else if (x < 4.15) search = 1 - ramp(3.35, 4.15) // 복귀 빠르게
-  // 동작 3: 공중부양 4.5~8.3
-  let float = 0
-  if (x < 4.5) float = 0
-  else if (x < 6.0) float = ramp(4.5, 6.0)
-  else if (x < 7.5) float = 1
-  else if (x < 8.3) float = 1 - ramp(7.5, 8.3) // 복귀 빠르게
-  // 동작 4: 빛큐브 8.65~11.95
-  let face = 0
-  if (x < 8.65) face = 0
-  else if (x < 10.15) face = ramp(8.65, 10.15)
-  else if (x < 11.15) face = 1
-  else if (x < 11.95) face = 1 - ramp(11.15, 11.95) // 복귀 빠르게
-  // 동작 5: 대시보드 내밀기 12.3~19.1
+  // 동작 5: 라벨링 보드 내밀기 4.5~11.3  [저작도구]
   let dash = 0
-  if (x < 12.3) dash = 0
-  else if (x < 13.8) dash = ramp(12.3, 13.8)
-  else if (x < 18.3) dash = 1
-  else dash = 1 - ramp(18.3, 19.1) // 복귀 빠르게
-  // 동작 6: 빼꼼 — 대시보드와 거의 동시에(살짝만 늦게 시작) 같이 올라갔다 같이 내려옴
+  if (x < 4.5) dash = 0
+  else if (x < 6.0) dash = ramp(4.5, 6.0)
+  else if (x < 10.5) dash = 1
+  else dash = 1 - ramp(10.5, 11.3) // 복귀 빠르게
+  // 동작 6: 빼꼼 — 라벨링 보드와 거의 동시에(살짝 늦게 시작) 같이 올라갔다 같이 내려옴
   let peek = 0
-  if (x < 12.6) peek = 0
-  else if (x < 14.1) peek = ramp(12.6, 14.1)
-  else if (x < 18.3) peek = 1
-  else peek = 1 - ramp(18.3, 19.1) // 복귀 빠르게
-  // 동작 7: shield=팔 들기, shieldVis=방패 표시.
+  if (x < 4.8) peek = 0
+  else if (x < 6.3) peek = ramp(4.8, 6.3)
+  else if (x < 10.5) peek = 1
+  else peek = 1 - ramp(10.5, 11.3) // 복귀 빠르게
+  // 동작 3: 공중부양 11.65~15.45  [증강]
+  let float = 0
+  if (x < 11.65) float = 0
+  else if (x < 13.15) float = ramp(11.65, 13.15)
+  else if (x < 14.65) float = 1
+  else if (x < 15.45) float = 1 - ramp(14.65, 15.45) // 복귀 빠르게
+  // 동작 4: 빛큐브 15.8~19.1  [생성]
+  let face = 0
+  if (x < 15.8) face = 0
+  else if (x < 17.3) face = ramp(15.8, 17.3)
+  else if (x < 18.3) face = 1
+  else if (x < 19.1) face = 1 - ramp(18.3, 19.1) // 복귀 빠르게
+  // 동작 7: shield=팔 들기, shieldVis=방패 표시. 19.45~23.85  [안전]
   //  나갈 때: 방패(shieldVis) 먼저 사라지고(22.25~22.95) → 그 다음 손(shield) 내려옴(22.95~23.85).
   let shield = 0
   if (x < 19.45) shield = 0
@@ -97,12 +100,74 @@ function poses(t: number) {
 // 캐릭터 동작 키 — 좌측 헤드라인 문구 동기화에 사용
 export type HeroPoseKey = 'search' | 'float' | 'face' | 'dash' | 'shield'
 
-export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void } = {}) {
+// 단일 동작 정지(접근성: 동작 줄이기 시 대표 자세 유지). 해당 동작만 1, 나머지 0.
+function lockPose(p: HeroPoseKey) {
+  return {
+    search: p === 'search' ? 1 : 0,
+    float: p === 'float' ? 1 : 0,
+    face: p === 'face' ? 1 : 0,
+    dash: p === 'dash' ? 1 : 0,
+    peek: 0,
+    shield: p === 'shield' ? 1 : 0,
+    shieldVis: p === 'shield' ? 1 : 0,
+  }
+}
+
+// 카드용 단독 동작 루프: 지정 동작만 0→1(진입)→유지→복귀→휴지 를 반복 재생.
+// 히어로 poses()가 동작 1~7을 순환하는 것과 달리, 한 동작의 전체 연기를 되풀이한다.
+const SOLO_CYCLE = 4.6 // 한 동작 루프 길이(초)
+// 세 카드가 동시에 같은 위상으로 움직이지 않도록 동작별 시작 위상 오프셋.
+const SOLO_OFFSET: Record<HeroPoseKey, number> = {
+  search: 0,
+  dash: 1.6,
+  float: 3.1,
+  face: 2.3,
+  shield: 4.0,
+}
+function soloPose(key: HeroPoseKey, t: number) {
+  const x = (((t + SOLO_OFFSET[key]) % SOLO_CYCLE) + SOLO_CYCLE) % SOLO_CYCLE
+  // 진입 0.9s → 유지 2.2s → 복귀 0.8s → 휴지 0.7s(기본자세)
+  let v: number
+  if (x < 0.9) v = smoothstep(x / 0.9)
+  else if (x < 3.1) v = 1
+  else if (x < 3.9) v = 1 - smoothstep((x - 3.1) / 0.8)
+  else v = 0
+  return {
+    search: key === 'search' ? v : 0,
+    float: key === 'float' ? v : 0,
+    face: key === 'face' ? v : 0,
+    dash: key === 'dash' ? v : 0,
+    peek: 0,
+    shield: key === 'shield' ? v : 0,
+    shieldVis: key === 'shield' ? v : 0,
+  }
+}
+
+export function HeroVoxelBuddy({
+  onPose,
+  pose,
+  center = false,
+  zoom = 1,
+}: {
+  onPose?: (key: HeroPoseKey) => void
+  /** 지정 시 해당 동작으로 고정(사이클 루프 대신). 카드용. */
+  pose?: HeroPoseKey
+  /** true면 종횡비와 무관하게 중앙 배치(카드용). 기본은 히어로용 우측 배치. */
+  center?: boolean
+  /** >1이면 카메라를 당겨 캐릭터를 크게(카드용). 기본 1(히어로). */
+  zoom?: number
+} = {}) {
   const mountRef = useRef<HTMLDivElement>(null)
   const reduce = useReducedMotion()
   // onPose를 ref로 보관 → 무거운 씬 생성 useEffect가 onPose 변경에 재실행되지 않게
   const onPoseRef = useRef(onPose)
   onPoseRef.current = onPose
+  const poseRef = useRef(pose)
+  poseRef.current = pose
+  const centerRef = useRef(center)
+  centerRef.current = center
+  const zoomRef = useRef(zoom)
+  zoomRef.current = zoom
 
   useEffect(() => {
     const mount = mountRef.current
@@ -124,7 +189,8 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
 
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100)
-    camera.position.set(0, 0.3, 13.5)
+    // zoom>1이면 카메라를 당겨 캐릭터를 크게(카드용). 기본 13.5(히어로).
+    camera.position.set(0, 0.3, 13.5 / zoomRef.current)
 
     // ---------- Rounded box geometry ----------
     function roundedBox(w: number, h: number, d: number, r: number, seg = 10) {
@@ -159,17 +225,13 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
       return new THREE.MeshPhysicalMaterial({
         color,
         metalness: 0.0,
-        // 말랑 젤리 느낌: 부드러운(넓은) 하이라이트 + 약한 투과(반투명) + 안쪽 발광
-        roughness: 0.3,
-        clearcoat: 0.5,
-        clearcoatRoughness: 0.32,
+        // 맑은 젤리 플라스틱: 또렷한(맑은) 코트 반사 + 얕은 안쪽 발광.
+        // 투과(transmission)·흡수(attenuation)는 색 있는 몸통에서 색을 탁하게 뭉개므로 쓰지 않음.
+        roughness: 0.28,
+        clearcoat: 0.6,
+        clearcoatRoughness: 0.1, // 코트를 또렷하게 → 표면에 씌워진 듯한 뿌연 막 제거
         reflectivity: 0.5,
-        transmission: 0.12,
-        thickness: 0.9,
-        ior: 1.4,
-        attenuationColor: c.clone(),
-        attenuationDistance: 2.2,
-        emissive: c.clone().multiplyScalar(0.1),
+        emissive: c.clone().multiplyScalar(0.08),
       })
     }
 
@@ -253,6 +315,20 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
     }
     // plastic() wrapper that tracks material for disposal
     const mat = (color: number) => track(plastic(color))
+
+    // 얼굴 판 전용 화이트 — 조명 각도와 무관하게 항상 깨끗한 화이트로 보이도록 자체 발광을 실어 밝힘.
+    // (plastic()의 색 있는 코트·발광을 태우면 회백색으로 떠서 "뭔가 씌워진" 느낌이 남음)
+    const faceMat = track(
+      new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        metalness: 0,
+        roughness: 0.42,
+        clearcoat: 0.12,
+        clearcoatRoughness: 0.28,
+        emissive: 0xffffff,
+        emissiveIntensity: 0.3,
+      }),
+    )
 
     const buddy = new THREE.Group()
     scene.add(buddy)
@@ -339,7 +415,7 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
     plateGeo.center()
     plateGeo.computeVertexNormals()
     const PLATE_HALF = 0.065
-    const plate = new THREE.Mesh(plateGeo, mat(0xfbfbfd))
+    const plate = new THREE.Mesh(plateGeo, faceMat)
     plate.position.set(0, 0, bodyFrontZ + PLATE_HALF - 0.03)
     buddy.add(plate)
     const faceFront = bodyFrontZ + 2 * PLATE_HALF - 0.03
@@ -548,9 +624,9 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
     glowSprite.scale.setScalar(2.7) // 큐브보다 크게 퍼지는 부드러운 빛무리
     glowCube.add(glowSprite)
 
-    // ---------- 대시보드(동작5: 양손으로 들어 앞으로 내밂) ----------
+    // ---------- 라벨링 보드(동작5: 양손으로 들어 앞으로 내밂 — 바운딩 박스 저작) ----------
     const dashboard = new THREE.Group()
-    // 플랫 화면 판(밝은 블루, 발광·글로시) — 얇은 판
+    // 플랫 화면 판(밝은 블루, 발광) — 매트하게(광택 핫스팟 억제: 조명 번짐 방지)
     const screenPlate = new THREE.Mesh(
       track(roundedBox(2.1, 1.45, 0.12, 0.14, 8)),
       track(
@@ -558,10 +634,10 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
           color: 0x4f7be6,
           emissive: 0x2f5fd6,
           emissiveIntensity: 0.7,
-          roughness: 0.12,
+          roughness: 0.55,
           metalness: 0,
-          clearcoat: 1,
-          clearcoatRoughness: 0.1,
+          clearcoat: 0.25,
+          clearcoatRoughness: 0.5,
         }),
       ),
     )
@@ -584,15 +660,41 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
     const boldFrame = new THREE.Mesh(frameGeo, mat(0x2a3dd4))
     boldFrame.position.z = 0.05
     dashboard.add(boldFrame)
-    // 라인 차트(상승 지그재그) — 시안 발광 튜브
-    const chartPts = [
-      new THREE.Vector3(-0.62, -0.24, 0),
-      new THREE.Vector3(-0.28, 0.06, 0),
-      new THREE.Vector3(0.02, -0.1, 0),
-      new THREE.Vector3(0.32, 0.22, 0),
-      new THREE.Vector3(0.6, 0.38, 0),
-    ]
-    const chartMat = track(
+    // 라벨링 캔버스 — 화면 속 피사체에 바운딩 박스를 친 저작 메타포(ValueFlowSection 2D 캔버스와 동일 언어).
+    const boxCX = 0,
+      boxCY = -0.02 // 박스 중심(상단에 라벨 태그 공간 확보)
+    // 박스 안 피사체 힌트 — 부드러운 시안 글로우(감지 대상 암시)
+    const subjectGlow = new THREE.Sprite(
+      track(
+        new THREE.SpriteMaterial({
+          map: glowTexture,
+          color: 0x8fe6ff,
+          transparent: true,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+          opacity: 0.5,
+        }),
+      ),
+    )
+    subjectGlow.scale.setScalar(0.52)
+    subjectGlow.position.set(boxCX, boxCY, 0.1)
+    dashboard.add(subjectGlow)
+    // 바운딩 박스 — 라운드 사각에 구멍을 뚫어 압출한 얇은 시안 발광 아웃라인
+    const bboxOuter = roundedRectShape(0.9, 0.62, 0.07)
+    bboxOuter.holes.push(roundedRectShape(0.84, 0.56, 0.05)) // 테두리 폭 0.03 — 얇은 아웃라인
+    const bboxGeo = track(
+      new THREE.ExtrudeGeometry(bboxOuter, {
+        depth: 0.035,
+        bevelEnabled: true,
+        bevelThickness: 0.01,
+        bevelSize: 0.01,
+        bevelSegments: 2,
+        curveSegments: 12,
+      }),
+    )
+    bboxGeo.center()
+    bboxGeo.computeVertexNormals()
+    const markMat = track(
       new THREE.MeshPhysicalMaterial({
         color: 0xbdf3ff,
         emissive: 0x6fe0ff,
@@ -603,19 +705,53 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
         clearcoatRoughness: 0.1,
       }),
     )
-    const chart = new THREE.Mesh(
-      track(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(chartPts), 48, 0.04, 8, false)),
-      chartMat,
+    const bbox = new THREE.Mesh(bboxGeo, markMat)
+    bbox.position.set(boxCX, boxCY, 0.12)
+    dashboard.add(bbox)
+    // 코너 리사이즈 핸들 4개 — 박스 네 귀퉁이의 작은 흰 큐브(라벨링 도구 시그니처)
+    const handleGeo = track(roundedBox(0.09, 0.09, 0.06, 0.025, 4))
+    const handleMat = track(
+      new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        emissive: 0xcfeeff,
+        emissiveIntensity: 0.5,
+        roughness: 0.15,
+        metalness: 0,
+        clearcoat: 1,
+        clearcoatRoughness: 0.1,
+      }),
     )
-    chart.position.z = 0.12 // 화면 판 앞, 프레임 안쪽
-    dashboard.add(chart)
-    // 라인 끝/시작 점
-    const dotGeo = track(new THREE.SphereGeometry(0.08, 16, 16))
-    for (const p of [chartPts[0], chartPts[4]]) {
-      const dot = new THREE.Mesh(dotGeo, chartMat)
-      dot.position.set(p.x, p.y, 0.12)
-      dashboard.add(dot)
+    for (const [hx, hy] of [
+      [-0.45, 0.31],
+      [0.45, 0.31],
+      [-0.45, -0.31],
+      [0.45, -0.31],
+    ]) {
+      const h = new THREE.Mesh(handleGeo, handleMat)
+      h.position.set(boxCX + hx, boxCY + hy, 0.14)
+      dashboard.add(h)
     }
+    // 라벨 태그 칩 — 박스 좌상단에 얹힌 흰 칩(브랜드 색점 + 텍스트 바)
+    const chip = new THREE.Group()
+    chip.add(new THREE.Mesh(track(roundedBox(0.44, 0.16, 0.05, 0.04, 4)), mat(0xfbfbfd)))
+    const chipDot = new THREE.Mesh(
+      track(new THREE.SphereGeometry(0.035, 16, 16)),
+      track(
+        new THREE.MeshStandardMaterial({
+          color: 0x2f6bff,
+          emissive: 0x2f6bff,
+          emissiveIntensity: 0.4,
+          roughness: 0.3,
+        }),
+      ),
+    )
+    chipDot.position.set(-0.13, 0, 0.05)
+    chip.add(chipDot)
+    const chipBar = new THREE.Mesh(track(roundedBox(0.19, 0.04, 0.025, 0.02, 3)), mat(0x8aa0c8))
+    chipBar.position.set(0.045, 0, 0.05)
+    chip.add(chipBar)
+    chip.position.set(boxCX - 0.23, boxCY + 0.44, 0.15)
+    dashboard.add(chip)
     dashboard.position.set(0, -0.4, 1.6)
     dashboard.scale.setScalar(0.0001)
     buddy.add(dashboard)
@@ -694,7 +830,7 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
       )
       panelGeo.center()
       panelGeo.computeVertexNormals()
-      const panel = new THREE.Mesh(panelGeo, mat(0xfbfbfd))
+      const panel = new THREE.Mesh(panelGeo, faceMat)
       panel.position.z = s * 0.53 // 큐브 앞면(s/2) 위에 평평하게 얹힘
       cube.add(panel)
       const eGeo = track(
@@ -761,6 +897,8 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
     scene.add(fill)
 
     // ---------- Resize ----------
+    // 카메라 수직 FOV(35°) 절반의 탄젠트 — 캐릭터 월드 x를 화면 가로비율로 투영하는 데 사용.
+    const halfFovTan = Math.tan(((35 * Math.PI) / 180) / 2)
     function resize() {
       const w = mount!.clientWidth || 1
       const h = mount!.clientHeight || 1
@@ -769,10 +907,18 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
       camera.aspect = aspect
       camera.updateProjectionMatrix()
       // 풀블리드: 데스크톱(가로형)에선 캐릭터를 우측으로 밀어 좌측 텍스트와 분리,
-      // 모바일(세로형)에선 중앙 배치.
-      buddy.position.x = Math.min(Math.max((aspect - 1.1) * 2.4, 0), 3.6)
+      // 모바일(세로형)에선 중앙 배치. center면 종횡비와 무관하게 항상 중앙.
+      buddy.position.x = centerRef.current ? 0 : Math.min(Math.max((aspect - 1.1) * 2.4, 0), 3.6)
       // 그림자도 캐릭터 x를 따라가게(발밑 정렬)
       shadow.position.x = buddy.position.x
+      // 배경 코발트 글로우를 캐릭터 화면 위치에 고정 — 폭이 바뀌어도 글로우가 캐릭터를 벗어나지 않게.
+      // 캐릭터 월드 x를 z=0 평면 기준 화면 가로비율(0~1)로 투영해 섹션 CSS 변수(--hero-focal-x)로 전달.
+      if (!centerRef.current) {
+        const halfW = camera.position.z * halfFovTan * aspect
+        const frac = 0.5 + 0.5 * (buddy.position.x / halfW)
+        const section = mount!.closest('section') as HTMLElement | null
+        section?.style.setProperty('--hero-focal-x', `${(frac * 100).toFixed(1)}%`)
+      }
     }
     resize()
     const ro = new ResizeObserver(resize)
@@ -818,13 +964,19 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
 
     function animate() {
       const t = clock.getElapsedTime()
-      const { search, float, face, dash, peek, shield, shieldVis } = reduce
-        ? { search: 0, float: 0, face: 0, dash: 0, peek: 0, shield: 0, shieldVis: 0 }
-        : poses(t * POSE_SPEED)
+      const locked = poseRef.current
+      const { search, float, face, dash, peek, shield, shieldVis } = locked
+        ? reduce
+          ? lockPose(locked) // 접근성: 동작 줄이기 → 대표 자세 정지
+          : soloPose(locked, t) // 카드: 해당 동작 전체를 반복 재생
+        : reduce
+          ? { search: 0, float: 0, face: 0, dash: 0, peek: 0, shield: 0, shieldVis: 0 }
+          : poses(t * POSE_SPEED)
 
       // 현재 우세 동작을 좌측 헤드라인에 알림(임계값 넘는 동작 중 최댓값).
       // 동작 사이 휴지 구간에는 갱신하지 않고 직전 동작 문구를 유지(기본 문구 노출 X).
-      {
+      // 고정 동작(카드)일 땐 헤드라인 동기화 불필요.
+      if (!locked) {
         let key: HeroPoseKey | '' = ''
         let best = 0.55
         const cand: [HeroPoseKey, number][] = [
@@ -926,6 +1078,11 @@ export function HeroVoxelBuddy({ onPose }: { onPose?: (key: HeroPoseKey) => void
 
       // 동작 3(공중부양): float일 때 떠오름. 동작6(빼꼼): peek만큼 추가 상승.
       buddy.position.y = float * (0.42 + (reduce ? 0 : Math.sin(t * 1.2) * 0.13)) + peekDrop
+      // 카드 동작: 유지·휴지 구간에도 미세한 숨쉬기(주 모션은 동작 재생).
+      if (locked && !reduce) {
+        buddy.position.y += Math.sin(t * 1.5) * 0.05
+        buddy.rotation.y += Math.sin(t * 0.9) * 0.03
+      }
       // 발: 몸통 롤(-peek*0.14)을 위치·회전에서 상쇄해 바닥에 평평하게 머묾(뚫림 방지).
       const za = peek * 0.14 // 빼꼼 롤 상쇄 각
       const cza = Math.cos(za),

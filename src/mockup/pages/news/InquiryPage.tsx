@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Select } from '@/mockup/components/ui/Select'
 import { cn } from '@/lib/cn'
 import { formatDate } from '@/lib/datetime'
 
@@ -45,17 +46,14 @@ export function InquiryPage() {
             <span className="text-sm font-semibold text-slate-700">
               문의 유형 <span className="text-red-500">*</span>
             </span>
-            <select
-              defaultValue=""
-              className="mt-1.5 h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-base text-slate-700 focus:border-cobalt-400 focus:outline-none"
-            >
+            <Select defaultValue="" wrapperClassName="mt-1.5 w-full" className="h-11 w-full text-base">
               <option value="" disabled>
                 선택하세요
               </option>
               {INQUIRY_TYPES.map((t) => (
                 <option key={t}>{t}</option>
               ))}
-            </select>
+            </Select>
           </label>
           <label className="mt-4 block">
             <span className="text-sm font-semibold text-slate-700">
@@ -97,7 +95,7 @@ export function InquiryPage() {
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-slate-100 text-sm text-slate-400">
+              <tr className="border-b border-slate-200 text-sm text-slate-400">
                 <th className="w-32 px-5 py-3 font-medium">유형</th>
                 <th className="px-3 py-3 font-medium">제목</th>
                 <th className="px-3 py-3 font-medium whitespace-nowrap">등록일</th>

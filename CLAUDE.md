@@ -15,7 +15,7 @@
 
 - **Vite + React + TypeScript**
 - **Tailwind CSS** (디자인 토큰은 `theme.extend` + CSS 변수)
-- 차트: **Recharts** (랜딩 통계)
+- 차트: **Recharts** (메인 통계)
 - 지도: **SVG 한국지도**(시·도 단위 색칠, 목업 단계는 실지도 대신 경량 SVG)
 - 아이콘: **lucide-react**
 - 공통 컴포넌트: **직접 최소 구축** (외부 UI 라이브러리 미사용)
@@ -44,7 +44,7 @@
 ### 레이아웃
 
 - 글로벌: **상단 GNB + 푸터**(포털형). 관제 대시보드의 사이드바 구조 아님.
-- 레이아웃 분기: 랜딩(풀폭) / 일반 콘텐츠(컨테이너) / 워크스페이스 / 관리자(사이드바형).
+- 레이아웃 분기: 메인(풀폭) / 일반 콘텐츠(컨테이너) / 워크스페이스 / 관리자(사이드바형).
 - z-index는 레이어 토큰으로 관리. **지도 위 요소(마커·팝업)는 항상 패널·버튼보다 아래**, MapContainer에 `isolation: isolate`.
 
 ---
@@ -70,24 +70,24 @@ src/
   mocks/       klid.ts (KLID 기관정보 샘플 데이터)
   components/
     krds/      ★ 본작업 정본 디자인 시스템. Button, TextField, Table, Card … + KRDS Header/Footer
-    domain/    eventTypes 등 도메인 상수 (검색카드·배지 이벤트색)
 
-  mockup/      목업. 랜딩·플로우 확인용
+  mockup/      목업. 메인·플로우 확인용 (목업 관련 코드·데이터는 전부 이 안에서 관리)
     styles/         index.css (Tailwind 토큰 — mockup 전역 스타일)
+    domain/         eventTypes·dataset 도메인 상수 (이벤트 유형색·데이터셋 아이콘)
     pages/
-      landing/        랜딩 (구 landing-v2, 원본은 docs/98_아카이브/mockup_hero)
+      main/           메인·홈 (구 landing-v2, 원본은 docs/98_아카이브/mockup_hero)
       PlaceholderPage
       StyleGuide       디자인 스타일 가이드 (/style)
     components/
       layout/         AppLayout·AppHeader·AppFooter (코발트 셸)
       ui/             Container·Button(캡슐)·Reveal·Mark·CountUp
       Logo
-    mocks/            landing.ts (랜딩 샘플 데이터)
+    mocks/            landing.ts (메인·포털 공통 샘플 데이터)
 ```
 
 - **본작업은 `components/krds`를 디자인 수정해서 페이지를 만든다.**
-- **목업 작업은 `mockup/` 안에서 한다.** 랜딩·플로우로 서비스 정체성 + 디자인 스타일 확인이 목적. 디테일 기능·본격 디자인은 추후.
-- `mocks/` 는 화면 채우는 샘플 데이터. klid.ts(기관정보), mockup/mocks/landing.ts(랜딩용).
+- **목업 작업은 `mockup/` 안에서 한다.** 메인·플로우로 서비스 정체성 + 디자인 스타일 확인이 목적. 디테일 기능·본격 디자인은 추후.
+- `mocks/` 는 화면 채우는 샘플 데이터. klid.ts(기관정보), mockup/mocks/landing.ts(메인·포털 공통).
 
 ---
 
@@ -97,7 +97,7 @@ src/
 
 | 화면 | 내용 |
 |---|---|
-| 랜딩 | 데이터 통계, 지역별 지도 현황, 기능 소개, 공지사항 |
+| 메인 | 데이터 통계, 지역별 지도 현황, 기능 소개, 공지사항 |
 | 데이터 검색 | 검색 카드(이벤트 유형 중심) + 조건 필터(이벤트·지역 핵심, 기간·시간대·키워드 보조) + 결과 목록 |
 | 검색 결과 상세 | 영상/이미지 미리보기, 데이터 상세 |
 | 반출 요청 | 요청 요약(이벤트·기간·영상수·이미지수), 처리 상태, 다운로드 기한 |

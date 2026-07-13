@@ -4,7 +4,7 @@ import { motion } from 'motion/react'
 import { Search } from 'lucide-react'
 import { Container } from '@/mockup/components/ui/Container'
 import { Button } from '@/mockup/components/ui/Button'
-import { EVENT_TYPES_MAIN } from '@/components/domain/eventTypes'
+import { EVENT_TYPES_MAIN } from '@/mockup/domain/eventTypes'
 import { HeroVoxelBuddy, type HeroPoseKey } from './HeroVoxelBuddy'
 
 // 캐릭터 동작별 헤드라인 문구. lead(일반) + emph(브랜드 그라데이션 강조).
@@ -12,7 +12,7 @@ const HEADLINES: Record<HeroPoseKey, { lead: string; emph: string }> = {
   search: { lead: '데이터를 찾고', emph: '발견해요' },
   float: { lead: 'AI로 데이터를', emph: '증강해요' },
   face: { lead: '새로운 데이터를', emph: '만들어요' },
-  dash: { lead: '데이터 가치를', emph: '분석해요' },
+  dash: { lead: '영상에 직접', emph: '라벨링해요' },
   shield: { lead: '안전하고 신뢰할 수 있게', emph: '지원해요' },
 }
 
@@ -81,7 +81,7 @@ export function HeroSectionV2() {
             }}
           >
             <div className="relative flex-1">
-              <Search className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-slate-400" />
+              <Search className="pointer-events-none absolute top-1/2 left-4 z-10 size-5 -translate-y-1/2 text-slate-400" />
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}

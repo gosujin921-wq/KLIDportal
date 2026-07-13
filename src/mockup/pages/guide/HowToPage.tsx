@@ -1,6 +1,17 @@
 import { useState } from 'react'
 import { cn } from '@/lib/cn'
 
+// 단계별 화면 예시 캡처 (scripts/capture-guide.mjs 로 생성). 파일명: <가이드키>-<단계번호>.png
+const GUIDE_CAPTURES = import.meta.glob('../../assets/guide/*.png', {
+  eager: true,
+  import: 'default',
+}) as Record<string, string>
+const captureByStep: Record<string, string> = {}
+for (const [path, url] of Object.entries(GUIDE_CAPTURES)) {
+  const name = path.split('/').pop()!.replace('.png', '')
+  captureByStep[name] = url
+}
+
 const GUIDES = {
   search: {
     label: '데이터 검색·다운로드',
@@ -67,10 +78,19 @@ export function HowToPage() {
             <div className="min-w-0 flex-1">
               <p className="text-lg font-bold text-slate-900">{s.title}</p>
               <p className="mt-1 text-base leading-relaxed text-slate-600">{s.desc}</p>
-              {/* 스크린샷 placeholder */}
-              <div className="mt-3 flex h-32 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
-                화면 예시 이미지
-              </div>
+              {/* 화면 예시 캡처 */}
+              {captureByStep[`${guide}-${i + 1}`] ? (
+                <img
+                  src={captureByStep[`${guide}-${i + 1}`]}
+                  alt={`${s.title} 화면 예시`}
+                  loading="lazy"
+                  className="mt-3 w-full max-h-[40rem] rounded-xl border border-slate-200 object-contain shadow-sm"
+                />
+              ) : (
+                <div className="mt-3 flex h-32 items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
+                  화면 예시 이미지
+                </div>
+              )}
             </div>
           </li>
         ))}
