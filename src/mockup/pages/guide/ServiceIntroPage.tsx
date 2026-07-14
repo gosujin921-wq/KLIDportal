@@ -6,7 +6,7 @@ const FLOW = [
   { icon: Search, title: '검색', desc: '이벤트 유형·지역 조건으로\n학습데이터를 찾습니다.' },
   { icon: Download, title: '신청·다운로드', desc: '승인 후 워크스페이스에서\n데이터를 내려받습니다.' },
   { icon: PenTool, title: '제작', desc: '업로드한 영상을\n저작도구로 라벨링합니다.' },
-  { icon: Sparkles, title: '증강·생성', desc: 'AI로 데이터를 늘리거나\n새 영상을 생성합니다.' },
+  { icon: Sparkles, title: '데이터 증강', desc: '시간·계절·날씨 조건을 반영해\n학습데이터를 늘립니다.' },
 ]
 
 const FEATURES = [
@@ -26,10 +26,10 @@ const FEATURES = [
   },
   {
     pose: 'float',
-    title: 'AI 데이터 증강·생성',
-    desc: 'AI 기술로 학습데이터를 증강하고\n생성형 AI로 새로운 영상을 만들어 보세요.',
-    to: '/workspace/genai',
-    cta: 'AI 기능 알아보기',
+    title: 'AI 데이터 증강',
+    desc: 'AI 기술로 시간·계절·날씨 조건을 반영해\n학습데이터를 다양하게 확장해 보세요.',
+    to: '/workspace/augment',
+    cta: 'AI 증강 알아보기',
   },
 ] as const
 
@@ -46,7 +46,7 @@ export function ServiceIntroPage() {
           <span className="text-gradient-cobalt">AI 학습데이터 포털</span>
         </h2>
         <p className="mx-auto mt-4 max-w-4xl break-keep text-lg leading-relaxed text-pretty text-slate-600">
-          흩어진 원본 영상을 한데 모으고, AI 증강·생성 기술로 활용 가능한 학습데이터로 확장해 기업·연구자에게 제공합니다.
+          흩어진 원본 영상을 한데 모으고, AI 증강 기술로 활용 가능한 학습데이터로 확장해 기업·연구자에게 제공합니다.
         </p>
       </section>
 

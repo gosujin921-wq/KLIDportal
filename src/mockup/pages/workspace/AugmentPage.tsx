@@ -5,71 +5,43 @@ import { Breadcrumb } from '@/mockup/components/Breadcrumb'
 import { Button } from '@/mockup/components/ui/Button'
 import { Select } from '@/mockup/components/ui/Select'
 import { StatusBadge } from '@/mockup/components/ui/badges'
-import { GenAiSection } from './GenAiSection'
 import { augmentConditions } from '@/mockup/mocks/landing'
-import { augmentJobs, myDatasets } from '@/mockup/mocks/workspace'
+import { useDemoWorkspace } from '@/mockup/demoWorkspace'
 import { formatDate } from '@/lib/datetime'
 import { cn } from '@/lib/cn'
 
 const MULTIPLES = ['2배', '4배', '8배']
 
 /**
- * 데이터 증강 (기획 v2: 증강 실행 + 생성형 AI 영상 생성 통합 메뉴).
- * 내부 탭: [데이터 증강 | 생성형 AI]
+ * 데이터 증강 (기획 v2: 시간·계절·날씨 조건 반영 증강 실행 + 증강 이력).
  */
 export function AugmentPage() {
-  const [tab, setTab] = useState<'augment' | 'genai'>('augment')
+  const { augmentSources, augmentJobs, runAugment } = useDemoWorkspace()
   const [multiple, setMultiple] = useState('2배')
+  const [sourceId, setSourceId] = useState('')
+  const [options, setOptions] = useState<string[]>([])
   const [requested, setRequested] = useState(false)
+
+  const toggleOption = (c: string) =>
+    setOptions((prev) => (prev.includes(c) ? prev.filter((o) => o !== c) : [...prev, c]))
 
   return (
     <>
       <Breadcrumb items={[{ label: '워크스페이스', to: '/workspace' }, { label: '데이터 증강' }]} />
       <h1 className="mt-4 text-2xl font-extrabold tracking-tight text-slate-900">데이터 증강</h1>
       <p className="mt-1.5 text-base text-slate-500">
-        시간·계절·날씨 조건 반영 증강과 생성형 AI 영상 생성을 한곳에서 이용하세요.
+        시간·계절·날씨 조건을 반영해 학습데이터를 다양하게 늘려 보세요.
       </p>
 
-      {/* 내부 탭 */}
-      <div className="mt-6 border-b border-slate-200">
-        <nav className="flex gap-1">
-          {(
-            [
-              ['augment', '데이터 증강'],
-              ['genai', '생성형 AI 영상 생성'],
-            ] as const
-          ).map(([key, label]) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setTab(key)}
-              className={cn(
-                '-mb-px border-b-2 px-4 py-3 text-base font-semibold transition-colors',
-                tab === key
-                  ? 'border-cobalt-600 text-cobalt-700'
-                  : 'border-transparent text-slate-500 hover:text-slate-800',
-              )}
-            >
-              {label}
-            </button>
-          ))}
-        </nav>
-      </div>
-
-      {tab === 'genai' && (
-        <div className="mt-5">
-          <GenAiSection />
-        </div>
-      )}
-
-      {tab === 'augment' && (
-        <>
-      <div className="mt-5 grid items-start gap-5 lg:grid-cols-5">
+      <div className="mt-6 grid items-start gap-5 lg:grid-cols-5">
         {/* 증강 설정 */}
         <form
           className="rounded-2xl border border-slate-200 bg-white p-6 lg:col-span-3"
           onSubmit={(e) => {
             e.preventDefault()
+            const src = augmentSources.find((s) => s.id === sourceId)
+            if (!src) return
+            runAugment({ sourceTitle: src.title, sourceType: src.type, options, multiple })
             setRequested(true)
           }}
         >
@@ -79,15 +51,20 @@ export function AugmentPage() {
             <span className="text-sm font-semibold text-slate-700">
               원본 데이터 <span className="text-red-500">*</span>
             </span>
-            <Select defaultValue="" wrapperClassName="mt-1.5 w-full" className="h-11 w-full text-base">
+            <Select
+              value={sourceId}
+              onChange={setSourceId}
+              wrapperClassName="mt-1.5 w-full"
+              className="h-11 w-full text-base"
+            >
               <option value="" disabled>
-                내 학습데이터에서 선택하세요
+                반출 데이터·저작 결과물에서 선택하세요
               </option>
-              {myDatasets
-                .filter((d) => d.status !== 'expired')
-                .map((d) => (
-                  <option key={d.id}>{d.title}</option>
-                ))}
+              {augmentSources.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.origin} · {s.title}
+                </option>
+              ))}
             </Select>
           </label>
 
@@ -118,7 +95,12 @@ export function AugmentPage() {
                   key={c}
                   className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition-colors has-checked:border-cobalt-300 has-checked:bg-cobalt-50 has-checked:text-cobalt-700"
                 >
-                  <input type="checkbox" className="size-4 accent-cobalt-600" />
+                  <input
+                    type="checkbox"
+                    checked={options.includes(c)}
+                    onChange={() => toggleOption(c)}
+                    className="size-4 accent-cobalt-600"
+                  />
                   {c}
                 </label>
               ))}
@@ -135,7 +117,7 @@ export function AugmentPage() {
             </p>
           )}
 
-          <Button type="submit" className="mt-5">
+          <Button type="submit" className="mt-5" disabled={!sourceId}>
             증강 실행
           </Button>
         </form>
@@ -226,8 +208,6 @@ export function AugmentPage() {
           </table>
         </div>
       </section>
-        </>
-      )}
     </>
   )
 }

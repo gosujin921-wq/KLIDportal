@@ -17,7 +17,7 @@ const COUNT_MAP = Object.fromEntries(eventStats.map((e) => [e.key, e.count]))
  */
 export function EventShowcaseSection() {
   return (
-    <section className="py-20">
+    <section className="bg-white py-20">
       <Container>
         <Reveal>
           <SectionHeading

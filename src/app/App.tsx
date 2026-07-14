@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import { MotionConfig } from 'motion/react'
 import { DemoAuthProvider } from '@/mockup/demoAuth'
 import { SavedSearchProvider } from '@/mockup/savedSearches'
+import { DemoWorkspaceProvider } from '@/mockup/demoWorkspace'
 import { AppLayout } from '@/mockup/components/layout/AppLayout'
 import { MainPage } from '@/mockup/pages/main/MainPage'
 import { PlaceholderPage } from '@/mockup/pages/PlaceholderPage'
@@ -63,7 +64,7 @@ function PortalRoutes() {
         {/* 저작도구 라벨링 화면 (풀블리드, 워크스페이스 LNB 밖) */}
         <Route path="/workspace/authoring/:taskId" element={<AuthoringToolPage />} />
 
-        {/* 워크스페이스 (좌측 LNB, 기획 v2: 증강+생성형 통합·즐겨찾기 추가) */}
+        {/* 워크스페이스 (좌측 LNB, 기획 v2: 데이터 증강·즐겨찾기 추가) */}
         <Route path="/workspace" element={<WorkspaceLayout />}>
           <Route index element={<DashboardPage />} />
           <Route path="upload" element={<UploadPage />} />
@@ -71,12 +72,10 @@ function PortalRoutes() {
           <Route path="datasets" element={<MyDatasetsPage />} />
           <Route path="augment" element={<AugmentPage />} />
           <Route path="favorites" element={<WsFavoritesPage />} />
-          <Route path="genai" element={<Navigate to="/workspace/augment" replace />} />
         </Route>
 
         {/* 구 라우트 이관 */}
         <Route path="/authoring" element={<Navigate to="/workspace/authoring" replace />} />
-        <Route path="/genai" element={<Navigate to="/workspace/augment" replace />} />
 
         {/* 소식&참여 (상단 탭) */}
         <Route path="/news" element={<NewsLayout />}>
@@ -127,6 +126,7 @@ export default function App() {
       <MotionConfig reducedMotion="user">
         <DemoAuthProvider>
           <SavedSearchProvider>
+          <DemoWorkspaceProvider>
           <Routes>
             {/* 관리자 (별도 레이아웃, 포털 셸 밖) */}
             <Route path="/admin" element={<AdminLayout />}>
@@ -167,6 +167,7 @@ export default function App() {
             {/* 사용자 포털 */}
             <Route path="/*" element={<PortalRoutes />} />
           </Routes>
+          </DemoWorkspaceProvider>
           </SavedSearchProvider>
         </DemoAuthProvider>
       </MotionConfig>

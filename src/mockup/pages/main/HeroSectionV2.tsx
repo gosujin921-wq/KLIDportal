@@ -11,7 +11,7 @@ import { HeroVoxelBuddy, type HeroPoseKey } from './HeroVoxelBuddy'
 const HEADLINES: Record<HeroPoseKey, { lead: string; emph: string }> = {
   search: { lead: '데이터를 찾고', emph: '발견해요' },
   float: { lead: 'AI로 데이터를', emph: '증강해요' },
-  face: { lead: '새로운 데이터를', emph: '만들어요' },
+  face: { lead: '조건을 바꿔 데이터를', emph: '늘려요' },
   dash: { lead: '영상에 직접', emph: '라벨링해요' },
   shield: { lead: '안전하고 신뢰할 수 있게', emph: '지원해요' },
 }

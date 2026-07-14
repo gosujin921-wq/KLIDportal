@@ -16,7 +16,7 @@ const TAG_STYLE: Record<string, string> = {
 
 export function NoticeSection() {
   return (
-    <section className="py-20">
+    <section className="bg-white py-20">
       <Container>
         <Reveal className="card-soft rounded-2xl bg-white p-7">
           <div className="flex items-center justify-between">

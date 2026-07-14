@@ -15,7 +15,7 @@ import { useDemoAuth } from '@/mockup/demoAuth'
 import { LockedOverlay } from './LockedOverlay'
 import { cn } from '@/lib/cn'
 
-/* 기획 v2: 생성형 AI는 데이터 증강에 통합, 데이터 즐겨찾기가 워크스페이스로 이동 */
+/* 기획 v2: 데이터 즐겨찾기가 워크스페이스로 이동 */
 const MENUS = [
   { to: '/workspace', label: '대시보드', icon: LayoutDashboard, end: true },
   { to: '/workspace/upload', label: '업로드 영상', icon: Upload },

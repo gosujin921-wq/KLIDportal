@@ -28,9 +28,6 @@ export const rfpGoals = {
 /** 증강 조건 (출처: 제안요청서 SFR-06/07. 시간·계절·날씨 조건 반영) */
 export const augmentConditions = ['주간·야간', '계절 변화', '안개', '비', '눈']
 
-/** 생성형 AI 생성 대상 (출처: 제안요청서. 침수 이미지 생성, 산불 학습데이터 생성 등) */
-export const generateExamples = ['침수 이미지 생성', '산불 학습데이터 생성', '시간·날씨 조건 반영']
-
 /** 이벤트 유형별 데이터셋 분포 (8종, 합계 = 1,240) */
 export const eventStats: { key: EventTypeKey; count: number }[] = [
   { key: 'wildfire', count: 218 },

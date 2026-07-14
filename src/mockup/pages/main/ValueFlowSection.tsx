@@ -350,7 +350,7 @@ export function ValueFlowSection() {
               <span className="absolute left-8 top-7 text-sm font-bold tracking-wider text-cobalt-300">03 AUGMENT</span>
               <h3 className="relative text-2xl font-extrabold tracking-tight text-white">AI 데이터 증강</h3>
               <p className="relative mt-3 break-keep text-base leading-relaxed text-slate-400">
-                AI 기술로 학습데이터를 증강하고 생성형 AI로 새로운 영상을 만들어 보세요.
+                AI 기술로 시간·계절·날씨 조건을 반영해 학습데이터를 다양하게 확장해 보세요.
               </p>
               <Link
                 to="/workspace/augment"

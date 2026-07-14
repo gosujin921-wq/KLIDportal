@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom'
-import { Download, Upload, PenTool, Sparkles, RotateCcw, ChevronRight } from 'lucide-react'
+import { Download, Upload, PenTool, RotateCcw, ChevronRight, CheckCircle2 } from 'lucide-react'
 import { Breadcrumb } from '@/mockup/components/Breadcrumb'
 import { Button } from '@/mockup/components/ui/Button'
 import { EventBadge, StatusBadge } from '@/mockup/components/ui/badges'
-import { exportRequests, workJobs, uploads, demoUser } from '@/mockup/mocks/workspace'
+import { uploads, demoUser } from '@/mockup/mocks/workspace'
+import { useDemoWorkspace } from '@/mockup/demoWorkspace'
 import { formatDate } from '@/lib/datetime'
 
 /** 워크스페이스 대시보드: 진행중 작업 허브 (완료 이력은 마이페이지) */
 export function DashboardPage() {
+  const { exportRequests, workJobs, downloadExport } = useDemoWorkspace()
   const uploading = uploads.filter((u) => u.status === 'inProgress').length
   const activeJobs = workJobs.filter((j) => j.status === 'inProgress' || j.status === 'waiting')
 
@@ -21,15 +23,9 @@ export function DashboardPage() {
     { label: '업로드 처리중', value: uploading, icon: Upload, to: '/workspace/upload' },
     {
       label: '저작·증강 작업',
-      value: workJobs.filter((j) => j.kind !== '생성').length,
+      value: workJobs.length,
       icon: PenTool,
       to: '/workspace/authoring',
-    },
-    {
-      label: '생성형 AI 대기',
-      value: workJobs.filter((j) => j.kind === '생성').length,
-      icon: Sparkles,
-      to: '/workspace/augment',
     },
   ]
 
@@ -42,7 +38,7 @@ export function DashboardPage() {
       </p>
 
       {/* 요약 카드 */}
-      <div className="mt-6 grid grid-cols-2 gap-4 xl:grid-cols-4">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {SUMMARY.map((s) => {
           const body = (
             <>
@@ -119,8 +115,25 @@ export function DashboardPage() {
                     )}
                   </td>
                   <td className="px-5 py-3.5 text-right whitespace-nowrap">
-                    {r.status === 'approved' || r.status === 'expiring' ? (
-                      <Button size="sm" className="h-8 px-3.5 text-sm">
+                    {r.downloaded ? (
+                      <span className="inline-flex items-center gap-2.5">
+                        <span className="inline-flex items-center gap-1 text-sm font-medium text-green-600">
+                          <CheckCircle2 className="size-3.5" />
+                          다운로드 완료
+                        </span>
+                        <Link
+                          to="/workspace/augment"
+                          className="text-sm font-semibold text-cobalt-600 hover:underline"
+                        >
+                          증강하기
+                        </Link>
+                      </span>
+                    ) : r.status === 'approved' || r.status === 'expiring' ? (
+                      <Button
+                        size="sm"
+                        className="h-8 px-3.5 text-sm"
+                        onClick={() => downloadExport(r.id)}
+                      >
                         <Download className="size-3.5" />
                         다운로드
                       </Button>

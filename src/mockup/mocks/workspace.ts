@@ -27,6 +27,8 @@ export interface ExportRequest {
   /** 승인 후 다운로드 기한 */
   dueLabel?: string
   sizeGb: number
+  /** 다운로드 완료 여부 (완료 시 증강 원본으로 편입) */
+  downloaded?: boolean
 }
 
 export const exportRequests: ExportRequest[] = [
@@ -61,10 +63,10 @@ export const exportRequests: ExportRequest[] = [
   },
 ]
 
-/** 진행중 작업 (저작·증강·생성) */
+/** 진행중 작업 (저작·증강) */
 export interface WorkJob {
   id: string
-  kind: '저작' | '증강' | '생성'
+  kind: '저작' | '증강'
   title: string
   type: EventTypeKey
   status: StatusKey
@@ -91,14 +93,6 @@ export const workJobs: WorkJob[] = [
     status: 'inProgress',
     progress: 38,
     updatedAt: daysAgo(1),
-  },
-  {
-    id: 'job-115',
-    kind: '생성',
-    title: '침수 상황 영상 생성 (교차로)',
-    type: 'flood',
-    status: 'waiting',
-    updatedAt: daysAgo(2),
   },
   {
     id: 'job-112',
@@ -223,24 +217,6 @@ export const augmentJobs: AugmentJob[] = [
   { id: 'ag-014', source: 'CCTV-탄천변-006 침수 라벨링 결과', options: ['야간', '비'], multiple: '4배', status: 'inProgress', requestedAt: daysAgo(1) },
   { id: 'ag-013', source: 'CCTV-우면산-003 산사태 라벨링 결과', options: ['안개'], multiple: '2배', status: 'done', requestedAt: daysAgo(4), expireLabel: dDay(26) },
   { id: 'ag-011', source: 'CCTV-역삼로-002 교통사고 라벨링 결과', options: ['야간', '눈'], multiple: '4배', status: 'done', requestedAt: daysAgo(15), expireLabel: dDay(15) },
-]
-
-/** 생성형 AI 결과 (결과물 보관 30일) */
-export interface GenAiJob {
-  id: string
-  title: string
-  type: EventTypeKey
-  length: string
-  status: StatusKey
-  requestedAt: string
-  expireLabel?: string
-}
-
-export const genAiJobs: GenAiJob[] = [
-  { id: 'gen-022', title: '침수 상황 영상 생성 (교차로)', type: 'flood', length: '10초', status: 'waiting', requestedAt: daysAgo(3) },
-  { id: 'gen-021', title: '산불 확산 영상 생성 (능선)', type: 'wildfire', length: '10초', status: 'done', requestedAt: daysAgo(8), expireLabel: dDay(22) },
-  { id: 'gen-019', title: '야간 화재 영상 생성 (주차장)', type: 'fire', length: '5초', status: 'done', requestedAt: daysAgo(14), expireLabel: dDay(16) },
-  { id: 'gen-017', title: '폭우 침수 영상 생성 (지하차도)', type: 'flood', length: '5초', status: 'failed', requestedAt: daysAgo(20) },
 ]
 
 /** 데모 사용자 */

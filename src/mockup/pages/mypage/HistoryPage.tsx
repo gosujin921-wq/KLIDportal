@@ -27,7 +27,6 @@ const authoringRows = [
 
 const aiRows = [
   { kind: '증강', target: '침수 라벨링 결과 (4배)', type: 'flood' as const, date: '2026.07.09', result: '완료', score: 40 },
-  { kind: '생성', target: '산불 확산 영상 (10초)', type: 'wildfire' as const, date: '2026.07.03', result: '완료', score: 25 },
   { kind: '증강', target: '교통사고 라벨링 결과 (4배)', type: 'traffic' as const, date: '2026.06.24', result: '완료', score: 40 },
 ]
 

@@ -19,7 +19,7 @@ const KPIS = [
 
 export function StatsSection() {
   return (
-    <section className="py-20">
+    <section className="bg-white py-20">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <Reveal>

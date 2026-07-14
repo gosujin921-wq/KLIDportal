@@ -2,12 +2,13 @@ import { Download } from 'lucide-react'
 import { Breadcrumb } from '@/mockup/components/Breadcrumb'
 import { Button } from '@/mockup/components/ui/Button'
 import { EventBadge, StatusBadge } from '@/mockup/components/ui/badges'
-import { myDatasets } from '@/mockup/mocks/workspace'
+import { useDemoWorkspace } from '@/mockup/demoWorkspace'
 import { formatDate } from '@/lib/datetime'
 import { formatNumber } from '@/lib/format'
 
 /** 내 학습데이터: 저작 완료 결과물 목록 */
 export function MyDatasetsPage() {
+  const { myDatasets } = useDemoWorkspace()
   return (
     <>
       <Breadcrumb
